@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import './index.css';
+import PHOTOS from './photos';
 import CursorGlow from './components/CursorGlow';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -41,8 +42,8 @@ export default function App() {
 
   const openLightbox = useCallback((i) => { setLbIndex(i); setLbOpen(true); }, []);
   const closeLightbox = useCallback(() => setLbOpen(false), []);
-  const lbPrev = useCallback(() => setLbIndex((i) => (i - 1 + 4) % 4), []);
-  const lbNext = useCallback(() => setLbIndex((i) => (i + 1) % 4), []);
+  const lbPrev = useCallback(() => setLbIndex((i) => (i - 1 + PHOTOS.length) % PHOTOS.length), []);
+  const lbNext = useCallback(() => setLbIndex((i) => (i + 1) % PHOTOS.length), []);
 
   const openPopover = useCallback((text) => {
     setPopoverText(text);

@@ -1,11 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-
-const PHOTOS = [
-  { src: '/images/photo-0.png', caption: 'Manali, Himachal Pradesh' },
-  { src: '/images/photo-1.png', caption: 'Snow days, Manali' },
-  { src: '/images/photo-2.jpg', caption: 'Sunrise at the summit' },
-  { src: '/images/photo-3.jpg', caption: 'Varkala Beach, Kerala' },
-];
+import PHOTOS from '../photos';
 
 export default function PhotoStrip({ onPhotoClick }) {
   const stripRef = useRef(null);
@@ -112,5 +106,3 @@ export default function PhotoStrip({ onPhotoClick }) {
     </section>
   );
 }
-
-export { PHOTOS };
