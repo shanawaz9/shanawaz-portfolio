@@ -209,7 +209,7 @@ nav{
   text-transform:uppercase;white-space:nowrap;
   display:flex;align-items:center;gap:24px;
 }
-.ticker-item::after{content:'\u25C6';font-size:5px;color:var(--accent);}
+.ticker-dot{color:var(--accent);font-size:18px;line-height:1;}
 @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
 /* SECTIONS */

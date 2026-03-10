@@ -15,7 +15,10 @@ export default function Ticker() {
     <div className="ticker">
       <div className="ticker-track">
         {doubled.map((item, i) => (
-          <span className="ticker-item" key={i}>{item}</span>
+          <span className="ticker-item" key={i}>
+            {item}
+            <span className="ticker-dot">·</span>
+          </span>
         ))}
       </div>
     </div>

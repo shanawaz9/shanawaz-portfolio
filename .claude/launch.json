@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "react-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"],
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "npm install && npm start"],
       "port": 3000
     }
   ]
