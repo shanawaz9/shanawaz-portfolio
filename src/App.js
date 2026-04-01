@@ -18,10 +18,22 @@ import Footer from './components/Footer';
 import Popover from './components/Popover';
 
 export default function App() {
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [lbOpen, setLbOpen] = useState(false);
   const [lbIndex, setLbIndex] = useState(0);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [popoverText, setPopoverText] = useState('');
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => {
+      const next = prev === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', next);
+      document.documentElement.setAttribute('data-theme', next);
+      document.querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', next === 'dark' ? '#0e0c0a' : '#fafaf9');
+      return next;
+    });
+  }, []);
 
   // Global scroll-in animation observer
   useEffect(() => {
@@ -58,7 +70,7 @@ export default function App() {
   return (
     <>
       <CursorGlow />
-      <Navbar />
+      <Navbar theme={theme} onToggleTheme={toggleTheme} />
       <Hero />
       <Ticker />
       <Timeline />

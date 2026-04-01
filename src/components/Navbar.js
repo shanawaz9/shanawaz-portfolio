@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 
 const RESUME_URL =
-  'https://drive.google.com/file/d/1ov4QErnN8T8Xs9hYUNmKyrb5rfdHiw4L/view?usp=sharing';
+  'https://drive.google.com/file/d/1keXLOyPMbeusGi4czz1AJGL0bs92SzYy/view?usp=sharing';
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = useCallback(() => {
@@ -13,6 +13,8 @@ export default function Navbar() {
   const closeMenu = useCallback(() => {
     setMenuOpen(false);
   }, []);
+
+  const nextMode = theme === 'light' ? 'dark' : 'light';
 
   return (
     <>
@@ -30,16 +32,37 @@ export default function Navbar() {
               Resume &#8599;
             </a>
           </li>
+          <li>
+            <button
+              className="theme-toggle"
+              onClick={onToggleTheme}
+              aria-label={`Switch to ${nextMode} mode`}
+              title={`Switch to ${nextMode} mode`}
+            >
+              {theme === 'light' ? '[ dark ]' : '[ light ]'}
+            </button>
+          </li>
         </ul>
-        <button
-          className={`nav-hamburger${menuOpen ? ' open' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div className="nav-right-mobile">
+          <button
+            className="theme-toggle"
+            onClick={onToggleTheme}
+            aria-label={`Switch to ${nextMode} mode`}
+            title={`Switch to ${nextMode} mode`}
+          >
+            {theme === 'light' ? '[ dark ]' : '[ light ]'}
+          </button>
+          <button
+            className={`nav-hamburger${menuOpen ? ' open' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </nav>
 
       <div

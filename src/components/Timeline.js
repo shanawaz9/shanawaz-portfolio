@@ -12,15 +12,17 @@ export default function Timeline() {
     <section className="section anim">
       <p className="section-label">Experience</p>
       <h2 className="section-heading">The Path So Far</h2>
-      <div>
+      <div className="timeline">
         {EXPERIENCES.map((exp, i) => (
-          <div key={i} className={"timeline-item anim " + exp.delay}>
-            <div>
+          <div key={i} className={"timeline-node anim " + exp.delay}>
+            <div className="timeline-dot" />
+            {i < EXPERIENCES.length - 1 && <div className="timeline-line" />}
+            <div className="timeline-card">
               <div className="tl-company">{exp.company}</div>
               <div className="tl-period">{exp.period}</div>
               <div className="tl-role">{exp.role}</div>
+              <p className="tl-desc">{exp.desc}</p>
             </div>
-            <p className="tl-desc">{exp.desc}</p>
           </div>
         ))}
       </div>
