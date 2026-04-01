@@ -17,7 +17,7 @@ export default function Ticker() {
         {doubled.map((item, i) => (
           <span className="ticker-item" key={i}>
             {item}
-            <span className="ticker-dot">·</span>
+            <span className="ticker-dot" aria-hidden="true" />
           </span>
         ))}
       </div>
