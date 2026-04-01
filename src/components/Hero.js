@@ -2,8 +2,28 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const RESUME_URL =
   'https://drive.google.com/file/d/1keXLOyPMbeusGi4czz1AJGL0bs92SzYy/view?usp=sharing';
+const EMAIL_ADDRESS = 'shanawazhussain989@gmail.com';
+
+async function copyToClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'absolute';
+  textarea.style.left = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+}
 
 function ConnectModal({ open, onClose }) {
+  const [emailCopied, setEmailCopied] = useState(false);
+
   useEffect(() => {
     if (!open) return;
 
@@ -19,6 +39,18 @@ function ConnectModal({ open, onClose }) {
       document.body.style.overflow = '';
     };
   }, [open, onClose]);
+
+  useEffect(() => {
+    if (!emailCopied) return undefined;
+    const timer = setTimeout(() => setEmailCopied(false), 1800);
+    return () => clearTimeout(timer);
+  }, [emailCopied]);
+
+  const handleEmailCopy = async (e) => {
+    e.preventDefault();
+    await copyToClipboard(EMAIL_ADDRESS);
+    setEmailCopied(true);
+  };
 
   if (!open) return null;
 
@@ -41,9 +73,9 @@ function ConnectModal({ open, onClose }) {
             <span className="connect-modal-icon">in</span>
             <span>LinkedIn</span>
           </a>
-          <a href="mailto:shanawazhussain989@gmail.com" className="connect-modal-link">
+          <a href={`mailto:${EMAIL_ADDRESS}`} className="connect-modal-link" onClick={handleEmailCopy}>
             <span className="connect-modal-icon">@</span>
-            <span>Email</span>
+            <span>{emailCopied ? 'Email copied' : 'Email'}</span>
           </a>
           <a href={RESUME_URL} target="_blank" rel="noreferrer" className="connect-modal-link">
             <span className="connect-modal-icon">&darr;</span>
@@ -58,6 +90,7 @@ function ConnectModal({ open, onClose }) {
 export default function Hero() {
   const textRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [ctaCopied, setCtaCopied] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -66,6 +99,18 @@ export default function Hero() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!ctaCopied) return undefined;
+    const timer = setTimeout(() => setCtaCopied(false), 1800);
+    return () => clearTimeout(timer);
+  }, [ctaCopied]);
+
+  const handleConnectClick = async () => {
+    await copyToClipboard(EMAIL_ADDRESS);
+    setCtaCopied(true);
+    setModalOpen(true);
+  };
 
   return (
     <div className="hero">
@@ -83,8 +128,8 @@ export default function Hero() {
             experiences across systems, stories, and interfaces.
           </p>
           <div className="hero-cta-wrap">
-            <button className="hero-cta" onClick={() => setModalOpen(true)}>
-              Let's Connect
+            <button className="hero-cta" onClick={handleConnectClick}>
+              {ctaCopied ? 'Email Copied' : "Let's Connect"}
               <span className="hero-cta-icon" aria-hidden="true">
                 &rarr;
               </span>

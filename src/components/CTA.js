@@ -1,4 +1,39 @@
+import { useEffect, useState } from 'react';
+
+const EMAIL_ADDRESS = 'shanawazhussain989@gmail.com';
+
+async function copyToClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'absolute';
+  textarea.style.left = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+}
+
 export default function CTA() {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return undefined;
+    const timer = setTimeout(() => setCopied(false), 1800);
+    return () => clearTimeout(timer);
+  }, [copied]);
+
+  const handleEmailCopy = async (e) => {
+    e.preventDefault();
+    await copyToClipboard(EMAIL_ADDRESS);
+    setCopied(true);
+  };
+
   return (
     <div className="cta anim">
       <div className="cta-content">
@@ -8,8 +43,8 @@ export default function CTA() {
           Have a project in mind, or just want to say hello? I'm always open to
           discussing new opportunities and ideas.
         </p>
-        <a href="mailto:shanawazhussain989@gmail.com" className="cta-email">
-          shanawazhussain989@gmail.com
+        <a href={`mailto:${EMAIL_ADDRESS}`} className="cta-email" onClick={handleEmailCopy}>
+          {copied ? 'Email copied to clipboard' : EMAIL_ADDRESS}
         </a>
         <div className="cta-socials">
           <a href="https://www.linkedin.com/in/shanawaz-hussain-42335b12b" target="_blank" rel="noreferrer" className="cta-social-link" title="LinkedIn" aria-label="LinkedIn">in</a>
