@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
+const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&?!';
+
 const RESUME_URL =
   'https://drive.google.com/file/d/1keXLOyPMbeusGi4czz1AJGL0bs92SzYy/view?usp=sharing';
 const EMAIL_ADDRESS = 'shanawazhussain989@gmail.com';
@@ -91,6 +94,9 @@ export default function Hero() {
   const textRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [ctaCopied, setCtaCopied] = useState(false);
+  const [displayWord, setDisplayWord] = useState(CYCLE_WORDS[0]);
+  const [isScrambling, setIsScrambling] = useState(false);
+  const wordIndexRef = useRef(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -98,6 +104,48 @@ export default function Hero() {
     }, 120);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let cycleTimer;
+    let scrambleTimer;
+    let active = true;
+
+    const scrambleTo = (target) => {
+      if (!active) return;
+      setIsScrambling(true);
+      let frame = 0;
+      const totalFrames = 14;
+      clearInterval(scrambleTimer);
+      scrambleTimer = setInterval(() => {
+        if (!active) { clearInterval(scrambleTimer); return; }
+        frame++;
+        if (frame >= totalFrames) {
+          clearInterval(scrambleTimer);
+          setDisplayWord(target);
+          setIsScrambling(false);
+          return;
+        }
+        const revealed = Math.floor((frame / totalFrames) * target.length);
+        setDisplayWord(
+          target.slice(0, revealed) +
+          Array.from({ length: target.length - revealed }, () =>
+            SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
+          ).join('')
+        );
+      }, 26);
+    };
+
+    cycleTimer = setInterval(() => {
+      wordIndexRef.current = (wordIndexRef.current + 1) % CYCLE_WORDS.length;
+      scrambleTo(CYCLE_WORDS[wordIndexRef.current]);
+    }, 2800);
+
+    return () => {
+      active = false;
+      clearInterval(cycleTimer);
+      clearInterval(scrambleTimer);
+    };
   }, []);
 
   useEffect(() => {
@@ -121,7 +169,12 @@ export default function Hero() {
           <h1 className="hero-title">
             Designing with
             <br />
-            <span className="accent">Curiosity</span>
+            <span
+              className={`accent hero-word${isScrambling ? ' scrambling' : ''}`}
+              data-word={displayWord}
+            >
+              {displayWord}
+            </span>
           </h1>
           <p className="hero-desc">
             Hi, I'm Shanawaz. Generalist product designer crafting thoughtful, user-centered
