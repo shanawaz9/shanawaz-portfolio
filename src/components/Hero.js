@@ -6,6 +6,71 @@ const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&?!';
 const RESUME_URL =
   'https://drive.google.com/file/d/1keXLOyPMbeusGi4czz1AJGL0bs92SzYy/view?usp=sharing';
 const EMAIL_ADDRESS = 'shanawazhussain989@gmail.com';
+const FLOATING_WINDOWS = [
+  {
+    id: 'strategy',
+    title: 'Strategy',
+    className: 'hero-window hero-window--strategy',
+    rotation: '-5deg',
+    label: 'STRATEGY.EXE',
+    initialZ: 3,
+  },
+  {
+    id: 'process',
+    title: 'Process',
+    className: 'hero-window hero-window--process',
+    rotation: '4deg',
+    label: 'PROCESS.EXE',
+    initialZ: 2,
+  },
+];
+
+function HeroWindowGraphic({ id, label }) {
+  if (id === 'strategy') {
+    return (
+      <>
+        <div className="hero-window__chrome">
+          <span className="hero-window__name">{label}</span>
+          <span className="hero-window__lines" aria-hidden="true" />
+          <span className="hero-window__close" aria-hidden="true">
+            x
+          </span>
+        </div>
+        <div className="hero-window__body hero-window__body--strategy">
+          <h3>
+            <span className="hero-window__title-line">Exploring strategic</span>
+            <span className="hero-window__title-line">design...</span>
+          </h3>
+          <ul className="hero-window__bullets">
+            <li>Asking 'why', then 'what'.</li>
+            <li>Defining the problem, not symptoms.</li>
+          </ul>
+        </div>
+      </>
+    );
+  }
+
+  if (id === 'process') {
+    return (
+      <>
+        <div className="hero-window__chrome">
+          <span className="hero-window__name">{label}</span>
+          <span className="hero-window__lines" aria-hidden="true" />
+          <span className="hero-window__close" aria-hidden="true">
+            x
+          </span>
+        </div>
+        <div className="hero-window__body hero-window__body--process">
+          <h3>Ideating...</h3>
+          <div className="hero-window__progress" aria-hidden="true">
+            <span className="hero-window__progress-fill" />
+          </div>
+          <p>Loading creative ideas...</p>
+        </div>
+      </>
+    );
+  }
+}
 
 async function copyToClipboard(text) {
   if (navigator.clipboard?.writeText) {
@@ -92,10 +157,17 @@ function ConnectModal({ open, onClose }) {
 
 export default function Hero() {
   const textRef = useRef(null);
+  const dragStateRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [ctaCopied, setCtaCopied] = useState(false);
   const [displayWord, setDisplayWord] = useState(CYCLE_WORDS[0]);
   const [isScrambling, setIsScrambling] = useState(false);
+  const [windowState, setWindowState] = useState(() =>
+    FLOATING_WINDOWS.reduce((acc, window) => {
+      acc[window.id] = { x: 0, y: 0, z: window.initialZ };
+      return acc;
+    }, {})
+  );
   const wordIndexRef = useRef(0);
 
   useEffect(() => {
@@ -160,6 +232,58 @@ export default function Hero() {
     setModalOpen(true);
   };
 
+  const handleWindowPointerDown = (id) => (event) => {
+    if (!event.isPrimary) return;
+
+    dragStateRef.current = {
+      id,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: windowState[id].x,
+      originY: windowState[id].y,
+    };
+
+    event.currentTarget.setPointerCapture(event.pointerId);
+
+    setWindowState((prev) => {
+      const nextZ = Math.max(...Object.values(prev).map((item) => item.z)) + 1;
+      return {
+        ...prev,
+        [id]: {
+          ...prev[id],
+          z: nextZ,
+        },
+      };
+    });
+  };
+
+  const handleWindowPointerMove = (id) => (event) => {
+    const activeDrag = dragStateRef.current;
+    if (!activeDrag || activeDrag.id !== id) return;
+
+    const deltaX = event.clientX - activeDrag.startX;
+    const deltaY = event.clientY - activeDrag.startY;
+
+    setWindowState((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        x: activeDrag.originX + deltaX,
+        y: activeDrag.originY + deltaY,
+      },
+    }));
+  };
+
+  const handleWindowPointerEnd = (id) => (event) => {
+    if (dragStateRef.current?.id === id) {
+      dragStateRef.current = null;
+    }
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+
   return (
     <div className="hero">
       <div className="hero-bg" aria-hidden="true"></div>
@@ -188,6 +312,33 @@ export default function Hero() {
               </span>
             </button>
           </div>
+        </div>
+        <div className="hero-floating-layer">
+          {FLOATING_WINDOWS.map((windowCard) => {
+            const current = windowState[windowCard.id];
+
+            return (
+              <button
+                key={windowCard.id}
+                type="button"
+                className={windowCard.className}
+                onPointerDown={handleWindowPointerDown(windowCard.id)}
+                onPointerMove={handleWindowPointerMove(windowCard.id)}
+                onPointerUp={handleWindowPointerEnd(windowCard.id)}
+                onPointerCancel={handleWindowPointerEnd(windowCard.id)}
+                style={{
+                  '--window-offset-x': `${current.x}px`,
+                  '--window-offset-y': `${current.y}px`,
+                  '--window-rotation': windowCard.rotation,
+                  zIndex: current.z,
+                }}
+                aria-label={`Drag ${windowCard.title} card`}
+              >
+                <span className="sr-only">{windowCard.title}</span>
+                <HeroWindowGraphic id={windowCard.id} label={windowCard.label} />
+              </button>
+            );
+          })}
         </div>
       </div>
       <ConnectModal open={modalOpen} onClose={() => setModalOpen(false)} />
