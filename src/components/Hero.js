@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
-const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&?!';
+const SCRAMBLE_CHARS = '◆○□△◇●■▲◈◉◎·—∙⬡✦◐◑';
 
 const RESUME_URL =
   'https://drive.google.com/file/d/1keXLOyPMbeusGi4czz1AJGL0bs92SzYy/view?usp=sharing';
@@ -31,20 +31,36 @@ function HeroWindowGraphic({ id, label }) {
       <>
         <div className="hero-window__chrome">
           <span className="hero-window__name">{label}</span>
-          <span className="hero-window__lines" aria-hidden="true" />
-          <span className="hero-window__close" aria-hidden="true">
-            x
-          </span>
+          <div className="hero-window__chrome-btns" aria-hidden="true">
+            <span className="hero-window__chrome-btn">_</span>
+            <span className="hero-window__chrome-btn">□</span>
+            <span className="hero-window__chrome-btn hero-window__chrome-btn--x">×</span>
+          </div>
         </div>
         <div className="hero-window__body hero-window__body--strategy">
-          <h3>
-            <span className="hero-window__title-line">Exploring strategic</span>
-            <span className="hero-window__title-line">design...</span>
-          </h3>
-          <ul className="hero-window__bullets">
-            <li>Asking 'why', then 'what'.</li>
-            <li>Defining the problem, not symptoms.</li>
-          </ul>
+          <p className="hw-head">BRIEF.MD</p>
+          <div className="hw-rule" />
+          <div className="hw-brief-rows">
+            <div className="hw-brief-row">
+              <span className="hw-brief-key">WHO</span>
+              <span className="hw-brief-val">product teams</span>
+            </div>
+            <div className="hw-brief-row">
+              <span className="hw-brief-key">PAIN</span>
+              <span className="hw-brief-val">unclear flows</span>
+            </div>
+            <div className="hw-brief-row">
+              <span className="hw-brief-key">GOAL</span>
+              <span className="hw-brief-val">time to value</span>
+            </div>
+          </div>
+          <div className="hw-rule" />
+          <p className="hw-hmw">HMW: reduce friction?</p>
+          <div className="hw-brief-status">
+            <span aria-hidden="true">▶</span>
+            <span>DEFINING</span>
+            <span className="hw-cursor" aria-hidden="true">▋</span>
+          </div>
         </div>
       </>
     );
@@ -55,17 +71,39 @@ function HeroWindowGraphic({ id, label }) {
       <>
         <div className="hero-window__chrome">
           <span className="hero-window__name">{label}</span>
-          <span className="hero-window__lines" aria-hidden="true" />
-          <span className="hero-window__close" aria-hidden="true">
-            x
-          </span>
+          <div className="hero-window__chrome-btns" aria-hidden="true">
+            <span className="hero-window__chrome-btn">_</span>
+            <span className="hero-window__chrome-btn">□</span>
+            <span className="hero-window__chrome-btn hero-window__chrome-btn--x">×</span>
+          </div>
         </div>
         <div className="hero-window__body hero-window__body--process">
-          <h3>Ideating...</h3>
-          <div className="hero-window__progress" aria-hidden="true">
-            <span className="hero-window__progress-fill" />
+          <div className="hw-phases">
+            <div className="hw-phase hw-phase--done">
+              <span className="hw-phase__chk">[x]</span>
+              <span className="hw-phase__lbl">DISCOVER</span>
+            </div>
+            <div className="hw-phase hw-phase--done">
+              <span className="hw-phase__chk">[x]</span>
+              <span className="hw-phase__lbl">DEFINE</span>
+            </div>
+            <div className="hw-phase hw-phase--now">
+              <span className="hw-phase__chk">[&gt;]</span>
+              <span className="hw-phase__lbl">DESIGN</span>
+              <span className="hw-cursor" aria-hidden="true">▋</span>
+            </div>
+            <div className="hw-phase">
+              <span className="hw-phase__chk">[ ]</span>
+              <span className="hw-phase__lbl">DELIVER</span>
+            </div>
           </div>
-          <p>Loading creative ideas...</p>
+          <div className="hw-pbar">
+            <span className="hw-pbar__lbl">PROGRESS</span>
+            <div className="hw-pbar__track">
+              <div className="hw-pbar__fill" />
+            </div>
+            <span className="hw-pbar__pct">67%</span>
+          </div>
         </div>
       </>
     );
