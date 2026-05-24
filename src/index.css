@@ -1119,43 +1119,11 @@ nav{
 
   .hero-inner{
     min-height:auto;
-    padding:92px 18px 40px;
+    padding:92px 18px 56px;
   }
 
   .hero-floating-layer{
-    height:560px;
-    margin-top:24px;
-  }
-
-  .hero-window{
-    width:clamp(138px, 42vw, 172px);
-  }
-
-  .hero-window__chrome{
-    min-height:22px;
-    padding:0 4px 0 6px;
-    font-size:8px;
-  }
-
-  .hero-window__body{
-    min-height:116px;
-    padding:6px;
-  }
-
-  .hero-window--strategy{
-    top:0;
-    left:calc(5% - 32px);
-    width:clamp(164px, 48vw, 198px);
-  }
-
-  .hero-window--process{
-    right:4%;
-    bottom:0;
-  }
-
-  .hero-window--text{
-    left:0;
-    bottom:10%;
+    display:none;
   }
 }
 
