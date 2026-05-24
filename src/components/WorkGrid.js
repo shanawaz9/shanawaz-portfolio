@@ -2,13 +2,15 @@ import React from 'react';
 
 const WORKS = [
   {
-    href: 'https://shrub-gallium-386.notion.site/Khoj-Landing-Page-Case-Study-301644ba75b680a587ffd608395e3811?pvs=73',
-    img: 'https://framerusercontent.com/images/KD5mHHSu1nuzNMqYhjl4qIy4p0.png',
-    alt: 'Khoj',
+    href: '/case-studies/shiftlyn.html',
+    img: '/images/shiftlyn.png',
+    alt: 'Shiftlyn',
     year: '2025',
     tag: 'Case study',
-    title: 'Khoj Landing page',
+    title: 'Shiftlyn',
     delay: 'd1',
+    fit: 'contain',
+    thumbBg: '#ece2d0',
   },
   {
     href: 'https://shrub-gallium-386.notion.site/Confidential-Projects-301644ba75b6806895b6cf7d89e25661?pvs=73',
@@ -20,13 +22,13 @@ const WORKS = [
     delay: 'd2',
   },
   {
-    img: 'https://framerusercontent.com/images/X9Gstk6YdSaJJ0nW4VeflNEvZak.png',
-    alt: 'WIP',
+    href: 'https://shrub-gallium-386.notion.site/Khoj-Landing-Page-Case-Study-301644ba75b680a587ffd608395e3811?pvs=73',
+    img: 'https://framerusercontent.com/images/KD5mHHSu1nuzNMqYhjl4qIy4p0.png',
+    alt: 'Khoj',
     year: '2025',
     tag: 'Case study',
-    title: 'Work In Progress',
+    title: 'Khoj Landing page',
     delay: 'd3',
-    wip: true,
   },
   {
     img: 'https://framerusercontent.com/images/X9Gstk6YdSaJJ0nW4VeflNEvZak.png',
@@ -41,10 +43,12 @@ const WORKS = [
 
 function WorkCard({ work }) {
   const cardClass = `work-card anim${work.wip ? ' wip' : ''} ${work.delay}`;
+  const thumbStyle = work.thumbBg ? { background: work.thumbBg } : undefined;
+  const imgStyle = work.fit ? { objectFit: work.fit } : undefined;
   const content = (
     <>
-      <div className="work-card-thumb">
-        <img src={work.img} alt={work.alt} />
+      <div className="work-card-thumb" style={thumbStyle}>
+        <img src={work.img} alt={work.alt} style={imgStyle} />
       </div>
       <div className="work-card-body">
         <div className="work-card-meta">

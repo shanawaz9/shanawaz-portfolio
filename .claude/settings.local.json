@@ -4,7 +4,9 @@
       "Bash(git --version)",
       "Bash(gh --version)",
       "WebFetch(domain:github.com)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(ls \"C:\\\\Users\\\\Admin\\\\Downloads\\\\final riskradar.html\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\" && cp \"C:\\\\Users\\\\Admin\\\\Downloads\\\\final riskradar.html\" \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\\\\shiftlyn.html\" && ls \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\")"
     ]
   }
 }
