@@ -3,8 +3,8 @@ const EXPERIENCES = [
     desc: 'Joined as the first designer, helping establish the design function and contributing to team hiring and growth. Worked across enterprise platforms, AI-driven products, marketing websites, and healthcare solutions, taking on senior-level ownership.' },
   { company: '10kDesigners', period: '2024', role: 'Learning Experience', delay: 'd2',
     desc: 'Part of the 10k Designers Cohort focused on product thinking, visual design, and career growth. Participated in critiques, live sessions, and peer collaborations, applying modern design frameworks and scalable UI patterns.' },
-  { company: 'TCS', period: '2021 – 2022', role: 'UI Developer', delay: 'd3',
-    desc: 'Worked on an enterprise e-commerce application, contributing to UI features and resolving frontend issues. Collaborated with designers, product managers, and backend teams within large-scale systems.' },
+  { company: 'TCS', period: '2021 – 2022', role: 'UX Designer', delay: 'd3',
+    desc: 'Designed user flows and interfaces for an enterprise e-commerce platform, focusing on usability and clarity. Partnered with product managers and engineers to translate business requirements into intuitive, user-centered experiences.' },
 ];
 
 export default function Timeline() {
