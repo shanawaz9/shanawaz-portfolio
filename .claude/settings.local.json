@@ -8,7 +8,8 @@
       "Bash(ls \"C:\\\\Users\\\\Admin\\\\Downloads\\\\final riskradar.html\")",
       "Bash(mkdir -p \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\" && cp \"C:\\\\Users\\\\Admin\\\\Downloads\\\\final riskradar.html\" \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\\\\shiftlyn.html\" && ls \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\")",
       "Bash(python -c ' *)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(grep -iE \"^\\(sharp|jimp|canvas|svgo|to-ico|png-to-ico|png|svg\\)$\")"
     ]
   }
 }
