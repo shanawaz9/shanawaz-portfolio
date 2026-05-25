@@ -22,7 +22,7 @@ const WORKS = [
     delay: 'd2',
   },
   {
-    href: 'https://shrub-gallium-386.notion.site/Khoj-Landing-Page-Case-Study-301644ba75b680a587ffd608395e3811?pvs=73',
+    href: 'https://medium.com/@shanawazhussain989/khoj-landing-page-case-study-c279cb08c671',
     img: 'https://framerusercontent.com/images/KD5mHHSu1nuzNMqYhjl4qIy4p0.png',
     alt: 'Khoj',
     year: '2025',
