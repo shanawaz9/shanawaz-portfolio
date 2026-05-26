@@ -17,7 +17,7 @@ export default function About() {
       <div className="about-inner">
         <div className="about-body anim anim-left">
           <p>
-            Product Designer (UI/UX) with over 2 years of experience crafting user-focused
+            Product Designer (UI/UX) with over 4+ years of experience crafting user-focused
             digital experiences that are clear, scalable, and system-driven.
           </p>
           <p>
