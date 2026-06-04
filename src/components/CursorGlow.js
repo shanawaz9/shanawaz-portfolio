@@ -8,6 +8,7 @@ export default function CursorGlow() {
       if (dotRef.current) {
         dotRef.current.style.left = e.clientX + 'px';
         dotRef.current.style.top = e.clientY + 'px';
+        dotRef.current.classList.add('cursor-dot--ready');
       }
     };
     document.addEventListener('mousemove', handleMouseMove);

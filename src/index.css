@@ -112,6 +112,12 @@ body::after{
 a{color:inherit;text-decoration:none;}
 img{display:block;max-width:100%;}
 
+@media(pointer:fine){
+  *,*::before,*::after{
+    cursor:none !important;
+  }
+}
+
 :focus-visible{
   outline:3px solid var(--accent);
   outline-offset:3px;
@@ -1655,6 +1661,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   border:1px solid rgba(240,100,59,0.45);
   border-radius:50%;
   background:rgba(240,100,59,0.04);
+  opacity:0;
   transform:translate(-50%,-50%);
   z-index:10000;
   transition:left 0.08s ease-out,top 0.08s ease-out,opacity 0.2s;
@@ -1662,6 +1669,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
     0 0 18px rgba(240,100,59,0.16),
     inset 0 0 8px rgba(240,100,59,0.08);
 }
+.cursor-dot--ready{opacity:1;}
 .cursor-dot::before{
   content:'';
   position:absolute;
