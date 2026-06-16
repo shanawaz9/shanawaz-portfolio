@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 const RESUME_URL =
-  'https://drive.google.com/file/d/1keXLOyPMbeusGi4czz1AJGL0bs92SzYy/view?usp=sharing';
+  'https://drive.google.com/file/d/1ykbOksFk2TVq_DqjcCJnp0pBTNzEd-_X/view?usp=sharing';
 
 export default function Navbar({ theme, onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
