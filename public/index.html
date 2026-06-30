@@ -5,23 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0e0c0a" />
     <meta name="description" content="Shanawaz — Design Portfolio" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e0c0a'/%3E%3Cg fill='%23F0643B'%3E%3Crect x='8' y='2' width='20' height='4'/%3E%3Crect x='4' y='6' width='4' height='8'/%3E%3Crect x='8' y='14' width='16' height='4'/%3E%3Crect x='24' y='18' width='4' height='8'/%3E%3Crect x='4' y='26' width='20' height='4'/%3E%3C/g%3E%3C/svg%3E" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e0c0a'/%3E%3Cg fill='%235a4cea'%3E%3Crect x='8' y='2' width='20' height='4'/%3E%3Crect x='4' y='6' width='4' height='8'/%3E%3Crect x='8' y='14' width='16' height='4'/%3E%3Crect x='24' y='18' width='4' height='8'/%3E%3Crect x='4' y='26' width='20' height='4'/%3E%3C/g%3E%3C/svg%3E" />
     <link rel="alternate icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg?v=2" />
     <title>Shanawaz — Design Portfolio</title>
     <script>
       (function(){
-        var t = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
-        var mc = t === 'dark' ? '#0e0c0a' : '#f8f7f4';
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', mc);
+        /* Light mode disabled for now — always render dark, ignore any stored preference. */
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0e0c0a');
       })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Cascadia+Code:wght@300;400;500;600;700&family=Red+Hat+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
-      rel="stylesheet"
-    />
+    <!-- All fonts (Space Grotesk, Inter, Silkscreen, Red Hat Mono) are self-hosted
+         via Fontsource — see src/fonts.js. No external font CDN needed. -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

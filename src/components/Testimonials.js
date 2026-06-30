@@ -1,3 +1,6 @@
+import Reveal from './Reveal';
+import { Stagger, StaggerItem } from './Stagger';
+
 const TESTIMONIALS = [
   {
     avatar: 'https://framerusercontent.com/images/iT7IbdVfSfsl1WwkMQCLJkv4oA.jpg',
@@ -21,24 +24,26 @@ const TESTIMONIALS = [
 
 export default function Testimonials({ onExpandClick }) {
   return (
-    <section className="section anim">
-      <div className="testimonials-head">
+    <section className="section">
+      <Reveal as="div" className="testimonials-head">
         <p className="eyebrow">Testimonials</p>
         <h2>{"Best part of the work"}<br />{"It's all about the people"}</h2>
-      </div>
-      <div className="t-grid">
+      </Reveal>
+      <Stagger className="t-grid">
         {TESTIMONIALS.map((t, i) => (
-          <div key={i} className={"t-card anim " + t.delay}>
-            <div className="t-avatar"><img src={t.avatar} alt={t.name} /></div>
-            <div className="t-name">{t.name}</div>
-            <div className="t-role">{t.role}</div>
-            <p className="t-text">{t.preview}</p>
-            <button className="t-expand-btn" onClick={() => onExpandClick(t.full)}>
-              Read more <span className="arrow">&#x203a;</span>
-            </button>
-          </div>
+          <StaggerItem key={i} className="reveal-cell">
+            <div className="t-card">
+              <div className="t-avatar"><img src={t.avatar} alt={t.name} /></div>
+              <div className="t-name">{t.name}</div>
+              <div className="t-role">{t.role}</div>
+              <p className="t-text">{t.preview}</p>
+              <button className="t-expand-btn" onClick={() => onExpandClick(t.full)}>
+                Read more <span className="arrow">&#x203a;</span>
+              </button>
+            </div>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
     </section>
   );
 }

@@ -3,6 +3,9 @@ import React, { useState, useCallback } from 'react';
 const RESUME_URL =
   'https://drive.google.com/file/d/1ykbOksFk2TVq_DqjcCJnp0pBTNzEd-_X/view?usp=sharing';
 
+// Light mode disabled for now — flip to true to bring the dark/light toggle back.
+const ENABLE_THEME_TOGGLE = false;
+
 export default function Navbar({ theme, onToggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -32,7 +35,21 @@ export default function Navbar({ theme, onToggleTheme }) {
               Resume &#8599;
             </a>
           </li>
-          <li>
+          {ENABLE_THEME_TOGGLE && (
+            <li>
+              <button
+                className="theme-toggle"
+                onClick={onToggleTheme}
+                aria-label={`Switch to ${nextMode} mode`}
+                title={`Switch to ${nextMode} mode`}
+              >
+                {theme === 'light' ? '[ dark ]' : '[ light ]'}
+              </button>
+            </li>
+          )}
+        </ul>
+        <div className="nav-right-mobile">
+          {ENABLE_THEME_TOGGLE && (
             <button
               className="theme-toggle"
               onClick={onToggleTheme}
@@ -41,17 +58,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             >
               {theme === 'light' ? '[ dark ]' : '[ light ]'}
             </button>
-          </li>
-        </ul>
-        <div className="nav-right-mobile">
-          <button
-            className="theme-toggle"
-            onClick={onToggleTheme}
-            aria-label={`Switch to ${nextMode} mode`}
-            title={`Switch to ${nextMode} mode`}
-          >
-            {theme === 'light' ? '[ dark ]' : '[ light ]'}
-          </button>
+          )}
           <button
             className={`nav-hamburger${menuOpen ? ' open' : ''}`}
             onClick={toggleMenu}

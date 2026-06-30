@@ -9,7 +9,10 @@
       "Bash(mkdir -p \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\" && cp \"C:\\\\Users\\\\Admin\\\\Downloads\\\\final riskradar.html\" \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\\\\shiftlyn.html\" && ls \"C:\\\\Users\\\\Admin\\\\Downloads\\\\shanawaz-portfolio\\\\public\\\\case-studies\")",
       "Bash(python -c ' *)",
       "Bash(node -e ' *)",
-      "Bash(grep -iE \"^\\(sharp|jimp|canvas|svgo|to-ico|png-to-ico|png|svg\\)$\")"
+      "Bash(grep -iE \"^\\(sharp|jimp|canvas|svgo|to-ico|png-to-ico|png|svg\\)$\")",
+      "Bash(node -e \"const fs=require\\('fs'\\);const c=fs.readFileSync\\('public/case-studies/shiftlyn.html','utf8'\\);console.log\\(c.length\\); console.log\\(c.slice\\(0,3000\\)\\)\")",
+      "Read(//tmp/**)",
+      "Bash(wc -l /c/Users/Admin/Downloads/shanawaz-portfolio/public/case-studies/shiftlyn.html; echo \"---HEAD---\"; head -c 60 /dev/null)"
     ]
   }
 }

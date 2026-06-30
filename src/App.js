@@ -1,6 +1,7 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import './index.css';
 import PHOTOS from './photos';
+import Loader from './components/Loader';
 import CursorGlow from './components/CursorGlow';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -18,11 +19,14 @@ import Footer from './components/Footer';
 import Popover from './components/Popover';
 
 export default function App() {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  // Light mode disabled for now — force dark regardless of any stored preference.
+  const [theme, setTheme] = useState('dark');
   const [lbOpen, setLbOpen] = useState(false);
   const [lbIndex, setLbIndex] = useState(0);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [popoverText, setPopoverText] = useState('');
+  // Remembers the element that opened a modal, so focus returns there on close.
+  const lastFocusRef = useRef(null);
 
   const toggleTheme = useCallback(() => {
     setTheme(prev => {
@@ -33,6 +37,13 @@ export default function App() {
         ?.setAttribute('content', next === 'dark' ? '#0e0c0a' : '#f8f7f4');
       return next;
     });
+  }, []);
+
+  // Light mode disabled for now — pin the document to dark on mount and clear any stale preference.
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0e0c0a');
+    localStorage.setItem('theme', 'dark');
   }, []);
 
   // Global scroll-in animation observer
@@ -52,12 +63,13 @@ export default function App() {
     return () => { io.disconnect(); mo.disconnect(); };
   }, []);
 
-  const openLightbox = useCallback((i) => { setLbIndex(i); setLbOpen(true); }, []);
-  const closeLightbox = useCallback(() => setLbOpen(false), []);
+  const openLightbox = useCallback((i) => { lastFocusRef.current = document.activeElement; setLbIndex(i); setLbOpen(true); }, []);
+  const closeLightbox = useCallback(() => { setLbOpen(false); lastFocusRef.current?.focus?.(); }, []);
   const lbPrev = useCallback(() => setLbIndex((i) => (i - 1 + PHOTOS.length) % PHOTOS.length), []);
   const lbNext = useCallback(() => setLbIndex((i) => (i + 1) % PHOTOS.length), []);
 
   const openPopover = useCallback((text) => {
+    lastFocusRef.current = document.activeElement;
     setPopoverText(text);
     setPopoverOpen(true);
     document.body.style.overflow = 'hidden';
@@ -65,23 +77,28 @@ export default function App() {
   const closePopover = useCallback(() => {
     setPopoverOpen(false);
     document.body.style.overflow = '';
+    lastFocusRef.current?.focus?.();
   }, []);
 
   return (
     <>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <Loader />
       <CursorGlow />
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
-      <Hero />
-      <Ticker />
-      <Timeline />
-      <WorkGrid />
-      <Blog />
-      <About />
-      <PhotoStrip onPhotoClick={openLightbox} />
-      <Lightbox open={lbOpen} index={lbIndex} onClose={closeLightbox} onPrev={lbPrev} onNext={lbNext} />
-      <Testimonials onExpandClick={openPopover} />
-      <Philosophy />
-      <CTA />
+      <main id="main" tabIndex={-1}>
+        <Hero />
+        <Ticker />
+        <Timeline />
+        <WorkGrid />
+        <Blog />
+        <About />
+        <PhotoStrip onPhotoClick={openLightbox} />
+        <Lightbox open={lbOpen} index={lbIndex} onClose={closeLightbox} onPrev={lbPrev} onNext={lbNext} />
+        <Testimonials onExpandClick={openPopover} />
+        <Philosophy />
+        <CTA />
+      </main>
       <Footer />
       <Popover open={popoverOpen} text={popoverText} onClose={closePopover} />
     </>

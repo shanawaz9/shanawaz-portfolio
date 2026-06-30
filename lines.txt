@@ -1,0 +1,570 @@
+1: <!DOCTYPE html>
+2: <html lang="en">
+3: <head>
+4: <meta charset="UTF-8">
+5: <meta name="viewport" content="width=device-width, initial-scale=1.0">
+6: <title>Shiftlyn — Case Study</title>
+7: <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+8: <style>
+9: *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+10: 
+11: :root{
+12:   --ink:    #0c0b0a;
+13:   --ink2:   #28261f;
+14:   --ink3:   #5a5750;
+15:   --ink4:   #9a9790;
+16:   --red:    #c1321f;
+17:   --green:  #1e6e43;
+18:   --gbg:    #edf6f1;
+19:   --line:   #e4e1db;
+20:   --bg:     #ffffff;
+21:   --bg2:    #f7f6f4;
+22:   --bg3:    #f0eeea;
+23: }
+24: 
+25: html{scroll-behavior:smooth}
+26: 
+27: body{
+28:   font-family:'Sora',sans-serif;
+29:   font-size:15px;
+30:   line-height:1.75;
+31:   color:var(--ink2);
+32:   background:var(--bg);
+33:   -webkit-font-smoothing:antialiased;
+34: }
+35: 
+36: /* layout */
+37: .t{max-width:648px;margin:0 auto;padding:0 28px}
+38: .w{max-width:960px;margin:0 auto;padding:0 28px}
+39: 
+40: /* header */
+41: .hdr{padding:72px 0 60px;border-bottom:1px solid var(--line);margin-bottom:64px}
+42: 
+43: .badge{
+44:   display:inline-flex;align-items:center;gap:7px;
+45:   font-family:'DM Mono',monospace;font-size:10px;
+46:   letter-spacing:0.13em;text-transform:uppercase;
+47:   color:var(--ink4);margin-bottom:28px;
+48: }
+49: .dot{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
+50: 
+51: h1{
+52:   font-size:clamp(38px,5.5vw,60px);
+53:   font-weight:800;color:var(--ink);
+54:   line-height:1.06;letter-spacing:-0.03em;
+55:   margin-bottom:20px;
+56: }
+57: h1 em{color:var(--ink4);font-weight:300;font-style:normal}
+58: 
+59: .lead{
+60:   font-size:16px;font-weight:300;
+61:   color:var(--ink3);line-height:1.65;
+62:   max-width:480px;margin-bottom:44px;
+63: }
+64: 
+65: .meta{
+66:   display:flex;gap:0;
+67:   border:1px solid var(--line);
+68:   border-radius:8px;overflow:hidden;
+69:   width:fit-content;flex-wrap:wrap;
+70: }
+71: .mi{padding:11px 20px;border-right:1px solid var(--line)}
+72: .mi:last-child{border-right:none}
+73: .ml{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:2px}
+74: .mv{font-size:13px;font-weight:600;color:var(--ink)}
+75: 
+76: /* toc */
+77: .toc{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:26px 30px;margin-bottom:72px}
+78: .toc-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.13em;text-transform:uppercase;color:var(--ink4);margin-bottom:14px}
+79: .toc-grid{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:2px 40px}
+80: .toc-grid a{display:flex;align-items:baseline;gap:10px;font-size:13px;font-weight:400;color:var(--ink3);text-decoration:none;padding:5px 0;transition:color .12s}
+81: .toc-grid a:hover{color:var(--red)}
+82: .tn{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);flex-shrink:0}
+83: 
+84: /* chapter */
+85: .ch{margin-bottom:96px}
+86: 
+87: .ch-num{
+88:   font-family:'DM Mono',monospace;font-size:10px;
+89:   letter-spacing:0.13em;text-transform:uppercase;
+90:   color:var(--red);margin-bottom:12px;
+91:   display:flex;align-items:center;gap:10px;
+92: }
+93: .ch-num::before{content:'';width:16px;height:1px;background:var(--red)}
+94: 
+95: h2{
+96:   font-size:clamp(24px,3.2vw,34px);
+97:   font-weight:700;color:var(--ink);
+98:   line-height:1.16;letter-spacing:-0.025em;
+99:   margin-bottom:22px;
+100: }
+101: 
+102: h3{
+103:   font-size:9px;font-weight:600;
+104:   letter-spacing:0.13em;text-transform:uppercase;
+105:   color:var(--ink4);margin-top:44px;margin-bottom:14px;
+106: }
+107: 
+108: p{font-weight:300;color:var(--ink2);margin-bottom:18px;font-size:15px}
+109: p:last-child{margin-bottom:0}
+110: em{font-style:italic;color:var(--ink3)}
+111: strong{font-weight:600;color:var(--ink);font-style:normal}
+112: 
+113: /* pullquote */
+114: .pq{
+115:   margin:44px 0;padding:22px 26px;
+116:   background:var(--bg2);
+117:   border-left:3px solid var(--red);
+118:   border-radius:0 6px 6px 0;
+119: }
+120: .pq p{font-size:17px;font-weight:500;color:var(--ink);line-height:1.55;margin:0;font-style:normal}
+121: 
+122: /* data-4 */
+123: .d4{
+124:   display:grid;grid-template-columns:repeat(4,1fr);
+125:   gap:1px;background:var(--line);
+126:   border:1px solid var(--line);border-radius:8px;
+127:   overflow:hidden;margin:32px 0;
+128: }
+129: /* data-2 */
+130: .d2{
+131:   display:grid;grid-template-columns:1fr 1fr;
+132:   gap:1px;background:var(--line);
+133:   border:1px solid var(--line);border-radius:8px;
+134:   overflow:hidden;margin:32px 0;
+135: }
+136: .dc{background:var(--bg);padding:20px 18px}
+137: .dn{font-size:30px;font-weight:800;color:var(--red);letter-spacing:-0.03em;line-height:1;margin-bottom:6px}
+138: .dd{font-size:12px;font-weight:400;color:var(--ink3);line-height:1.45}
+139: .ds{font-family:'DM Mono',monospace;font-size:9px;color:var(--ink4);margin-top:4px}
+140: 
+141: /* stat row (3 cols) */
+142: .sr{
+143:   display:grid;grid-template-columns:repeat(3,1fr);
+144:   gap:1px;background:var(--line);
+145:   border:1px solid var(--line);border-radius:8px;
+146:   overflow:hidden;margin:32px 0;
+147: }
+148: .sc{background:var(--bg);padding:20px 18px;border-top:3px solid var(--red)}
+149: .sn{font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:1;margin-bottom:6px}
+150: .sd{font-size:12px;font-weight:400;color:var(--ink3);line-height:1.4}
+151: .ss{font-family:'DM Mono',monospace;font-size:9px;color:var(--ink4);margin-top:4px}
+152: 
+153: /* table */
+154: .tbl{width:100%;border-collapse:collapse;margin:28px 0;font-size:13px}
+155: .tbl th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);background:var(--bg2);font-weight:400}
+156: .tbl td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink2);font-weight:300}
+157: .tbl tr:last-child td{border-bottom:none}
+158: .tbl td:first-child{font-weight:500;color:var(--ink)}
+159: .tag{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;letter-spacing:.04em}
+160: .tg{background:var(--gbg);color:var(--green)}
+161: 
+162: /* mistakes */
+163: .ml-list{list-style:none;margin:28px 0}
+164: .ml-item{display:grid;grid-template-columns:22px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--line);align-items:start}
+165: .ml-item:first-child{border-top:1px solid var(--line)}
+166: .mn{font-family:'DM Mono',monospace;font-size:10px;color:var(--red);font-weight:500;padding-top:2px}
+167: .mb strong{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px}
+168: .mb p{font-size:13px;margin:0;color:var(--ink3)}
+169: 
+170: /* learnings */
+171: .lrn{padding:22px 0;border-top:1px solid var(--line)}
+172: .lrn:last-child{border-bottom:1px solid var(--line)}
+173: .lt{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:7px}
+174: .lrn p{font-size:13px;color:var(--ink3);margin:0;font-weight:300}
+175: 
+176: /* images */
+177: .ib,.ip,.it{margin:56px auto;display:flex;flex-direction:column;align-items:center;gap:56px}
+178: .ip>div,.it>div{display:flex;flex-direction:column;align-items:center;width:100%}
+179: .ib img,.ip img,.it img{width:100%;display:block;border-radius:10px;border:14px solid rgba(12,11,10,0.04);box-shadow:0 1px 2px rgba(12,11,10,0.04), 0 6px 16px rgba(12,11,10,0.05)}
+180: .ic{margin-top:16px;text-align:center;max-width:560px;margin-left:auto;margin-right:auto;padding:0 8px}
+181: .il{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+182: .id{display:block;font-size:13px;color:var(--ink3);line-height:1.55;font-weight:300}
+183: 
+184: /* rule */
+185: hr{border:none;border-top:1px solid var(--line);margin:72px 0}
+186: 
+187: /* footer */
+188: footer{border-top:1px solid var(--line);padding:48px 0 72px;margin-top:64px}
+189: .fi{max-width:648px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+190: .fb{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-0.02em}
+191: .fb span{color:var(--red)}
+192: .fn{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);text-align:right;line-height:1.9}
+193: .fn a{color:var(--red);text-decoration:none}
+194: 
+195: @media(max-width:640px){
+196:   .t,.w{padding:0 20px}
+197:   .d4{grid-template-columns:1fr 1fr}
+198:   .sr{grid-template-columns:1fr}
+199:   .d2{grid-template-columns:1fr}
+200:   .ib,.ip,.it{margin:40px auto;gap:40px}
+201:   .ib img,.ip img,.it img{border-width:8px;border-radius:8px}
+202:   .ic{margin-top:12px}
+203:   .id{font-size:12px}
+204:   .toc-grid{grid-template-columns:1fr}
+205:   .meta{width:100%}
+206:   .fi{flex-direction:column}
+207:   .fn{text-align:left}
+208: }
+209: </style>
+210: </head>
+211: <body>
+212: 
+213: <!-- HEADER -->
+214: <header class="hdr">
+215: <div class="t">
+216:   <div class="badge"><span class="dot"></span>Product Design Case Study</div>
+217:   <h1>Shiftlyn.<br><em>From anxiety<br>to a number.</em></h1>
+218:   <p class="lead">A tool to help Indian professionals understand where they stand with AI. A score, a plan, a next step.</p>
+219:   <div class="meta">
+220:     <div class="mi"><div class="ml">Product Designer</div><div class="mv">Shanawaz</div></div>
+221:     <div class="mi"><div class="ml">Timeline</div><div class="mv">2026</div></div>
+222:     <div class="mi"><div class="ml">Status</div><div class="mv">Beta · Live</div></div>
+223:   </div>
+224: </div>
+225: </header>
+226: 
+227: <!-- HERO -->
+228: <div class="w">
+229: <div class="ib">
+231:   <div class="ic"><span class="il">The product</span><span class="id">An AI career displacement risk checker — built for Indian working professionals. A score, a reality check, and a plan in one flow.</span></div>
+232: </div>
+233: </div>
+234: 
+235: <!-- TOC -->
+236: <div class="t">
+237: <nav class="toc">
+238:   <div class="toc-lbl">Chapters</div>
+239:   <ul class="toc-grid">
+240:     <li><a href="#s1"><span class="tn">01</span>Where it started</a></li>
+241:     <li><a href="#s6"><span class="tn">06</span>The auth decision</a></li>
+242:     <li><a href="#s2"><span class="tn">02</span>First version & the cost problem</a></li>
+243:     <li><a href="#s7"><span class="tn">07</span>The business model</a></li>
+244:     <li><a href="#s3"><span class="tn">03</span>Breaking into pages</a></li>
+245:     <li><a href="#s8"><span class="tn">08</span>What we got wrong</a></li>
+246:     <li><a href="#s4"><span class="tn">04</span>The results page</a></li>
+247:     <li><a href="#s9"><span class="tn">09</span>Where it is now</a></li>
+248:     <li><a href="#s5"><span class="tn">05</span>The design system</a></li>
+249:     <li><a href="#s10"><span class="tn">10</span>What I learned</a></li>
+250:   </ul>
+251: </nav>
+252: </div>
+253: 
+254: <!-- 01 -->
+255: <div class="t"><section class="ch" id="s1">
+256:   <div class="ch-num">01 — The Idea</div>
+257:   <h2>Everyone was scared.<br>Nobody had an answer.</h2>
+258:   <p>Every tool trying to answer "will AI take my job?" gave the same vague paragraph. No numbers. Nothing role-specific. The answers were too general to be useful.</p>
+259:   <p>I wanted something that gave you a number. Your role, your tasks, your actual risk. That was the gap.</p>
+260:   <div class="pq"><p>People don't need another think-piece about AI. They need something specific to them.</p></div>
+261:   <h3>The market wasn't hypothetical</h3>
+262:   <p>Before writing a line of code, needed to know if the problem was measurable.</p>
+263: </section></div>
+264: 
+265: <div class="w">
+266: <div class="d4">
+267:   <div class="dc"><div class="dn">$10.4B</div><div class="dd">India edtech market in 2025</div><div class="ds">→ $30B by 2030 · 37M paying users</div></div>
+268:   <div class="dc"><div class="dn">52%</div><div class="dd">of 18–24 yr olds worried about AI impact on careers</div></div>
+269:   <div class="dc"><div class="dn">83%</div><div class="dd">of Indian workers willing to delegate work to AI</div><div class="ds">Anxious, but open to using AI</div></div>
+270:   <div class="dc"><div class="dn">22k+</div><div class="dd">employees hit by AI layoffs in early 2026 alone</div></div>
+271: </div>
+272: </div>
+273: 
+274: <div class="t">
+275:   <p>Peer-reviewed research shows AI anxiety increases willingness to pay for knowledge products. The lower someone's confidence, the higher the payment intent. So the audience was real, and the demand was already there.</p>
+276:   <h3>The competitive gap</h3>
+277:   <p>Found 8+ global calculators. All free. All US/UK focused — USD pricing, Western jobs, zero LPA context. None built specifically for Indian working professionals. That gap was wide open.</p>
+278: </div>
+279: 
+280: <hr>
+281: 
+282: <!-- 02 -->
+283: <div class="t"><section class="ch" id="s2">
+284:   <div class="ch-num">02 — First Version & The Cost Problem</div>
+285:   <h2>It worked.<br>Then the cost math hit.</h2>
+286:   <p>One page, five questions, a score. Started on Claude API — quality was genuinely good, users could see themselves in the output. Then we ran the numbers at scale.</p>
+287: </section></div>
+288: 
+289: <div class="w">
+290: <table class="tbl">
+291:   <thead><tr><th>Users / month</th><th>Claude Sonnet</th><th>Gemini 2.5 Flash</th><th></th></tr></thead>
+292:   <tbody>
+293:     <tr><td>1,000</td><td>₹250</td><td>₹25</td><td><span class="tag tg">10× cheaper</span></td></tr>
+294:     <tr><td>10,000</td><td>₹2,500</td><td>₹200</td><td><span class="tag tg">10× cheaper</span></td></tr>
+295:     <tr><td>1,00,000</td><td>₹25,000</td><td>₹2,000</td><td><span class="tag tg">10× cheaper</span></td></tr>
+296:   </tbody>
+297: </table>
+298: </div>
+299: 
+300: <div class="t">
+301:   <p>Claude: $3/$15 per million tokens. Gemini 2.5 Flash: $0.30/$2.50. One assessment = ~2,000 tokens. Decision made. Switched to Gemini — but <em>commented</em> the Claude code, never deleted it. Smart call. We eventually moved back to Claude once q
+302:   <div class="pq"><p>Don't delete the thing you're replacing. Comment it. You'll be glad you did.</p></div>
+303:   <p>Mid-testing we hit Gemini's free tier quota. 429 error, during a user session. Lesson: free tiers are for development, not demos. Always have billing set up before showing the product.</p>
+304:   <h3>The domain problem</h3>
+305:   <p>Started with 13 career domains. Every third real user fell outside them — supply chain analyst, legal associate, real estate consultant. Domain matching was failing. Expanded to 27. Not just more dropdown options — rebuilt the keyword matching l
+306: </div>
+307: 
+308: <hr>
+309: 
+310: <!-- 03 -->
+311: <div class="t"><section class="ch" id="s3">
+312:   <div class="ch-num">03 — Breaking Into Pages</div>
+313:   <h2>One page was doing<br>too many jobs.</h2>
+314:   <p>Single-page version: quiz and results fighting for the same space. No progression. Split into three — /, /quiz, /results. Forced us to answer questions we'd been avoiding: what does each page actually do on its own?</p>
+315:   <h3>The quiz</h3>
+316:   <p>Five questions. Progress bar, input-validation microcopy, shake-animation instead of red error text — red errors can feel harsh. Not the right tone for a product built around job anxiety.</p>
+317: </section></div>
+318: 
+319: <div class="w">
+320: <div class="ip">
+321:   <div>
+323:     <div class="ic"><span class="il">Step 1 · Personalised entry</span><span class="id">The opening screen branches by who you are — working professional or student — so the rest of the quiz can ask the right questions.</span></div>
+324:   </div>
+325:   <div>
+327:     <div class="ic"><span class="il">Quiz · Question 1 of 5</span><span class="id">Progress bar up top, single question per screen, gentle validation copy under the field. Shake animation instead of red errors.</span></div>
+328:   </div>
+329: </div>
+330: </div>
+331: 
+332: <hr>
+333: 
+334: <!-- 04 -->
+335: <div class="t"><section class="ch" id="s4">
+336:   <div class="ch-num">04 — The Results Page</div>
+337:   <h2>Delivering bad news<br>without losing the person.</h2>
+338:   <p>The results page is the product. The challenge: show someone their score is 75/100 and have them still scroll down. Emotional arc: <strong>Anxiety → Understanding → Acceptance → Action.</strong> Every section placed with that sequence in mind.</
+339:   <div class="pq"><p>Delivering bad news without making people feel hopeless — that's a product design problem, not a visual one.</p></div>
+340:   <h3>The score reveal</h3>
+341:   <p>Tried a full circle gauge first — confusing, no clear good/bad direction. Landed on a half-circle needle. Score counts up from 0, settles, risk badge fades in after. The animation isn't decoration. The score is what people came to see.</p>
+342: </section></div>
+343: 
+344: <div class="w">
+345: <div class="ib">
+347:   <div class="ic"><span class="il">Score reveal</span><span class="id">A half-circle gauge with an animated needle. The number counts up from 0 and settles, then the risk badge fades in. The whole results page is designed to land this single moment.<
+348: </div>
+349: <div class="ib">
+351:   <div class="ic"><span class="il">Reality check</span><span class="id">Three role-specific signals that explain why the score is what it is. Numbered for scanability and written in plain language — no jargon, no hedging.</span></div>
+352: </div>
+353: </div>
+354: 
+355: <div class="t">
+356:   <h3>Skills, roles, jobs &amp; courses</h3>
+358: </div>
+359: 
+360: <div class="w">
+361: <div class="ip">
+362:   <div>
+364:     <div class="ic"><span class="il">Skills to build next</span><span class="id">Ranked by relevance to the user's role, with inline market data citations so each recommendation is anchored in something verifiable.</span></div>
+365:   </div>
+366:   <div>
+368:     <div class="ic"><span class="il">Roles to target</span><span class="id">Three suggested directions, numbered and contextualised. Each one explains the reasoning so the suggestion feels like advice, not a list.</span></div>
+369:   </div>
+370: </div>
+371: <div class="ip">
+372:   <div>
+374:     <div class="ic"><span class="il">Live jobs</span><span class="id">Matching roles pulled in real time. Source badges, salary band, and skill tags on each — turning the report from a static read into something actionable.</span></div>
+375:   </div>
+376:   <div>
+378:     <div class="ic"><span class="il">Live courses</span><span class="id">Recommendations ordered by relevance, with free options surfaced first. Earlier versions led with ₹66,000 courses — that killed momentum and was reordered.</span></div>
+379:   </div>
+380: </div>
+381: </div>
+382: 
+383: <hr>
+384: 
+385: <!-- 05 -->
+386: <div class="t"><section class="ch" id="s5">
+387:   <div class="ch-num">05 — The Design System</div>
+388:   <h2>Warm, not clinical.<br>White is the call.</h2>
+390:   <p>One visual rule: warm, not clinical. Most tools in this space feel cold and threatening. We went the opposite direction.</p>
+391: </section></div>
+392: 
+393: <div class="w">
+394: <div class="d4">
+395:   <div class="dc"><div class="dn" style="font-size:15px;font-family:'DM Mono',monospace;letter-spacing:.02em">#FAF9F7</div><div class="dd">Warm beige background — not stark white</div></div>
+396:   <div class="dc"><div class="dn" style="font-size:15px;font-family:'DM Mono',monospace;letter-spacing:.02em">#CC3320</div><div class="dd">Red accent — urgency without alarm</div></div>
+397:   <div class="dc"><div class="dn" style="font-size:14px;font-weight:700;letter-spacing:-.02em">Sora 700</div><div class="dd">Headings — geometric, tight, confident</div></div>
+398:   <div class="dc"><div class="dn" style="font-size:14px;font-weight:300;letter-spacing:0">Sora 300</div><div class="dd">Body — light weight, long-form readable</div></div>
+399: </div>
+400: </div>
+401: 
+402: <div class="t">
+403:   <h3>Risk color system</h3>
+404:   <p>Low (0–30): green. Moderate (31–55): amber. High (56–75): coral. Critical (76–100): red. The gauge gradient, risk badge, and table rows all use the same four colors. Severity communicated visually without spelling it out.</p>
+405: </div>
+406: 
+407: <div class="w">
+408: <div class="ip">
+409:   <div>
+411:     <div class="ic"><span class="il">Landing · warm framing</span><span class="id">The page opens on a warm beige, not stark white. The problem is named directly in the words the user is already thinking — no marketing speak.</span></div>
+412:   </div>
+413:   <div>
+415:     <div class="ic"><span class="il">Landing · contrast break</span><span class="id">A single dark section within the otherwise light page. Gives the long scroll a visual rhythm and pulls attention back at a deliberate moment.</span></div>
+416:   </div>
+417: </div>
+418: </div>
+419: 
+420: <hr>
+421: 
+422: <!-- 06 -->
+423: <div class="t"><section class="ch" id="s6">
+424:   <div class="ch-num">06 — The Auth Decision</div>
+425:   <h2>Login as a reward,<br>not a gate.</h2>
+426:   <p>Looked at 16Personalities, Grammarly, Duolingo, LinkedIn Learning — all of them. Then looked at the actual data.</p>
+427: </section></div>
+428: 
+429: <div class="w">
+430: <div class="sr">
+431:   <div class="sc"><div class="sn">26%</div><div class="sd">abandon if forced to create account upfront</div><div class="ss">Baymard Institute, 2024</div></div>
+432:   <div class="sc"><div class="sn">40–50%</div><div class="sd">account creation rate with OAuth vs 15–25% with password</div></div>
+433:   <div class="sc"><div class="sn">+56%</div><div class="sd">form completion from removing the confirm password field alone</div></div>
+434: </div>
+435: </div>
+436: 
+437: <div class="t">
+438:   <p>Every high-conversion product delays friction until after value lands. Login before score = gate. Login after payment = reward. Went login-wall-free until payment. No account to quiz, no account to see your score. OTP email only at payment — the
+439: </div>
+440: 
+441: <div class="w">
+442: <div class="ip">
+443:   <div>
+445:     <div class="ic"><span class="il">Paywall</span><span class="id">Only appears once the user has already seen their score and reality check. Login as a reward, not a gate — friction sits at the highest-intent moment.</span></div>
+446:   </div>
+447:   <div>
+449:     <div class="ic"><span class="il">Razorpay checkout</span><span class="id">UPI, cards, and net banking — the standard Indian payment surface. Fully wired and tested in sandbox, awaiting production keys.</span></div>
+450:   </div>
+451: </div>
+452: </div>
+453: 
+454: <div class="w">
+455: <div class="ib">
+457:   <div class="ic"><span class="il">Post-payment dashboard</span><span class="id">Score snapshot at the top, access to all past assessments below. Designed so the user has a reason to come back, not just a one-time read.</span></div>
+458: </div>
+459: </div>
+460: 
+461: <hr>
+462: 
+463: <!-- 07 -->
+464: <div class="t"><section class="ch" id="s7">
+465:   <div class="ch-num">07 — The Business Model</div>
+466:   <h2>Flat pricing<br>wasn't working.</h2>
+467:   <p>Started with flat ₹299. Ran the conversion math. The numbers didn't add up.</p>
+468: </section></div>
+469: 
+470: <div class="w">
+471: <div class="sr">
+472:   <div class="sc"><div class="sn">65%</div><div class="sd">quiz start → completion rate</div><div class="ss">Interact 2026 · 80M+ leads</div></div>
+473:   <div class="sc"><div class="sn">3–5%</div><div class="sd">B2C freemium → paid is considered "good"</div><div class="ss">ChartMogul 2026 · 200 SaaS cos.</div></div>
+474:   <div class="sc"><div class="sn">6.5%</div><div class="sd">monthly churn for B2C subscriptions — why we ruled them out</div><div class="ss">Recurly 2025 · 1,200+ sites</div></div>
+475: </div>
+476: </div>
+477: 
+478: <div class="t">
+479:   <p>Subscriptions don't work without retention infrastructure. Not there yet. One-time payment. And tiered pricing over flat:</p>
+480: </div>
+481: 
+482: <div class="w">
+483: <div class="d2">
+484:   <div class="dc"><div class="dn">+44%</div><div class="dd">Average revenue per user — tiered vs flat pricing</div><div class="ds">Price Intelligently · 1,000 SaaS companies</div></div>
+485:   <div class="dc"><div class="dn">+30%</div><div class="dd">Mid-tier selection lift from the decoy effect (3 options vs 2)</div><div class="ds">ConversionXL</div></div>
+486: </div>
+487: </div>
+488: 
+489: <div class="t">
+490:   <p><strong>Free / ₹199 / ₹399.</strong> Free = score + reality check + blurred preview. ₹199 = full report. ₹399 = full report + 12 weekly digest emails with fresh jobs and AI news for your domain. Email as a dashboard — no extra auth complexity ne
+492: </div>
+493: 
+494: <hr>
+495: 
+496: <!-- 08 -->
+497: <div class="t"><section class="ch" id="s8">
+498:   <div class="ch-num">08 — What We Got Wrong</div>
+499:   <h2>The honest list.</h2>
+500:   <ul class="ml-list">
+501:     <li class="ml-item">
+502:       <span class="mn">01</span>
+503:       <div class="mb">
+504:         <strong>Built too much before validating.</strong>
+505:         <p>Full payment flow, OTP auth, dashboard, PDF download — all before a single paying user. Architecture got complex before the core value was proven. Validate first, build infrastructure second.</p>
+506:       </div>
+507:     </li>
+508:     <li class="ml-item">
+509:       <span class="mn">02</span>
+510:       <div class="mb">
+511:         <strong>The AI provider swap cost real time.</strong>
+512:         <p>Claude → Gemini → Claude. Two codebases in parallel for a while. Commenting rather than deleting was smart — but pick a provider and don't switch without a real reason.</p>
+513:       </div>
+514:     </li>
+515:     <li class="ml-item">
+516:       <span class="mn">03</span>
+517:       <div class="mb">
+518:         <strong>429 error. Mid-demo. In front of users.</strong>
+519:         <p>Hit Gemini's free tier quota during a testing session. Free tiers are for development. Always have billing set up before showing the product to anyone.</p>
+520:       </div>
+521:     </li>
+522:     <li class="ml-item">
+523:       <span class="mn">04</span>
+524:       <div class="mb">
+525:         <strong>Optimized before validating traffic.</strong>
+526:         <p>Built a full architecture optimization plan — Redis caching, streaming APIs, URL-addressable reports. All good ideas. All premature. Build for the stage you're in, not the stage you want to be in.</p>
+527:       </div>
+528:     </li>
+529:   </ul>
+530:   <div class="pq"><p>Built the payment modal before activating the keys. Full auth system before a single paying user. The same mistake, twice.</p></div>
+531: </section></div>
+532: 
+533: <hr>
+534: 
+535: <!-- 09 -->
+536: <div class="t"><section class="ch" id="s9">
+537:   <div class="ch-num">09 — Where It Is Now</div>
+538:   <h2>It works.<br>Now it needs users.</h2>
+539:   <p>Live at shiftlyn.vercel.app. Quiz end-to-end, Claude API analysis, full results page — score gauge, reality check, skills, pivots, live jobs and courses. Next.js + MongoDB. OTP auth. Razorpay fully wired, awaiting live keys.</p>
+540: </section></div>
+541: 
+542: <hr>
+543: 
+544: <!-- 10 -->
+545: <div class="t"><section class="ch" id="s10">
+546:   <div class="ch-num">10 — What I Learned</div>
+547:   <h2>The actual takeaways.</h2>
+548: 
+549:   <div class="lrn">
+550:     <div class="lt">Emotional products need emotional design.</div>
+551:     <p>The gauge animation, the loading microcopy, the reality check opening with the user's actual job title — every decision that moved the needle was about how someone feels at a specific moment. Visual design is the surface. Emotional choreograph
+552:   </div>
+553:   <div class="lrn">
+554:     <div class="lt">Copy is design.</div>
+555:     <p>"Scanning your role…" changed user behavior more than any visual change. "One-time · No subscription · Saved to your account" answered three objections in one line. The words are the design.</p>
+556:   </div>
+557:   <div class="lrn">
+558:     <div class="lt">Data ends arguments.</div>
+559:     <p>The Baymard 26% stat ended the login-wall debate. The 6.5% churn number killed subscriptions. Data doesn't make decisions — it removes the opinion-based stalling that slows everything down.</p>
+560:   </div>
+561:   <div class="lrn">
+562:     <div class="lt">Scope is a trap.</div>
+563:     <p>Build the thing that proves the value. Everything else is a bet without the information to make it well.</p>
+564:   </div>
+565:   <div class="lrn">
+566:     <div class="lt">Distribution is the actual battle.</div>
+567:     <p>Not features, not polish. Getting found. Fifty SEO blog posts targeting "will AI replace [job] in India in 2026" — that's the unglamorous work that moves the needle. The product is ready.</p>
+568:   </div>
+569: 
+570:   <div class="pq"><p>The best thing we built wasn't the gauge animation or the live jobs API. It was making the score feel meaningful. Everything else supports that.</p></div>
+571: </section></div>
+572: 
+573: <footer>
+574:   <div class="fi">
+575:     <div>
+576:       <div class="fb">Shiftlyn<span>.</span></div>
+577:       <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);margin-top:5px;letter-spacing:.04em">Beta · 2025–2026</div>
+578:     </div>
+579:     <div class="fn">
+580:       A product design case study by Shanawaz<br>
+581:       <a href="https://shiftlyn.vercel.app" target="_blank">shiftlyn.vercel.app →</a>
+582:     </div>
+583:   </div>
+584: </footer>
+585: 
+586: </body>
+587: </html>

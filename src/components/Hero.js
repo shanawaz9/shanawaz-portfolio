@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Reveal from './Reveal';
+import { Stagger, StaggerItem, INTRO_REVEAL_DELAY } from './Stagger';
 
 const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
 const SCRAMBLE_CHARS = '◆○□△◇●■▲◈◉◎·—∙⬡✦◐◑';
@@ -194,7 +196,6 @@ function ConnectModal({ open, onClose }) {
 }
 
 export default function Hero() {
-  const textRef = useRef(null);
   const dragStateRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [ctaCopied, setCtaCopied] = useState(false);
@@ -207,14 +208,6 @@ export default function Hero() {
     }, {})
   );
   const wordIndexRef = useRef(0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      textRef.current?.classList.add('visible');
-    }, 120);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     let cycleTimer;
@@ -326,9 +319,9 @@ export default function Hero() {
     <div className="hero">
       <div className="hero-bg" aria-hidden="true"></div>
       <div className="hero-inner">
-        <div className="hero-text anim" ref={textRef}>
-          <p className="hero-eyebrow">Product Designer &middot; Hyderabad, India</p>
-          <h1 className="hero-title">
+        <Stagger className="hero-text" onLoad stagger={0.12} delay={INTRO_REVEAL_DELAY}>
+          <StaggerItem as="p" className="hero-eyebrow">Product Designer &middot; Hyderabad, India</StaggerItem>
+          <StaggerItem as="h1" className="hero-title">
             Designing with
             <br />
             <span
@@ -337,21 +330,21 @@ export default function Hero() {
             >
               {displayWord}
             </span>
-          </h1>
-          <p className="hero-desc">
+          </StaggerItem>
+          <StaggerItem as="p" className="hero-desc">
             Hi, I'm Shanawaz. Generalist product designer crafting thoughtful, user-centered
             experiences across systems, stories, and interfaces.
-          </p>
-          <div className="hero-cta-wrap">
+          </StaggerItem>
+          <StaggerItem className="hero-cta-wrap">
             <button className="hero-cta" onClick={handleConnectClick}>
               {ctaCopied ? 'Email Copied' : "Let's Connect"}
               <span className="hero-cta-icon" aria-hidden="true">
                 &rarr;
               </span>
             </button>
-          </div>
-        </div>
-        <div className="hero-floating-layer">
+          </StaggerItem>
+        </Stagger>
+        <Reveal as="div" className="hero-floating-layer" y={0} delay={INTRO_REVEAL_DELAY + 0.4} amount={0}>
           {FLOATING_WINDOWS.map((windowCard) => {
             const current = windowState[windowCard.id];
 
@@ -377,7 +370,7 @@ export default function Hero() {
               </button>
             );
           })}
-        </div>
+        </Reveal>
       </div>
       <ConnectModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>

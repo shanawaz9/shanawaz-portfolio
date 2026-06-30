@@ -1,4 +1,6 @@
 import React, { useState, useCallback } from 'react';
+import Reveal from './Reveal';
+import { Stagger, StaggerItem } from './Stagger';
 
 const BLOG_POSTS = [
   {
@@ -84,9 +86,11 @@ export default function Blog() {
   }, [totalPages]);
 
   return (
-    <section className="section anim">
-      <p className="section-label">Writing</p>
-      <div
+    <section className="section">
+      <Reveal as="p" className="section-label" y={16}>Writing</Reveal>
+      <Reveal
+        as="div"
+        delay={0.05}
         style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -124,34 +128,35 @@ export default function Blog() {
             &rarr;
           </button>
         </div>
-      </div>
-      <div className="blog-grid">
+      </Reveal>
+      <Stagger className="blog-grid" key={currentPage}>
         {BLOG_POSTS.map((post, idx) => {
           const pageIndex = Math.floor(idx / CARDS_PER_PAGE);
           const shouldShow = pageIndex === currentPage;
           return (
-            <a
-              className={`blog-card anim ${post.delay}`}
-              href={post.href}
-              target="_blank"
-              rel="noopener noreferrer"
+            <StaggerItem
+              className="reveal-cell"
               key={idx}
-              style={{
-                display: shouldShow ? 'block' : 'none',
-                visibility: shouldShow ? 'visible' : 'hidden',
-              }}
+              style={{ display: shouldShow ? undefined : 'none' }}
             >
-              <div className="blog-thumb">
-                <img src={post.img} alt={post.alt} />
-              </div>
-              <div className="blog-body">
-                <div className="blog-title">{post.title}</div>
-                <div className="blog-excerpt">{post.excerpt}</div>
-              </div>
-            </a>
+              <a
+                className="blog-card"
+                href={post.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="blog-thumb">
+                  <img src={post.img} alt={post.alt} />
+                </div>
+                <div className="blog-body">
+                  <div className="blog-title">{post.title}</div>
+                  <div className="blog-excerpt">{post.excerpt}</div>
+                </div>
+              </a>
+            </StaggerItem>
           );
         })}
-      </div>
+      </Stagger>
     </section>
   );
 }

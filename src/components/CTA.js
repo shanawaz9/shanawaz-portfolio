@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Stagger, StaggerItem } from './Stagger';
 
 const EMAIL_ADDRESS = 'shanawazhussain989@gmail.com';
 
@@ -35,18 +36,18 @@ export default function CTA() {
   };
 
   return (
-    <div className="cta anim">
-      <div className="cta-content">
-        <p className="section-label">Get in touch</p>
-        <h2 className="cta-heading">{"Let's collaborate"}</h2>
-        <p className="cta-desc">
+    <div className="cta">
+      <Stagger className="cta-content" amount={0.3}>
+        <StaggerItem as="p" className="section-label">Get in touch</StaggerItem>
+        <StaggerItem as="h2" className="cta-heading">{"Let's collaborate"}</StaggerItem>
+        <StaggerItem as="p" className="cta-desc">
           Have a project in mind, or just want to say hello? I'm always open to
           discussing new opportunities and ideas.
-        </p>
-        <a href={`mailto:${EMAIL_ADDRESS}`} className="cta-email" onClick={handleEmailCopy}>
+        </StaggerItem>
+        <StaggerItem as="a" href={`mailto:${EMAIL_ADDRESS}`} className="cta-email" onClick={handleEmailCopy}>
           {copied ? 'Email copied to clipboard' : EMAIL_ADDRESS}
-        </a>
-        <div className="cta-socials">
+        </StaggerItem>
+        <StaggerItem className="cta-socials">
           <a href="https://www.linkedin.com/in/shanawaz-hussain-42335b12b" target="_blank" rel="noreferrer" className="cta-social-link" title="LinkedIn" aria-label="LinkedIn">in</a>
           <a href="https://www.instagram.com/_shanawaz_shaik?igsh=MXJ6bWoxOGNhMzVubg%3D%3D" target="_blank" rel="noreferrer" className="cta-social-link" title="Instagram" aria-label="Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -56,8 +57,8 @@ export default function CTA() {
             </svg>
           </a>
           <a href="https://x.com/shaikshanawazz" target="_blank" rel="noreferrer" className="cta-social-link" title="X (Twitter)" aria-label="X">&#120143;</a>
-        </div>
-      </div>
+        </StaggerItem>
+      </Stagger>
     </div>
   );
 }

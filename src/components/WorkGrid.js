@@ -1,4 +1,6 @@
 import React from 'react';
+import Reveal from './Reveal';
+import { Stagger, StaggerItem } from './Stagger';
 
 const WORKS = [
   {
@@ -42,7 +44,7 @@ const WORKS = [
 ];
 
 function WorkCard({ work }) {
-  const cardClass = `work-card anim${work.wip ? ' wip' : ''} ${work.delay}`;
+  const cardClass = `work-card${work.wip ? ' wip' : ''}`;
   const thumbStyle = work.thumbBg ? { background: work.thumbBg } : undefined;
   const imgStyle = work.fit ? { objectFit: work.fit } : undefined;
   const content = (
@@ -73,19 +75,23 @@ function WorkCard({ work }) {
     );
   }
 
-  return <div className={cardClass}>{content}</div>;
+  // The WIP card is a non-interactive, intentionally-dimmed placeholder — hide it from
+  // assistive tech (its faded text is decorative teaser only, exempt from contrast as inactive).
+  return <div className={cardClass} aria-hidden={work.wip ? 'true' : undefined}>{content}</div>;
 }
 
 export default function WorkGrid() {
   return (
-    <section className="section anim" id="work">
-      <p className="section-label">Portfolio</p>
-      <h2 className="section-heading">Selected Work</h2>
-      <div className="work-grid">
+    <section className="section" id="work">
+      <Reveal as="p" className="section-label" y={16}>Portfolio</Reveal>
+      <Reveal as="h2" className="section-heading" delay={0.05}>Selected Work</Reveal>
+      <Stagger className="work-grid">
         {WORKS.map((work, i) => (
-          <WorkCard key={i} work={work} />
+          <StaggerItem className="reveal-cell" key={i}>
+            <WorkCard work={work} />
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
     </section>
   );
 }

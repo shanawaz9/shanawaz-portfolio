@@ -1,4 +1,7 @@
-import AnimSection from './AnimSection';
+import { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import Reveal from './Reveal';
+import { Stagger, StaggerItem, SPRING } from './Stagger';
 
 const TAGS = [
   'UI / UX Design',
@@ -10,12 +13,21 @@ const TAGS = [
 ];
 
 export default function About() {
+  const reduce = useReducedMotion();
+  const imgRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: imgRef,
+    offset: ['start end', 'end start'],
+  });
+  // Gentle parallax — the image block drifts a touch against the text as you scroll.
+  const imgY = useTransform(scrollYProgress, [0, 1], [36, -36]);
+
   return (
-    <AnimSection className="section" id="about">
-      <p className="section-label">About me</p>
-      <h2 className="section-heading">A Bit About Me</h2>
+    <section className="section" id="about">
+      <Reveal as="p" className="section-label" y={16}>About me</Reveal>
+      <Reveal as="h2" className="section-heading" delay={0.05}>A Bit About Me</Reveal>
       <div className="about-inner">
-        <div className="about-body anim anim-left">
+        <Reveal as="div" className="about-body" x={-28} y={0} delay={0.05}>
           <p>
             Product Designer (UI/UX) with over 5+ years of experience crafting user-focused
             digital experiences that are clear, scalable, and system-driven.
@@ -34,19 +46,29 @@ export default function About() {
             Currently exploring how AI can support and speed up UX workflows &mdash; from
             early ideation to testing and iteration.
           </p>
-          <div className="about-tags">
+          <Stagger className="about-tags" stagger={0.06} amount={0.4}>
             {TAGS.map((tag, i) => (
-              <span className="about-tag" key={i}>{tag}</span>
+              <StaggerItem as="span" key={i} style={{ display: 'inline-flex' }}>
+                <span className="about-tag">{tag}</span>
+              </StaggerItem>
             ))}
-          </div>
-        </div>
-        <div className="about-img-wrap anim anim-right">
+          </Stagger>
+        </Reveal>
+        <motion.div
+          ref={imgRef}
+          className="about-img-wrap"
+          style={reduce ? undefined : { y: imgY }}
+          initial={reduce ? false : { opacity: 0, x: 28 }}
+          whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={SPRING}
+        >
           <img
             src="https://framerusercontent.com/images/ShSVzHQ54oZLNDEVuKiHyQz9JhY.png"
             alt="Shanawaz"
           />
-        </div>
+        </motion.div>
       </div>
-    </AnimSection>
+    </section>
   );
 }
