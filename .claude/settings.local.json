@@ -12,7 +12,9 @@
       "Bash(grep -iE \"^\\(sharp|jimp|canvas|svgo|to-ico|png-to-ico|png|svg\\)$\")",
       "Bash(node -e \"const fs=require\\('fs'\\);const c=fs.readFileSync\\('public/case-studies/shiftlyn.html','utf8'\\);console.log\\(c.length\\); console.log\\(c.slice\\(0,3000\\)\\)\")",
       "Read(//tmp/**)",
-      "Bash(wc -l /c/Users/Admin/Downloads/shanawaz-portfolio/public/case-studies/shiftlyn.html; echo \"---HEAD---\"; head -c 60 /dev/null)"
+      "Bash(wc -l /c/Users/Admin/Downloads/shanawaz-portfolio/public/case-studies/shiftlyn.html; echo \"---HEAD---\"; head -c 60 /dev/null)",
+      "WebFetch(domain:medium.com)",
+      "mcp__claude-in-chrome__navigate"
     ]
   }
 }
