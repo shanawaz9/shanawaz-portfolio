@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import './index.css';
 import PHOTOS from './photos';
 import Loader from './components/Loader';
@@ -101,6 +102,7 @@ export default function App() {
       </main>
       <Footer />
       <Popover open={popoverOpen} text={popoverText} onClose={closePopover} />
+      <Analytics />
     </>
   );
 }
