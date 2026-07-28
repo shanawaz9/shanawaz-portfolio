@@ -29,7 +29,7 @@ export default function About() {
       <div className="about-inner">
         <Reveal as="div" className="about-body" x={-28} y={0} delay={0.05}>
           <p>
-            Product Designer (UI/UX) with over 5+ years of experience crafting user-focused
+            Product Designer (UI/UX) with over 4+ years of experience crafting user-focused
             digital experiences that are clear, scalable, and system-driven.
           </p>
           <p>

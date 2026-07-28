@@ -6,3 +6,4 @@ import '@fontsource-variable/red-hat-mono/wght.css';
 import '@fontsource-variable/red-hat-mono/wght-italic.css';
 import '@fontsource/silkscreen/400.css';
 import '@fontsource/silkscreen/700.css';
+import '@fontsource-variable/pixelify-sans/wght.css';

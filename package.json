@@ -5,6 +5,7 @@
   "dependencies": {
     "@fontsource-variable/funnel-display": "^5.2.8",
     "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/pixelify-sans": "^5.2.7",
     "@fontsource-variable/red-hat-mono": "^5.2.8",
     "@fontsource-variable/space-grotesk": "^5.2.10",
     "@fontsource/silkscreen": "^5.2.8",

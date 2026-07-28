@@ -14,7 +14,10 @@
       "Read(//tmp/**)",
       "Bash(wc -l /c/Users/Admin/Downloads/shanawaz-portfolio/public/case-studies/shiftlyn.html; echo \"---HEAD---\"; head -c 60 /dev/null)",
       "WebFetch(domain:medium.com)",
-      "mcp__claude-in-chrome__navigate"
+      "mcp__claude-in-chrome__navigate",
+      "Bash(npm view *)",
+      "Bash(npm install *)",
+      "Bash(xargs grep -l \"useInView\")"
     ]
   }
 }

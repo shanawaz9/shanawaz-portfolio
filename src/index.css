@@ -39,6 +39,8 @@
   --font-head:'Funnel Display Variable','Funnel Display','Inter Variable','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-body:'Red Hat Mono Variable','Red Hat Mono',monospace;
   --font-logo:'Silkscreen',cursive;
+  /* Bigger, readable pixel face — reserved for the wordmark; Silkscreen (above) stays for small retro labels/tags. */
+  --font-pixel:'Pixelify Sans Variable','Pixelify Sans',var(--font-logo);
 }
 
 /* ========== DARK MODE (neutral) ========== */
@@ -95,6 +97,23 @@ body{
   -webkit-font-smoothing:antialiased;
   font-optical-sizing:auto;
 }
+
+/* CRT SCANLINES — a faint, site-wide retro-tech texture. Fixed + pointer-events:none so
+   it never touches layout, interaction, or contrast; barely visible except on close look. */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:9997;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.05) 0px,rgba(0,0,0,0.05) 1px,
+    transparent 1px,transparent 3px
+  );
+  mix-blend-mode:overlay;
+}
+@media(prefers-reduced-motion:reduce){body::after{display:none;}}
 
 /* Inter Display: force the display optical cut on headings (tighter, more refined),
    independent of rendered size */
@@ -197,10 +216,11 @@ nav{
 }
 
 .nav-logo{
-  font-family:var(--font-logo);
-  font-size:19px;
+  font-family:var(--font-pixel);
+  font-weight:600;
+  font-size:28px;
   color:var(--accent);
-  letter-spacing:0.06em;
+  letter-spacing:0.02em;
   transition:opacity 0.2s;
   position:relative;
   animation:pixelFlicker 8s ease-in-out infinite;
@@ -1154,6 +1174,23 @@ nav{
   max-width:560px;
   text-align:center;
 }
+/* subtle name highlight — a soft accent tag, not a loud callout */
+.name-mark{
+  position:relative;
+  color:var(--text);
+  font-weight:600;
+  padding:0 3px;
+  background:var(--accent-dim);
+  box-shadow:inset 0 -2px 0 var(--accent-dim),0 0 0 1px var(--accent-dim);
+}
+.name-mark::after{
+  content:'';
+  position:absolute;
+  top:-3px;right:-3px;
+  width:4px;height:4px;
+  background:var(--accent-bright);
+  opacity:0.7;
+}
 
 @media(max-width:1180px){
   .hero-inner{
@@ -1269,44 +1306,73 @@ nav{
   display:flex;
   flex-direction:column;
   gap:0;
+  max-width:75%;
 }
 .timeline-node{
   position:relative;
   display:grid;
   grid-template-columns:24px 1fr;
-  gap:24px;
-  padding-bottom:48px;
+  gap:28px;
+  padding-bottom:44px;
 }
 .timeline-node:last-child{padding-bottom:0;}
+
+/* rail — the pixel dot; the vertical connector is one continuous line for the whole section */
+.timeline-rail{position:relative;justify-self:center;width:24px;}
 .timeline-dot{
-  width:10px;height:10px;
+  display:block;
+  width:12px;height:12px;
+  margin:5px auto 0;
   border-radius:0;
   border:2px solid var(--silver-2);
   background:var(--bg);
-  margin-top:6px;
   position:relative;
   z-index:2;
-  flex-shrink:0;
-  justify-self:center;
-  box-shadow:0 0 8px var(--silver-dim);
-}
-.timeline-line{
-  position:absolute;
-  left:11px;
-  top:18px;
-  bottom:0;
-  width:1px;
-  background:var(--border);
-  z-index:1;
-}
-.timeline-card{
-  padding:0;
+  box-shadow:0 0 6px var(--silver-dim);
 }
 
-.tl-company{font-family:var(--font-head);font-weight:600;font-size:16px;margin-bottom:4px;}
-.tl-period{font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;}
-.tl-role{font-size:11px;color:var(--accent-bright);letter-spacing:0.06em;font-weight:500;margin-bottom:10px;}
-.tl-desc{font-size:16px;color:var(--muted);line-height:1.75;font-weight:500;}
+/* single connector spanning first → last dot; JS sets its top/height */
+.timeline-line{
+  position:absolute;
+  left:10px;
+  width:2px;
+  z-index:1;
+  pointer-events:none;
+}
+/* un-printed rail — a thin dashed rule, like the guide line in an old terminal margin */
+.timeline-line-track{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    var(--border) 0px,var(--border) 3px,
+    transparent 3px,transparent 7px
+  );
+}
+/* printed portion — solid glowing accent, drawn top-down in coarse steps for a "line printer" feel */
+.timeline-line-fill{
+  position:absolute;inset:0;
+  transform-origin:top center;
+  background:var(--accent-bright);
+  box-shadow:0 0 6px var(--accent-bright),0 0 14px var(--accent-dim);
+}
+/* blinking terminal caret riding the tip of the printed line */
+.timeline-caret{
+  position:absolute;
+  left:50%;
+  width:8px;height:8px;
+  transform:translate(-50%,-50%);
+  background:var(--accent-bright);
+  box-shadow:0 0 8px var(--accent-bright);
+  animation:caretBlink 0.85s steps(1) infinite;
+}
+
+/* content — borderless, lightweight */
+.timeline-card{position:relative;}
+
+.tl-period{font-family:var(--font-logo);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+.tl-role{font-family:var(--font-head);font-weight:600;font-size:17px;letter-spacing:-0.01em;margin-bottom:3px;}
+.tl-company{font-size:11px;color:var(--accent-bright);letter-spacing:0.06em;font-weight:500;margin-bottom:12px;}
+.tl-desc{font-size:15px;color:var(--muted);line-height:1.7;font-weight:500;}
 
 /* WORK */
 .work-grid{
@@ -1567,10 +1633,32 @@ nav{
   opacity:0;transition:opacity 0.2s;
 }
 .t-card:hover::before{opacity:0.5;}
-.t-avatar{width:44px;height:44px;border-radius:4px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;}
-.t-avatar img{width:100%;height:100%;object-fit:cover;}
-.t-name{font-family:var(--font-head);font-weight:600;font-size:13px;margin-bottom:2px;}
-.t-role{font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:0.02em;}
+.t-byline{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.t-avatar{
+  width:72px;height:72px;flex-shrink:0;
+  position:relative;
+  border-radius:50%;
+  border:2px solid var(--border);
+  box-shadow:0 0 0 3px var(--bg),0 5px 16px rgba(0,0,0,0.3);
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.t-avatar img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:50%;
+  /* Clip on the img itself (not a parent overflow:hidden) and force its own
+     compositing layer — otherwise Chromium can rasterize the clipped circle
+     at the low resolution of the card's Framer Motion transform layer and
+     never refresh it, leaving the photo permanently soft until a repaint
+     (e.g. browser zoom) forces a redraw. */
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  transition:transform 0.4s;
+}
+.t-card:hover .t-avatar{border-color:var(--accent-bright);box-shadow:0 0 0 3px var(--bg),0 0 14px var(--accent-bright);}
+.t-card:hover .t-avatar img{transform:scale(1.08) translateZ(0);}
+.t-byline-info{min-width:0;}
+.t-name{font-family:var(--font-head);font-weight:600;font-size:14px;margin-bottom:3px;}
+.t-role{font-size:11px;color:var(--muted);letter-spacing:0.02em;}
 .t-text{position:relative;font-size:15px;color:var(--muted);line-height:1.75;font-weight:500;margin-bottom:12px;}
 
 /* TESTIMONIAL EXPAND */
@@ -1642,9 +1730,48 @@ nav{
   padding:100px max(24px, calc((100% - var(--max-w)) / 2 + 24px));
   transition:border-color 0.35s;
 }
+
+/* terminal window panel — bookends the hero's STRATEGY.EXE / PROCESS.EXE cards
+   with a CONNECT.EXE close-out, so the page opens and closes on the same motif */
+.cta-panel{
+  max-width:640px;
+  margin:0 auto;
+  position:relative;
+  border:2px solid var(--border);
+  background:var(--surface);
+  box-shadow:4px 4px 0 var(--border);
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.cta-panel:hover{border-color:var(--silver-2);box-shadow:5px 5px 0 var(--silver);}
+.cta-panel::after{
+  content:'';position:absolute;top:8px;right:8px;
+  width:6px;height:6px;background:var(--silver-2);
+  opacity:0;transition:opacity 0.2s;
+}
+.cta-panel:hover::after{opacity:0.6;}
+
+.cta-chrome{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:9px 12px;
+  border-bottom:2px solid var(--border);
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 3px);
+  font-family:var(--font-logo);
+  font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);
+}
+.cta-chrome-btns{display:flex;gap:4px;flex-shrink:0;}
+.cta-chrome-btn{
+  width:16px;height:14px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);
+  font-size:9px;line-height:1;color:var(--muted);
+  font-family:var(--font-logo);
+}
+
 .cta-content{
   max-width:560px;
   margin:0 auto;
+  padding:56px 32px;
   text-align:center;
   display:flex;
   flex-direction:column;
@@ -1658,6 +1785,24 @@ nav{
   line-height:1.1;
   margin-bottom:20px;
 }
+.cta-heading .accent{
+  color:var(--accent);
+  position:relative;
+  text-shadow:0 0 20px rgba(90,76,234,0.25);
+}
+.cta-heading .accent:hover{animation:glitch 1.5s steps(1) infinite;}
+/* blinking terminal caret — mirrors the hero title's, so the page's opening
+   statement and closing statement read as one continuous terminal session.
+   Suppressed while the Typewriter is actively typing (it renders its own
+   .type-caret at the live edge of the text instead). */
+.cta-heading::after{
+  content:'_';
+  color:var(--accent);
+  animation:caretBlink 1s steps(1) infinite;
+  font-weight:400;
+  margin-left:2px;
+}
+.cta-heading--typing::after{display:none;}
 .cta-desc{
   font-size:16px;
   color:var(--muted);
@@ -1668,16 +1813,34 @@ nav{
 }
 .cta-email{
   font-size:14px;color:var(--accent-bright);
+  font-family:var(--font-body);
   border-bottom:1px solid var(--accent-dim);
   padding-bottom:2px;display:inline-block;
   transition:border-color 0.2s,letter-spacing 0.25s;
 }
+.cta-email-prefix{color:var(--silver);margin-right:6px;font-family:var(--font-logo);}
 .cta-email:hover{border-color:var(--accent);letter-spacing:0.02em;}
+
+/* terminal type-in cursor — a solid block that trails whichever line is
+   currently being typed, in place of the classic underscore caret */
+.type-caret{
+  display:inline-block;
+  width:0.5em;height:1em;
+  margin-left:2px;
+  background:var(--accent-bright);
+  vertical-align:-0.15em;
+  animation:caretBlink 0.85s steps(1) infinite;
+}
+
 .cta-socials{
   display:flex;
   gap:16px;
   margin-top:24px;
+  opacity:0;
+  transform:translateY(8px);
+  transition:opacity 0.4s ease,transform 0.4s ease;
 }
+.cta-socials.visible{opacity:1;transform:translateY(0);}
 .cta-social-link{
   display:inline-flex;
   align-items:center;
@@ -1955,8 +2118,12 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .strip-header{align-items:center;margin-bottom:36px;}
   .strip-header .section-label{margin-bottom:14px;}
 
-  .timeline-node{grid-template-columns:20px 1fr;gap:16px;padding-bottom:36px;}
+  .timeline{max-width:100%;}
+  .timeline-node{grid-template-columns:20px 1fr;gap:18px;padding-bottom:32px;}
+  .timeline-rail{width:20px;}
   .timeline-line{left:9px;}
+  .timeline-caret{width:7px;height:7px;}
+  .tl-role{font-size:16px;}
 
   .work-grid{grid-template-columns:1fr;gap:20px;}
 
@@ -1972,6 +2139,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .philosophy h2{font-size:clamp(26px,7vw,44px);}
 
   .cta{padding:72px 20px;}
+  .cta-content{padding:44px 24px;}
 
   footer{padding:24px 20px;flex-direction:column;text-align:center;}
 
@@ -1993,6 +2161,8 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .blog-grid{grid-template-columns:1fr;gap:16px;}
   .philosophy{padding:56px 16px;}
   .cta{padding:56px 16px;}
+  .cta-content{padding:36px 18px;}
+  .cta-chrome{padding:8px 10px;font-size:9px;}
   footer{padding:20px 16px;}
   .photo-strip-item{width:210px;height:155px;}
   .photo-strip-fade-l,.photo-strip-fade-r{width:32px;}

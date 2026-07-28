@@ -332,8 +332,8 @@ export default function Hero() {
             </span>
           </StaggerItem>
           <StaggerItem as="p" className="hero-desc">
-            Hi, I'm Shanawaz. Generalist product designer crafting thoughtful, user-centered
-            experiences across systems, stories, and interfaces.
+            Hi, I'm <span className="name-mark">Shanawaz</span>. Generalist product designer
+            crafting thoughtful, user-centered experiences across systems, stories, and interfaces.
           </StaggerItem>
           <StaggerItem className="hero-cta-wrap">
             <button className="hero-cta" onClick={handleConnectClick}>
