@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 const RESUME_URL =
-  'https://drive.google.com/file/d/1weBFGYehRwqWccuizf_Yzl5hv2rZWRnH/view?usp=sharing';
+  'https://drive.google.com/file/d/1BEJTpYwfb61c3sYZZZbvxnHoqZbEZWPv/view?usp=sharing';
 
 // Light mode disabled for now — flip to true to bring the dark/light toggle back.
 const ENABLE_THEME_TOGGLE = false;
