@@ -6,7 +6,7 @@ const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
 const SCRAMBLE_CHARS = '◆○□△◇●■▲◈◉◎·—∙⬡✦◐◑';
 
 const RESUME_URL =
-  'https://drive.google.com/file/d/1BEJTpYwfb61c3sYZZZbvxnHoqZbEZWPv/view?usp=sharing';
+  'https://drive.google.com/file/d/1bkxp2tKTgsepPc-RmAmAy7ejhXDmeDOO/view?usp=sharing';
 const EMAIL_ADDRESS = 'shanawazhussain989@gmail.com';
 const FLOATING_WINDOWS = [
   {
