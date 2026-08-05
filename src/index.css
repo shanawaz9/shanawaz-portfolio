@@ -35,7 +35,17 @@
   --hover-bg:rgba(22,21,18,0.06);
   --shadow-card:2px 2px 0 var(--border);
   --shadow-card-hover:3px 3px 0 var(--silver);
+  /* LAYOUT SCALE
+     --max-w  : content measure; grows in steps on wide viewports so the nav and
+                sections use the available width instead of sitting in a narrow
+                centred column surrounded by dead space.
+     --gutter : minimum breathing room at the viewport edge.
+     --pad-x  : the single horizontal-padding token every full-bleed band (nav,
+                .section, .philosophy, .cta, footer) uses, so they all align on
+                the same left/right edge at every size. */
   --max-w:1200px;
+  --gutter:24px;
+  --pad-x:max(var(--gutter), calc((100% - var(--max-w)) / 2 + var(--gutter)));
   --font-head:'Funnel Display Variable','Funnel Display','Inter Variable','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-body:'Red Hat Mono Variable','Red Hat Mono',monospace;
   --font-logo:'Silkscreen',cursive;
@@ -45,9 +55,11 @@
 
 /* ========== DARK MODE (neutral) ========== */
 [data-theme="dark"]{
-  --bg:#0f0f0f;
-  --surface:#161616;
-  --border:#252525;
+  /* True black page field. Surface/border stepped up just enough to keep the
+     card → page separation that the grey background used to provide. */
+  --bg:#000000;
+  --surface:#0b0b0b;
+  --border:#232323;
   --text:#e5e5e5;
   --muted:#888;
   --muted2:#333;
@@ -75,13 +87,19 @@
     rgba(99,89,207,0.2) 58%,
     transparent 82%
   );
-  --nav-bg:rgba(15,15,15,0.92);
+  --nav-bg:rgba(0,0,0,0.92);
   --hover-bg:rgba(255,255,255,0.03);
   --shadow-card:3px 3px 0 var(--border);
   --shadow-card-hover:4px 4px 0 var(--silver);
 }
 
-html{scroll-behavior:smooth;}
+html{
+  scroll-behavior:smooth;
+  /* Reserve the scrollbar track so the fixed nav and the in-flow sections
+     measure against the same width, and so locking body scroll for a modal
+     doesn't shift the page sideways. No-op where scrollbars overlay. */
+  scrollbar-gutter:stable;
+}
 
 body{
   background:var(--bg);
@@ -179,10 +197,13 @@ body::after{
       rgba(255,255,255,0.025) 2px,
       rgba(255,255,255,0.025) 4px
     );
+  /* On a true-black field an `overlay` blend resolves to black, which would
+     erase the CRT texture entirely — composite the lines normally instead. */
+  mix-blend-mode:normal;
 }
 
 a{color:inherit;text-decoration:none;}
-img{display:block;max-width:100%;}
+img{display:block;max-width:100%;height:auto;}
 
 @media(pointer:fine){
   *,*::before,*::after{
@@ -204,7 +225,7 @@ img{display:block;max-width:100%;}
 nav{
   position:fixed;top:0;left:0;right:0;
   z-index:200;
-  padding:0 max(24px, calc((100% - var(--max-w)) / 2 + 24px));
+  padding:0 var(--pad-x);
   height:64px;
   display:flex;
   align-items:center;
@@ -337,6 +358,7 @@ nav{
   position:relative;
   width:100%;
   min-height:100vh;
+  min-height:100svh;
   display:flex;
   align-items:center;
   overflow:hidden;
@@ -391,7 +413,9 @@ nav{
   margin:0 auto;
   width:100%;
   min-height:calc(100vh - 64px);
-  padding:72px 24px 56px;
+  /* svh keeps the first screen from being pushed under mobile browser chrome */
+  min-height:calc(100svh - 64px);
+  padding:72px var(--gutter) 56px;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -1278,7 +1302,7 @@ nav{
 
 /* SECTIONS */
 .section{
-  padding:100px max(24px, calc((100% - var(--max-w)) / 2 + 24px));
+  padding:100px var(--pad-x);
   border-top:1px solid var(--border);
   transition:border-color 0.35s;
 }
@@ -1306,7 +1330,9 @@ nav{
   display:flex;
   flex-direction:column;
   gap:0;
-  max-width:75%;
+  /* 75% of the container, but never a wider measure than reads comfortably —
+     the cap only engages once --max-w steps up on large displays. */
+  max-width:min(75%,900px);
 }
 .timeline-node{
   position:relative;
@@ -1414,9 +1440,21 @@ nav{
 .work-card-title{font-family:var(--font-head);font-size:18px;font-weight:600;letter-spacing:-0.01em;}
 
 /* BLOG */
+/* Heading + pager on one row; wraps to two rows once they no longer fit,
+   so the heading never gets squeezed into a narrow column on small screens. */
+.blog-head{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px 32px;
+  margin-bottom:32px;
+}
+.blog-head .section-heading{margin:0;}
 .blog-controls{
   display:flex;
   gap:12px;
+  flex-shrink:0;
 }
 .blog-nav-btn{
   background:var(--surface);
@@ -1546,7 +1584,7 @@ nav{
   overflow:hidden;
   position:relative;
   border:1px solid var(--border);
-  background:#0a0a0a;
+  background:#000;
   cursor:zoom-in;
 }
 .photo-strip-item img{
@@ -1704,7 +1742,7 @@ nav{
 /* PHILOSOPHY */
 .philosophy{
   border-top:1px solid var(--border);
-  padding:100px max(24px, calc((100% - var(--max-w)) / 2 + 24px));
+  padding:100px var(--pad-x);
   text-align:center;
   transition:border-color 0.35s;
 }
@@ -1727,7 +1765,7 @@ nav{
 /* CTA */
 .cta{
   border-top:1px solid var(--border);
-  padding:100px max(24px, calc((100% - var(--max-w)) / 2 + 24px));
+  padding:100px var(--pad-x);
   transition:border-color 0.35s;
 }
 
@@ -1866,7 +1904,7 @@ nav{
 /* FOOTER */
 footer{
   border-top:2px dashed var(--border);
-  padding:28px max(24px, calc((100% - var(--max-w)) / 2 + 24px));
+  padding:28px var(--pad-x);
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
   transition:border-color 0.35s;
 }
@@ -2069,9 +2107,10 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 /* STRIP ARROWS */
 .strip-header{
   display:flex;
+  flex-wrap:wrap;
   align-items:flex-end;
   justify-content:space-between;
-  gap:24px;
+  gap:16px 24px;
   margin-bottom:56px;
 }
 .life-section .section-heading{margin-bottom:0;}
@@ -2093,26 +2132,72 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 .strip-arrow:hover{border-color:var(--silver-2);background:var(--metal);box-shadow:2px 2px 0 var(--silver);transform:translate(-1px,-1px);}
 .strip-arrow:active{transform:translate(1px,1px);box-shadow:0 0 0 var(--accent);}
 
-/* RESPONSIVE */
+/* RESPONSIVE
+   The layout scales through --gutter / --max-w (see :root) so every band shares
+   one horizontal rhythm; the breakpoints below only adjust what those two tokens
+   can't express — column counts, stacking, and component-level sizing. */
+
+/* ---- Wide desktop tiers -------------------------------------------------- */
+/* The content measure steps up with the viewport so the nav and every section
+   keep using the available width instead of stranding it as side whitespace. */
+
+/* Large laptop / small desktop */
+@media(min-width:1400px){
+  :root{--max-w:1320px;--gutter:32px;}
+  .hero-text{max-width:700px;}
+  .hero-desc{max-width:620px;}
+  .work-grid{gap:24px;}
+  .blog-grid{gap:24px;}
+  .t-grid{gap:24px;}
+  .about-inner{grid-template-columns:1fr 400px;gap:72px;}
+  .about-img-wrap{max-width:400px;}
+}
+
+/* Desktop */
+@media(min-width:1600px){
+  :root{--max-w:1460px;--gutter:40px;}
+  .section,.philosophy,.cta{padding-top:116px;padding-bottom:116px;}
+  .hero-text{max-width:740px;}
+  .work-grid{gap:28px;}
+  .blog-grid{gap:28px;}
+  .t-grid{gap:28px;}
+  .about-inner{grid-template-columns:1fr 420px;gap:88px;}
+  .about-img-wrap{max-width:420px;}
+  .about-img-wrap img{height:520px;}
+  .photo-strip-item{width:420px;height:290px;}
+}
+
+/* Large desktop / 2K — cap the measure so line lengths stay readable, but keep
+   the bands generously inset rather than pinned to a narrow centred column. */
+@media(min-width:1920px){
+  :root{--max-w:1660px;--gutter:48px;}
+  .section,.philosophy,.cta{padding-top:132px;padding-bottom:132px;}
+  .photo-strip-item{width:460px;height:320px;}
+}
+
+/* ---- Down-scaling tiers -------------------------------------------------- */
 
 /* Tablet landscape / small desktop <=1024px */
 @media(max-width:1024px){
   .blog-grid{grid-template-columns:repeat(2,1fr);}
+  .about-inner{grid-template-columns:1fr 320px;gap:44px;}
+  .about-img-wrap{max-width:320px;}
+  .timeline{max-width:100%;}
 }
 
 /* Tablet portrait <=768px */
 @media(max-width:768px){
-  nav{padding:0 20px;}
+  :root{--gutter:20px;}
   .nav-links{display:none;}
   .nav-right-mobile{display:flex;}
   .nav-hamburger{display:flex;}
 
   .hero{min-height:auto;}
-  .hero-inner{padding:48px 20px;}
+  .hero-inner{padding-top:48px;padding-bottom:48px;}
   .hero-title{font-size:clamp(30px,9vw,52px);}
   .hero-desc{font-size:16px;}
 
-  .section{padding:72px 20px;}
+  .section{padding-top:72px;padding-bottom:72px;}
   .section-heading{font-size:clamp(22px,6vw,32px);margin-bottom:36px;}
   .section-label{margin-bottom:28px;}
   .strip-header{align-items:center;margin-bottom:36px;}
@@ -2135,13 +2220,13 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 
   .t-grid{grid-template-columns:1fr;gap:16px;}
 
-  .philosophy{padding:72px 20px;}
+  .philosophy{padding-top:72px;padding-bottom:72px;}
   .philosophy h2{font-size:clamp(26px,7vw,44px);}
 
-  .cta{padding:72px 20px;}
+  .cta{padding-top:72px;padding-bottom:72px;}
   .cta-content{padding:44px 24px;}
 
-  footer{padding:24px 20px;flex-direction:column;text-align:center;}
+  footer{padding-top:24px;padding-bottom:24px;flex-direction:column;text-align:center;}
 
   .photo-strip-item{width:260px;height:190px;}
   .lb-arrow{display:none;}
@@ -2149,23 +2234,44 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .photo-strip-fade-l,.photo-strip-fade-r{width:50px;}
 }
 
+/* Large phone / small tablet <=600px — blog drops to a single column before the
+   two-up cards get too narrow to read. */
+@media(max-width:600px){
+  .blog-grid{grid-template-columns:1fr;gap:16px;}
+  .blog-title{font-size:14px;}
+  .blog-excerpt{font-size:12px;}
+}
+
 /* Mobile <=480px */
 @media(max-width:480px){
-  nav{padding:0 16px;}
-  .hero-inner{padding:32px 16px;}
+  :root{--gutter:16px;}
+  .hero-inner{padding-top:32px;padding-bottom:32px;}
   .hero-title{font-size:clamp(26px,10vw,42px);}
-  .section{padding:56px 16px;}
+  .section{padding-top:56px;padding-bottom:56px;}
   .section-heading{margin-bottom:32px;}
   .strip-header{gap:16px;margin-bottom:32px;}
   .strip-arrow{width:36px;height:36px;font-size:15px;}
-  .blog-grid{grid-template-columns:1fr;gap:16px;}
-  .philosophy{padding:56px 16px;}
-  .cta{padding:56px 16px;}
+  .philosophy{padding-top:56px;padding-bottom:56px;}
+  .cta{padding-top:56px;padding-bottom:56px;}
   .cta-content{padding:36px 18px;}
   .cta-chrome{padding:8px 10px;font-size:9px;}
-  footer{padding:20px 16px;}
+  footer{padding-top:20px;padding-bottom:20px;}
   .photo-strip-item{width:210px;height:155px;}
   .photo-strip-fade-l,.photo-strip-fade-r{width:32px;}
+  .about-img-wrap img{height:300px;}
+  .connect-modal{padding:32px 24px;min-width:0;}
+  .t-popover{padding:26px 22px;width:min(92vw,560px);}
+  .t-avatar{width:60px;height:60px;}
+}
+
+/* Small phone <=380px — keep the tightest layout from overflowing. */
+@media(max-width:380px){
+  .hero-title{font-size:clamp(24px,10.5vw,34px);}
+  .hero-cta{padding:13px 24px;font-size:11px;}
+  .photo-strip-item{width:180px;height:135px;}
+  .about-img-wrap img{height:260px;}
+  .t-byline{gap:12px;}
+  .t-avatar{width:52px;height:52px;}
 }
 
 @media(hover:none){

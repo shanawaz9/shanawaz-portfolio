@@ -88,21 +88,11 @@ export default function Blog() {
   return (
     <section className="section">
       <Reveal as="p" className="section-label" y={16}>Writing</Reveal>
-      <Reveal
-        as="div"
-        delay={0.05}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 32,
-          gap: 32,
-        }}
-      >
-        <h2 className="section-heading" style={{ margin: 0 }}>
+      <Reveal as="div" className="blog-head" delay={0.05}>
+        <h2 className="section-heading">
           Sometimes I write too
         </h2>
-        <div className="blog-controls" style={{ flexShrink: 0 }}>
+        <div className="blog-controls">
           <button
             className="blog-nav-btn"
             onClick={handlePrev}

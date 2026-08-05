@@ -26,7 +26,17 @@
   /* spacing scale (8pt-based) */
   --sp-1:8px;  --sp-2:12px; --sp-3:16px; --sp-4:24px;
   --sp-5:32px; --sp-6:48px; --sp-7:64px; --sp-8:96px;
+
+  /* layout widths — --wide grows on large displays so the data components use
+     the available canvas; --read stays fixed, a reading measure must not. */
+  --read:720px;
+  --wide:1100px;
+  --pad:32px;
 }
+@media(min-width:1600px){:root{--wide:1240px;--pad:40px;}}
+@media(min-width:1920px){:root{--wide:1340px;--pad:48px;}}
+@media(max-width:640px){:root{--pad:20px;}}
+@media(max-width:400px){:root{--pad:16px;}}
 
 html{scroll-behavior:smooth}
 
@@ -41,8 +51,8 @@ body{
 
 /* layout — .t is the reading column (~74ch at 16.5px), .w carries the wider
    data components. Both stay proportional so neither reads as an afterthought. */
-.t{max-width:720px;margin:0 auto;padding:0 32px}
-.w{max-width:1100px;margin:0 auto;padding:0 32px}
+.t{max-width:var(--read);margin:0 auto;padding:0 var(--pad)}
+.w{max-width:var(--wide);margin:0 auto;padding:0 var(--pad)}
 
 /* header */
 .hdr{padding:72px 0 60px;border-bottom:1px solid var(--line);margin-bottom:64px}
@@ -174,21 +184,22 @@ strong{font-weight:600;color:var(--ink);font-style:normal}
    so the break should read as a pause, not a wall. Parts use the heavier .part-inner border instead. */
 hr{border:none;width:56px;height:2px;background:var(--line2);margin:var(--sp-6) auto;}
 
-/* canvas guide rules — on wide screens, frame the 1100px content width with
+/* canvas guide rules — on wide screens, frame the --wide content column with
    faint fixed verticals so the page reads as a deliberate canvas, not text
-   floating in an unbounded void. */
+   floating in an unbounded void. Tracks --wide so the frame stays on the
+   content edge as the column steps up. */
 @media(min-width:1240px){
   body::before,body::after{
     content:'';position:fixed;top:0;bottom:0;width:1px;
     background:var(--line);z-index:0;pointer-events:none;
   }
-  body::before{left:calc(50% - 550px)}
-  body::after{right:calc(50% - 550px)}
+  body::before{left:calc(50% - var(--wide) / 2)}
+  body::after{right:calc(50% - var(--wide) / 2)}
 }
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:48px 0 72px;margin-top:64px}
-.fi{max-width:720px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+.fi{max-width:var(--read);margin:0 auto;padding:0 var(--pad);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
 .fb{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-0.02em}
 .fb span{color:var(--red)}
 .fn{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);text-align:right;line-height:1.9}
@@ -605,7 +616,7 @@ ol.pl li{margin-bottom:7px}
 }
 .snav.show{transform:none}
 .snav-in{
-  max-width:1100px;margin:0 auto;padding:10px 32px;
+  max-width:var(--wide);margin:0 auto;padding:10px var(--pad);
   display:flex;align-items:center;gap:18px;
 }
 .snav-tabs{

@@ -35,7 +35,7 @@ export default function App() {
       localStorage.setItem('theme', next);
       document.documentElement.setAttribute('data-theme', next);
       document.querySelector('meta[name="theme-color"]')
-        ?.setAttribute('content', next === 'dark' ? '#0e0c0a' : '#f8f7f4');
+        ?.setAttribute('content', next === 'dark' ? '#000000' : '#f8f7f4');
       return next;
     });
   }, []);
@@ -43,7 +43,7 @@ export default function App() {
   // Light mode disabled for now — pin the document to dark on mount and clear any stale preference.
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'dark');
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0e0c0a');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000000');
     localStorage.setItem('theme', 'dark');
   }, []);
 
