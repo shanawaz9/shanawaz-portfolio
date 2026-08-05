@@ -17,7 +17,8 @@
       "mcp__claude-in-chrome__navigate",
       "Bash(npm view *)",
       "Bash(npm install *)",
-      "Bash(xargs grep -l \"useInView\")"
+      "Bash(xargs grep -l \"useInView\")",
+      "Bash(node \"C:\\\\Users\\\\shana\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-shana-Downloads-shanawaz-portfolio\\\\1ac11f95-9670-4dd0-acf0-0bb99aa958d7\\\\scratchpad\\\\raster.js\")"
     ]
   }
 }

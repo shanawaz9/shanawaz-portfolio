@@ -2034,33 +2034,21 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 .reveal-cell{display:flex;min-width:0;}
 .reveal-cell>*{width:100%;}
 
-/* CURSOR DOT — pixel square */
+/* CURSOR — hollow pixel-art arrow / pointer: brand-accent stair-stepped
+   outline over a surface-toned body, so it reads on either theme. */
 .cursor-dot{
   pointer-events:none;
   position:fixed;
-  width:24px;height:24px;
-  border:1px solid var(--silver-2);
-  border-radius:50%;
-  background:var(--silver-dim);
+  left:0;top:0;
   opacity:0;
-  transform:translate(-50%,-50%);
   z-index:10000;
-  transition:left 0.08s ease-out,top 0.08s ease-out,opacity 0.2s;
-  box-shadow:
-    0 0 18px var(--silver-dim),
-    inset 0 0 8px rgba(207,211,218,0.08);
+  transition:opacity 0.2s;
 }
-.cursor-dot--ready{opacity:1;}
-.cursor-dot::before{
-  content:'';
-  position:absolute;
-  left:50%;top:50%;
-  width:5px;height:5px;
-  border-radius:50%;
-  background:var(--silver);
-  transform:translate(-50%,-50%);
-  box-shadow:0 0 10px rgba(207,211,218,0.5);
-}
+.cursor-dot--ready{opacity:0.9;}
+.cursor-pixel-svg{display:block;shape-rendering:crispEdges;}
+/* Rim only — the body stays open so the page reads through the cursor. */
+.cursor-pixel-svg .px-outline{fill:var(--accent-bright);}
+.cursor-pixel-svg .px-fill{fill:none;}
 /* GLITCH ANIMATION */
 @keyframes glitch{
   0%,93%,100%{transform:translate(0);text-shadow:none;}
