@@ -6,35 +6,52 @@ import Reveal from './Reveal';
 // count reads like a terminal printing line-by-line rather than a smooth wipe.
 const PRINT_STEPS = 18;
 
+/* Pixel bust standing in for self-employed work — the supplied logos are all
+   company marks, so freelance gets a mark in the site's own pixel language
+   rather than a borrowed brand. Inline so it inherits colour with the theme. */
+function FreelanceMark() {
+  return (
+    <svg className="tl-logo-mark" viewBox="0 0 11 10" shapeRendering="crispEdges" aria-hidden="true">
+      <rect x="4" y="0" width="3" height="3" />
+      <rect x="3" y="4" width="5" height="1" />
+      <rect x="2" y="5" width="7" height="5" />
+    </svg>
+  );
+}
+
+/* Each source bakes in a different amount of empty margin — AAPMOR's artwork
+   fills 68% of its file's height, TCS's only 59% — so a shared size cap would
+   render them at visibly different sizes. `cap` is that logo's own height
+   limit, chosen so the *visible* artwork lands at a matching optical size. */
 const EXPERIENCES = [
   {
-    period: 'Dec 2024 – Present',
+    period: 'Nov 2023 – Present',
     role: 'Senior UX Designer',
     company: 'AAPMOR',
+    logo: '/AAPMOR.png',
+    cap: '38px',
     desc: 'Leading enterprise UX initiatives, product strategy, design systems, and cross-functional collaboration for global SaaS products.',
   },
   {
     period: '2025',
     role: 'Product Design Cohort',
     company: '10kdesigners',
+    logo: '/10kdesigners%20logo.png',
     desc: 'Strengthened product thinking through intensive product design training, real-world projects, mentorship, and design critiques.',
-  },
-  {
-    period: 'Nov 2023 – Dec 2024',
-    role: 'UX Designer',
-    company: 'AAPMOR',
-    desc: 'Designed enterprise SaaS experiences, conducted user research, and delivered scalable, user-centered solutions.',
   },
   {
     period: 'Oct 2022 – Oct 2023',
     role: 'Freelance UX/UI Designer',
     company: 'Self-employed',
+    logo: null,
     desc: 'Designed end-to-end digital products for startups, from research and wireframes to polished, responsive interfaces.',
   },
   {
     period: 'Apr 2021 – Oct 2022',
     role: 'UI/UX Designer',
     company: 'Tata Consultancy Services (TCS)',
+    logo: '/TCS%20logo.svg',
+    cap: '42px',
     desc: 'Designed enterprise web experiences while collaborating closely with developers to build responsive, accessible interfaces.',
   },
 ];
@@ -102,7 +119,23 @@ export default function Timeline() {
             <div className="timeline-card">
               <div className="tl-period">{exp.period}</div>
               <h3 className="tl-role">{exp.role}</h3>
-              <div className="tl-company">{exp.company}</div>
+              {/* The mark stands in for the company name, so it carries the
+                  name as alt text rather than being decorative. */}
+              <div className="tl-logo">
+                {exp.logo ? (
+                  <img
+                    src={exp.logo}
+                    alt={exp.company}
+                    style={exp.cap ? { '--logo-cap': exp.cap } : undefined}
+                    loading="lazy"
+                  />
+                ) : (
+                  <>
+                    <FreelanceMark />
+                    <span className="tl-logo-word">{exp.company}</span>
+                  </>
+                )}
+              </div>
               <p className="tl-desc">{exp.desc}</p>
             </div>
           </div>

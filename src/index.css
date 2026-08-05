@@ -17,6 +17,12 @@
   --silver-2:#a9adb5;
   --silver-dim:rgba(138,143,154,0.14);
   --metal:linear-gradient(160deg,#ffffff 0%,#dadde2 28%,#bcc0c8 54%,#eceef1 72%,#c4c8cf 100%);
+  /* Logo plate — deliberately NOT themed. The supplied company marks are all
+     light-on-transparent, so they need a dark ground in light mode too; fixing
+     it keeps the timeline's logo row identical across both themes. */
+  --logo-plate:#0d0d11;
+  --logo-plate-edge:rgba(255,255,255,0.10);
+  --logo-ink:#e9e9f0;
   /* Semantic */
   --success:#2f8f5e;
   --success-dim:rgba(47,143,94,0.12);
@@ -135,7 +141,7 @@ body::after{
 
 /* Inter Display: force the display optical cut on headings (tighter, more refined),
    independent of rendered size */
-h1,h2,h3,h4,.work-card-title,.blog-title,.tl-company,.t-name,
+h1,h2,h3,h4,.work-card-title,.blog-title,.t-name,
 [style*="--font-head"],
 .testimonials-head h2{
   font-optical-sizing:auto;
@@ -1395,9 +1401,50 @@ nav{
 /* content — borderless, lightweight */
 .timeline-card{position:relative;}
 
+/* Logo plate — replaces the company name. Every mark supplied is light-on-
+   transparent (TCS white, 10kdesigners purple + white, AAPMOR white wordmark
+   with a colour gradient symbol), so the plate stays dark in BOTH themes:
+   that is what lets the logos keep their own colours instead of being
+   flattened, and it keeps the two themes reading identically here.
+   One fixed plate size carries wildly different aspect ratios — from TCS at
+   3:1 to the 10kdesigners wordmark at 13.5:1 — as a single set. */
+.tl-logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  width:176px;
+  height:44px;
+  padding:0 14px;
+  margin:10px 0 14px;
+  background:var(--logo-plate);
+  border:1px solid var(--logo-plate-edge);
+  transition:border-color 0.3s,transform 0.3s;
+}
+/* max-height and max-width together: each logo settles on whichever limit it
+   hits first, so tall marks and long wordmarks both sit inside the plate. */
+/* Each logo sets its own --logo-cap (see Timeline.js) to offset the empty
+   margin baked into its file; 26px is the default for a tightly-cropped mark. */
+.tl-logo img{
+  max-height:var(--logo-cap,26px);
+  max-width:138px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+}
+.tl-logo-mark{height:20px;width:auto;fill:var(--logo-ink);flex-shrink:0;}
+.tl-logo-word{
+  font-family:var(--font-logo);
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--logo-ink);
+  white-space:nowrap;
+}
+.timeline-node:hover .tl-logo{border-color:var(--silver-2);transform:translateY(-2px);}
+
 .tl-period{font-family:var(--font-logo);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
 .tl-role{font-family:var(--font-head);font-weight:600;font-size:17px;letter-spacing:-0.01em;margin-bottom:3px;}
-.tl-company{font-size:11px;color:var(--accent-bright);letter-spacing:0.06em;font-weight:500;margin-bottom:12px;}
 .tl-desc{font-size:15px;color:var(--muted);line-height:1.7;font-weight:500;}
 
 /* WORK */
@@ -2197,6 +2244,9 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .timeline-line{left:9px;}
   .timeline-caret{width:7px;height:7px;}
   .tl-role{font-size:16px;}
+  .tl-logo{width:158px;height:40px;margin:9px 0 12px;}
+  .tl-logo img{max-height:calc(var(--logo-cap,26px) * 0.85);max-width:120px;}
+  .tl-logo-mark{height:18px;}
 
   .work-grid{grid-template-columns:1fr;gap:20px;}
 
