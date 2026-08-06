@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-const PIXEL = 2;
-
 /* Sprites are authored as plain silhouettes ('#' filled, '.' empty; rows must
    be equal length). buildPixels splits each into a stair-stepped outline and
    an interior, giving the classic hollow pixel-cursor look.
-   hotspot is the cell that sits under the real mouse position. */
+   hotspot is the cell that sits under the real mouse position.
+
+   Cell size lives in CSS (--cursor-px) so the cursor can scale with the
+   viewport; the sprite's grid dimensions and hotspot are handed to CSS as
+   unitless custom properties for it to multiply out. */
 
 /* Classic arrow: vertical left edge, diagonal right edge, then a notch
    splitting into a short foot and the tail. */
@@ -84,11 +86,9 @@ function PixelCursorIcon({ shape }) {
   return (
     <svg
       className="cursor-pixel-svg"
-      width={cols * PIXEL}
-      height={rows * PIXEL}
       viewBox={`0 0 ${cols} ${rows}`}
       shapeRendering="crispEdges"
-      style={{ transform: `translate(${-hotspot.x * PIXEL}px,${-hotspot.y * PIXEL}px)` }}
+      style={{ '--cols': cols, '--rows': rows, '--hx': hotspot.x, '--hy': hotspot.y }}
     >
       {/* Interior first so the outline always wins on any shared edge. */}
       {pixels.map((p) => (

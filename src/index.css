@@ -52,6 +52,9 @@
   --max-w:1200px;
   --gutter:24px;
   --pad-x:max(var(--gutter), calc((100% - var(--max-w)) / 2 + var(--gutter)));
+  /* Size of one cell in the pixel-art cursor sprite — the cursor's whole scale.
+     Stepped in 0.5px increments so cells stay whole device pixels on 2x displays. */
+  --cursor-px:1.5px;
   --font-head:'Funnel Display Variable','Funnel Display','Inter Variable','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-body:'Red Hat Mono Variable','Red Hat Mono',monospace;
   --font-logo:'Silkscreen',cursive;
@@ -2092,7 +2095,20 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   transition:opacity 0.2s;
 }
 .cursor-dot--ready{opacity:0.9;}
-.cursor-pixel-svg{display:block;shape-rendering:crispEdges;}
+/* Size comes from the sprite grid (--cols/--rows, set by CursorGlow) times the
+   viewport-scaled cell size, so the SVG lays out at its exact pixel size and
+   still rasterizes crisply — scaling it with transform would blur the edges.
+   The hotspot shift scales with it, keeping the tip on the real pointer. */
+.cursor-pixel-svg{
+  display:block;
+  shape-rendering:crispEdges;
+  width:calc(var(--cols) * var(--cursor-px));
+  height:calc(var(--rows) * var(--cursor-px));
+  transform:translate(
+    calc(var(--hx) * var(--cursor-px) * -1),
+    calc(var(--hy) * var(--cursor-px) * -1)
+  );
+}
 /* Rim only — the body stays open so the page reads through the cursor. */
 .cursor-pixel-svg .px-outline{fill:var(--accent-bright);}
 .cursor-pixel-svg .px-fill{fill:none;}
@@ -2190,7 +2206,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 
 /* Desktop */
 @media(min-width:1600px){
-  :root{--max-w:1460px;--gutter:40px;}
+  :root{--max-w:1460px;--gutter:40px;--cursor-px:2px;}
   .section,.philosophy,.cta{padding-top:116px;padding-bottom:116px;}
   .hero-text{max-width:740px;}
   .work-grid{gap:28px;}
@@ -2222,7 +2238,9 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 
 /* Tablet portrait <=768px */
 @media(max-width:768px){
-  :root{--gutter:20px;}
+  /* Roughly a native OS arrow at this size — the cursor only shows on
+     fine-pointer devices, so this is a narrow desktop window, not a phone. */
+  :root{--gutter:20px;--cursor-px:1px;}
   .nav-links{display:none;}
   .nav-right-mobile{display:flex;}
   .nav-hamburger{display:flex;}
