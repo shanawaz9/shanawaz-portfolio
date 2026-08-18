@@ -4,23 +4,22 @@ import { Stagger, StaggerItem } from './Stagger';
 
 const WORKS = [
   {
-    href: '/case-studies/shiftlyn.html',
-    img: '/images/shiftlyn.png',
+    href: '/shiftlyn',
+    img: '/thumbnail.png',
     alt: 'Shiftlyn',
     year: '2025',
     tag: 'Case study',
     title: 'Shiftlyn — AI Risk Assessment, Humanized',
     delay: 'd1',
-    fit: 'contain',
-    thumbBg: '#ece2d0',
+    flush: true,
   },
   {
-    href: 'https://shrub-gallium-386.notion.site/Confidential-Projects-301644ba75b6806895b6cf7d89e25661?pvs=73',
-    img: 'https://framerusercontent.com/images/LKPsBUmKOjVvwZxGtktMsfJgANs.jpg',
-    alt: 'Enterprise',
+    href: '/confidential-projects',
+    img: '/thumbnail%202.png',
+    alt: 'Confidential projects \u2014 Johnson & Johnson and Liberty Dental Plan',
     year: '2024\u20132026',
     tag: 'Confidential work',
-    title: 'Enterprise SaaS, Healthcare & AI Systems',
+    title: 'Enterprise SaaS, Conversational AI & Healthcare Systems',
     delay: 'd2',
   },
   {
@@ -45,11 +44,21 @@ const WORKS = [
 
 function WorkCard({ work }) {
   const cardClass = `work-card${work.wip ? ' wip' : ''}`;
+  const cardStyle = work.flush ? { borderRadius: 0 } : undefined;
   const thumbStyle = work.thumbBg ? { background: work.thumbBg } : undefined;
   const imgStyle = work.fit ? { objectFit: work.fit } : undefined;
   const content = (
     <>
       <div className="work-card-thumb" style={thumbStyle}>
+        {work.clients && (
+          <div className="work-card-clients">
+            {work.clients.map((c) => (
+              <span key={c.name} className="work-card-client-badge" style={{ background: c.color }}>
+                {c.name}
+              </span>
+            ))}
+          </div>
+        )}
         <img src={work.img} alt={work.alt} style={imgStyle} />
       </div>
       <div className="work-card-body">
@@ -66,6 +75,7 @@ function WorkCard({ work }) {
     return (
       <a
         className={cardClass}
+        style={cardStyle}
         href={work.href}
         target="_blank"
         rel="noopener noreferrer"

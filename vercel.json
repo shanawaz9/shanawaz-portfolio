@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/confidential-projects", "destination": "/confidential-projects/index.html" },
+    { "source": "/shiftlyn", "destination": "/shiftlyn/index.html" }
+  ]
+}
