@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/confidential-projects", "destination": "/confidential-projects/index.html" },
+    { "source": "/johnson-and-johnson", "destination": "/johnson-and-johnson/index.html" },
+    { "source": "/liberty-dental-plan", "destination": "/liberty-dental-plan/index.html" },
     { "source": "/shiftlyn", "destination": "/shiftlyn/index.html" }
   ]
 }

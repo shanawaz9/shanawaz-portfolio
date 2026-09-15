@@ -14,13 +14,22 @@ const WORKS = [
     flush: true,
   },
   {
-    href: '/confidential-projects',
-    img: '/thumbnail%202.png',
-    alt: 'Confidential projects \u2014 Johnson & Johnson and Liberty Dental Plan',
+    href: '/liberty-dental-plan',
+    img: '/images/ldp/ldp-card-thumb.jpg',
+    alt: 'The Liberty Dental Plan homepage on a desktop monitor, captioned "Explore the live platform"',
+    year: '2025\u20132026',
+    tag: 'Confidential work',
+    title: 'Liberty Dental Plan \u2014 Restructuring a Legacy Healthcare Platform',
+    delay: 'd2',
+  },
+  {
+    href: '/johnson-and-johnson',
+    img: '/images/jnj-grc-ai.svg',
+    alt: 'Johnson & Johnson \u2014 enterprise GRC platform with a conversational AI assistant',
     year: '2024\u20132026',
     tag: 'Confidential work',
-    title: 'Enterprise SaaS, Conversational AI & Healthcare Systems',
-    delay: 'd2',
+    title: 'Johnson & Johnson \u2014 Conversational AI & GRC Platform',
+    delay: 'd3',
   },
   {
     href: 'https://medium.com/@shanawazhussain989/khoj-landing-page-case-study-c279cb08c671',
@@ -29,7 +38,7 @@ const WORKS = [
     year: '2025',
     tag: 'Case study',
     title: 'Khoj — Landing Page Built to Convert',
-    delay: 'd3',
+    delay: 'd4',
   },
   {
     href: 'https://medium.com/@shanawazhussain989/ethno-furniture-e-commerce-ux-ui-design-ed915e70eb97',
@@ -38,7 +47,9 @@ const WORKS = [
     year: '2023',
     tag: 'Case study',
     title: 'Ethno — Indian Craft Commerce, Reimagined',
-    delay: 'd4',
+    delay: 'd5',
+    // Kept in the list but not shown for now — flip this off to bring it back.
+    hidden: true,
   },
 ];
 
@@ -96,7 +107,7 @@ export default function WorkGrid() {
       <Reveal as="p" className="section-label" y={16}>Portfolio</Reveal>
       <Reveal as="h2" className="section-heading" delay={0.05}>Selected Work</Reveal>
       <Stagger className="work-grid">
-        {WORKS.map((work, i) => (
+        {WORKS.filter((work) => !work.hidden).map((work, i) => (
           <StaggerItem className="reveal-cell" key={i}>
             <WorkCard work={work} />
           </StaggerItem>
