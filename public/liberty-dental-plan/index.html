@@ -138,7 +138,7 @@ h1{
   font-family:var(--display);
   font-size:clamp(33px,4.4vw,50px);font-weight:600;color:var(--ink);
   line-height:1.16;letter-spacing:-0.014em;
-  margin-bottom:var(--sp-4);max-width:19ch;
+  margin-bottom:var(--sp-4);max-width:21ch;   /* keeps "decade-old" unbroken */
 }
 
 .lead{
@@ -195,6 +195,8 @@ h3{
   font-size:clamp(22px,2.7vw,30px);font-weight:600;color:var(--ink);
   line-height:1.32;letter-spacing:-0.008em;margin:0 0 var(--sp-4);max-width:24ch;
 }
+/* this one heading carries a deliberate two-line break, so it needs more measure */
+h3.h3-wide{max-width:46ch}
 
 h4.subhead2{
   font-family:var(--display);
@@ -265,6 +267,7 @@ table.ctable tbody tr:last-child th,table.ctable tbody tr:last-child td{border-b
 
 /* the one-line conclusion under a research block */
 p.takeaway{font-size:15.5px;color:var(--ink-soft);margin-bottom:var(--sp-5)}
+p.bench-note{font-size:13px;line-height:1.6;color:var(--ink-faint);margin:0 0 var(--sp-5)}
 p.takeaway b{
   font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink-faint);display:block;margin-bottom:5px;
@@ -364,12 +367,133 @@ blockquote p{
   .mark,.mark.m2,.mark.m3{background:rgba(255,230,84,.55);border-radius:0}
 }
 
+/* ---------- decision furniture ----------
+   Small pieces that let the page show judgment rather than narrate it:
+   a label for who owned a call, a pull statement for the one line worth
+   stopping on, option cards, a chain from evidence to decision, a vertical
+   mini-story, and a shipped list. All hairlines and type, no new colour. */
+
+/* who owned this, in three words above the thing they owned */
+.tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-faint);margin:0 0 9px;
+}
+.tag::before{content:"";width:14px;height:1px;background:var(--line2);flex-shrink:0}
+.tag.is-mine{color:var(--accent)}
+.tag.is-mine::before{background:var(--accent)}
+
+/* the one line worth stopping on. A rule at the left, nothing else. */
+.insight{
+  margin:var(--sp-6) 0;padding:2px 0 2px var(--sp-4);
+  border-left:2px solid var(--accent);
+}
+.insight p{
+  font-family:var(--display);font-size:clamp(18px,1.9vw,22px);font-weight:600;
+  font-style:italic;color:var(--ink);line-height:1.45;margin:0;letter-spacing:-0.004em;
+}
+
+/* the three IA options, as cards that end in a verdict */
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4);margin:var(--sp-5) 0 var(--sp-4)}
+.opt{display:flex;flex-direction:column;border-top:2px solid var(--line2);padding-top:var(--sp-3)}
+.opt.is-approved{border-top-color:var(--accent)}
+.opt-n{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+.opt-t{font-size:16px;font-weight:600;color:var(--ink);letter-spacing:-0.004em;margin-bottom:7px}
+.opt-d{font-size:14px;line-height:1.6;color:var(--ink-soft);margin:0 0 var(--sp-3);letter-spacing:-0.002em}
+.opt-v{
+  margin-top:auto;display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  padding:5px 10px;border-radius:5px;background:var(--bg-soft);color:var(--ink-faint);
+}
+.opt.is-approved .opt-v{background:var(--accent-soft);color:var(--accent)}
+.opt-v svg{width:11px;height:11px;flex-shrink:0}
+
+/* evidence to principle to decision, one row per thread */
+.chain{margin:var(--sp-4) 0 var(--sp-5);border-top:1px solid var(--line)}
+.chain-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-3);
+  align-items:start;padding:14px 0;border-bottom:1px solid var(--line);
+}
+.chain-row span{font-size:14px;line-height:1.55;color:var(--ink-soft);position:relative;letter-spacing:-0.002em}
+.chain-row span + span{padding-left:22px}
+.chain-row span + span::before{
+  content:"";position:absolute;left:0;top:9px;width:11px;height:1px;background:var(--line2);
+}
+.chain-row span + span::after{
+  content:"";position:absolute;left:7px;top:6px;width:5px;height:5px;
+  border-top:1px solid var(--line2);border-right:1px solid var(--line2);transform:rotate(45deg);
+}
+.chain-row span:last-child{color:var(--ink);font-weight:500}
+.chain-lbl{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-3);
+  font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-faint);padding-bottom:9px;
+}
+.chain-lbl span + span{padding-left:22px}
+
+/* a short sequence told top to bottom, with the beat named in the margin */
+.flow{margin:var(--sp-5) 0;border-left:1px solid var(--line2);padding-left:var(--sp-4)}
+.flow-step{position:relative;padding:0 0 var(--sp-4)}
+.flow-step:last-child{padding-bottom:0}
+.flow-step::before{
+  content:"";position:absolute;left:calc(-1 * var(--sp-4) - 4px);top:6px;
+  width:7px;height:7px;border-radius:50%;background:var(--line2);
+}
+.flow-step.is-mine::before{background:var(--accent)}
+.flow-b{
+  display:block;font-size:9.5px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;
+}
+.flow-step.is-mine .flow-b{color:var(--accent)}
+.flow-step p{font-size:15.5px;line-height:1.6;color:var(--ink-soft);margin:0;letter-spacing:-0.003em}
+.flow-step p strong{color:var(--ink)}
+
+/* the process as a single line of steps */
+.steps{display:flex;flex-wrap:wrap;gap:7px 0;align-items:center;margin:var(--sp-2) 0 0}
+.steps span{
+  font-size:12px;font-weight:600;color:var(--ink);background:var(--bg-soft);
+  border-radius:5px;padding:5px 10px;letter-spacing:-0.002em;
+}
+.steps i{display:inline-block;width:18px;height:1px;background:var(--line2);margin:0 2px}
+
+/* what shipped, ticked */
+.ship{list-style:none;padding:0;margin:var(--sp-4) 0 var(--sp-5);display:grid;gap:11px}
+.ship li{position:relative;padding-left:26px;font-size:15.5px;line-height:1.6;color:var(--ink-soft);letter-spacing:-0.003em}
+.ship li strong{color:var(--ink);font-weight:600}
+.ship li::before{
+  content:"";position:absolute;left:1px;top:4px;width:13px;height:7px;
+  border-left:1.8px solid var(--accent);border-bottom:1.8px solid var(--accent);
+  transform:rotate(-45deg);
+}
+
+/* accessibility decisions: a term and what we actually did about it */
+.a11y{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3) var(--sp-5);margin:var(--sp-4) 0 var(--sp-3)}
+.a11y div{border-top:1px solid var(--line);padding-top:11px}
+.a11y b{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;letter-spacing:-0.002em}
+.a11y span{font-size:14px;line-height:1.55;color:var(--ink-soft);letter-spacing:-0.002em}
+
+/* "not taken", the counterpart to the approved tick */
+.variant-x{
+  display:inline-flex;align-items:center;gap:6px;margin-left:auto;
+  background:var(--bg-soft);border-radius:20px;padding:4px 11px;
+  font-size:10px;letter-spacing:.11em;color:var(--ink-faint);
+}
+
+@media(max-width:820px){
+  .opts{grid-template-columns:1fr;gap:var(--sp-5)}
+  .chain-lbl{display:none}
+  .chain-row{grid-template-columns:1fr;gap:6px;padding:16px 0}
+  .chain-row span + span{padding-left:22px}
+  .a11y{grid-template-columns:1fr}
+}
+
 /* ---------- figures ---------- */
 figure{margin:var(--sp-6) 0 var(--sp-7)}
 .shots{margin:var(--sp-6) 0 var(--sp-7)}
 .shots a{display:block;border-radius:10px;overflow:hidden;transition:transform .2s,box-shadow .2s}
 .shots a:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(20,22,34,.1)}
 .shots img{display:block;width:100%;height:auto}
+.shots > img{border-radius:10px}
 .shot-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);margin-top:var(--sp-3)}
 figcaption,.shots figcaption{
   font-size:13px;color:var(--ink-faint);line-height:1.6;margin-top:var(--sp-3);
@@ -673,9 +797,9 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
   <main class="article">
   <div class="article-in">
 
-    <div class="kicker"><i></i>Liberty Dental Plan <span class="sep">·</span> 8 min read</div>
-    <h1>A legacy healthcare platform, restructured</h1>
-    <p class="lead">A decade of additions had left the site scattered and hard to navigate. I led the UX end to end: research, information architecture, responsive navigation, and the design system now running in production.</p>
+    <div class="kicker"><i></i>Liberty Dental Plan <span class="sep">·</span> Senior UX Designer &amp; Offshore Design Lead <span class="sep">·</span> 8 min read</div>
+    <h1>Rebuilding the UX foundation of a decade-old healthcare platform</h1>
+    <p class="lead">A scattered information architecture, three user groups, and a responsive redesign became an exercise in simplifying how members, providers, and brokers navigate Liberty Dental Plan.</p>
 
     <div class="hero-shot">
       <img src="/images/ldp/live-homepage-hero.jpg" width="1600" height="753" loading="eager" decoding="async"
@@ -684,7 +808,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
         <div class="hero-bar-txt">
           <span class="hero-live"><i></i>Live</span>
           <div class="hero-bar-lines">
-            <b>The shipped homepage</b>
+            <b>The shipped product</b>
             <span>Persona-based navigation, in production</span>
           </div>
         </div>
@@ -738,18 +862,6 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
 
     <section id="p2-situation">
       <div class="stage"><b>01</b>Discovery &amp; Research</div>
-      <h3>Turning a complex healthcare application into a simpler experience</h3>
-      <p>We started with an existing healthcare application that had been around for a long time. Information and <span class="mark m2">navigation were scattered across the product</span>, making the experience difficult to structure.</p>
-      <p>The application served three groups of users: <strong>members, providers and brokers</strong>. The client also wanted a mobile-responsive experience.</p>
-      <p>Since we were new to US healthcare, we first focused on understanding the domain before jumping into design.</p>
-      <p>We conducted:</p>
-      <ul class="article-list">
-        <li><span class="mark">US healthcare market research</span></li>
-        <li>Competitive analysis <span class="li-note"><b>(6)</b> Delta Dental, DentaQuest, UnitedHealthcare, Aetna, Cigna, MCNA Dental</span></li>
-        <li>Existing product analysis</li>
-        <li>Client discussions and requirement gathering</li>
-        <li>Design workshops and brainstorming</li>
-      </ul>
     <figure class="shots bleed">
       <p class="fig-head">Old screens</p>
       <a href="/images/ldp/existing-01-home.jpg" target="_blank" rel="noopener noreferrer">
@@ -768,6 +880,25 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       </div>
       <figcaption>The existing application. Navigation scattered across competing menus: a top-level <strong>Programs</strong> dropdown, a second dropdown nested inside a plan card, and a twelve-item <strong>Members</strong> menu covering most of the page, all reachable from the same screen.</figcaption>
     </figure>
+      <h3 class="h3-wide">Turning a complex healthcare application<br>into a simpler experience</h3>
+      <p>A decade-old application serving <strong>members, providers and brokers</strong>, with <span class="mark m2">navigation scattered across the product</span>. The client wanted it responsive. New to US healthcare, we learned the domain first.</p>
+      <p>Discovery ran on one shared FigJam board, with the team in it at the same time: gatherings, research, competitive analysis, personas, journeys. Working in one place kept the process intact when the timeline tightened.</p>
+    <figure class="shots bleed">
+      <p class="fig-head">The discovery board</p>
+      <img src="/images/ldp/discovery-board.jpg" width="1400" height="554" loading="lazy" decoding="async"
+           alt="The shared FigJam board, with sections for initial gatherings, the existing flow chart, user journeys, personas, competitive analysis and a survey, and several collaborator cursors active across them at once">
+      <figcaption>One board for the whole discovery. The clustered avatars are the four of us working in it at the same time.</figcaption>
+    </figure>
+      <p>We conducted:</p>
+      <ul class="article-list">
+        <li><span class="mark">US healthcare market research</span></li>
+        <li>Competitive analysis <span class="li-note"><b>(6)</b> Delta Dental, DentaQuest, UnitedHealthcare, Aetna, Cigna, MCNA Dental</span></li>
+        <li>Existing product analysis</li>
+        <li>Client discussions and requirement gathering</li>
+        <li>Personas for the three audiences</li>
+        <li>User journey and task flow mapping</li>
+        <li>Design workshops and brainstorming</li>
+      </ul>
       <h4 class="subhead2">What the rest of the market was already doing</h4>
       <p>I reviewed the six for the patterns that repeat: navigation, provider search, member self-service, accessibility, personalization and mobile. Not to copy anyone, but to find where LDP could simplify.</p>
       <div class="ctable-wrap">
@@ -809,20 +940,66 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
           </tbody>
         </table>
       </div>
-      <p class="takeaway"><b>Key takeaway</b>The research moved our focus from adding features to <strong>simplifying the experience</strong>: clearer navigation, better hierarchy, more efficient forms and progress indicators, stronger provider journeys.</p>
+      <div class="chain-lbl"><span>Competitive insight</span><span>UX principle</span><span>Design decision</span></div>
+      <div class="chain">
+        <div class="chain-row"><span>Complex, scattered navigation</span><span>Reduce cognitive load</span><span>Simplified information architecture</span></div>
+        <div class="chain-row"><span>Dense member information</span><span>Improve scannability</span><span>Stronger hierarchy and contextual information</span></div>
+        <div class="chain-row"><span>Inconsistent mobile quality</span><span>Prioritize the essential tasks</span><span>Responsive, mobile-first patterns</span></div>
+      </div>
+      <h4 class="subhead2">The real problem</h4>
       <div class="inline-note">From a design lead perspective, the first challenge was clear: <strong><span class="mark m3">how do we structure the information and navigation</span> around three different personas without making the product fragmented?</strong></div>
+      <div class="insight"><p>Navigation was not a menu problem. It was an information architecture problem.</p></div>
+
     </section>
 
     <section id="p2-desire">
       <div class="stage"><b>02</b>IA &amp; User Flows</div>
       <h3>Build the right foundation before designing the interface</h3>
-      <p>Instead of immediately jumping into visual design, we wanted to solve the structure of the product first.</p>
-      <p>We explored three approaches:</p>
-      <ol class="article-list">
-        <li><strong>Persona-based.</strong> Each persona sees the information relevant to them, with dedicated local navigation.</li>
-        <li><strong>Category-based.</strong> Information is organized through configurable categories.</li>
-        <li><strong>Search-based.</strong> Users rely more on search and advanced search to find information.</li>
-      </ol>
+      <p>Instead of jumping into visual design, we solved the structure first, and put three approaches in front of the client.</p>
+      <div class="opts">
+        <div class="opt is-approved">
+          <div class="opt-n">Option 01</div>
+          <div class="opt-t">Persona-based</div>
+          <p class="opt-d">Each persona sees only what is relevant to them, with dedicated local navigation underneath.</p>
+          <span class="opt-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Approved</span>
+        </div>
+        <div class="opt">
+          <div class="opt-n">Option 02</div>
+          <div class="opt-t">Category-based</div>
+          <p class="opt-d">One persistent header opening a full-width mega menu that groups every category into configurable columns.</p>
+          <span class="opt-v">Not taken</span>
+        </div>
+        <div class="opt">
+          <div class="opt-n">Option 03</div>
+          <div class="opt-t">Search-based</div>
+          <p class="opt-d">An &ldquo;I am a&hellip;&rdquo; selector with guided search as the main route into plans, quotes and provider services.</p>
+          <span class="opt-v">Not taken</span>
+        </div>
+      </div>
+      <p class="fig-head">Navigation benchmark, from the competitive review</p>
+      <div class="ctable-wrap">
+        <table class="ctable">
+          <thead>
+            <tr><th scope="col">Navigation model</th><th scope="col">Adoption among competitors</th><th scope="col">User satisfaction (est.)</th><th scope="col">Fit for Liberty Dental</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Persona-based</th>
+              <td data-l="Adoption">~65%</td>
+              <td data-l="Satisfaction (est.)">~82%</td>
+              <td data-l="Fit">Strong fit for multiple user types: members, providers and brokers</td>
+            </tr>
+            <tr>
+              <th scope="row">Mega menu</th>
+              <td data-l="Adoption">~35%</td>
+              <td data-l="Satisfaction (est.)">~68%</td>
+              <td data-l="Fit">Usable on desktop, but clutters on mobile</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-note">Adoption was counted across the six competitors. Satisfaction is an estimate from that review, not a measured result from this project.</p>
+      <p>The <strong>persona-based approach</strong> emerged as the strongest direction, and <span class="mark m3">the client agreed to move forward with it</span>.</p>
     <figure class="shots">
       <div class="variant">
         <div class="variant-lbl"><b>01</b>Persona based</div>
@@ -831,7 +1008,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
         </a>
       </div>
       <div class="variant">
-        <div class="variant-lbl"><b>02</b>Mega menu</div>
+        <div class="variant-lbl"><b>02</b>Category based</div>
         <a href="/images/ldp/ia-02-mega-menu.jpg" target="_blank" rel="noopener noreferrer">
           <img src="/images/ldp/ia-02-mega-menu.jpg" width="1400" height="435" loading="lazy" decoding="async" alt="Mega-menu wireframe — one persistent header opening a full-width panel that groups every category into configurable columns">
         </a>
@@ -842,17 +1019,15 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
           <img src="/images/ldp/ia-03-search-based.jpg" width="1400" height="402" loading="lazy" decoding="async" alt="Search-based wireframe — an &quot;I am a…&quot; selector with a guided search bar as the primary route into plans, quotes and provider services">
         </a>
       </div>
-      <figcaption>Three proposed navigation approaches</figcaption>
+      <figcaption>The three approaches, wireframed at the same fidelity so the comparison was about structure rather than polish.</figcaption>
     </figure>
-      <p>Research, client workshops and repeated design discussions narrowed the field, but the decision itself came out of one exercise.</p>
+      <p>Research, workshops and repeated discussions narrowed the field. The decision itself came out of one exercise.</p>
 
       <h4 class="subhead2">Card sorting, on a table, with paper</h4>
-      <p>We ran <span class="mark">card sorting</span> inside the UX team. Every page, tool and piece of content in the product went onto its own card, and we sorted them into groups until the grouping stopped moving.</p>
-      <p>Two things decided where a card landed: <strong>what the client had asked the business to surface</strong>, and <strong>how members, providers and brokers actually go looking for information</strong>.</p>
-      <p>Where those two disagreed, the card went onto a list we worked through one by one, then took into the next client discussion as a position rather than a question.</p>
-      <p>That produced the priority order: what earns primary navigation, what belongs a level down, and what had sat on the homepage for years without earning it.</p>
+      <div class="tag is-mine">My decision</div>
+      <p>We ran <span class="mark">card sorting</span> inside the UX team, every page and tool on its own card, placed by <strong>what the client wanted surfaced</strong> against <strong>how the three personas actually look for information</strong>.</p>
+      <p>Where those disagreed we argued the card out, then took a position to the client rather than a question. That set the priority order: what earns primary navigation, what sits a level down, what had never earned its place.</p>
       <div class="inline-note">We ran it <strong><span class="mark m2">physically rather than in a digital tool</span></strong>. Paper on a table meant everyone reached in and moved something, so disagreements surfaced in an afternoon instead of as comments on a board a week later.</div>
-      <p>The <strong>persona-based approach</strong> emerged as the strongest direction, and <span class="mark m3">the client agreed to move forward with it</span>.</p>
     <figure class="shots">
       <p class="fig-head">Card sorting &middot; Research artifacts &middot; Final IA</p>
       <div class="nda">
@@ -891,11 +1066,31 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
     <figure class="shots meme">
       <img src="/images/ldp/pressure-two-buttons.jpg" width="600" height="897" loading="lazy" decoding="async"
            alt="The two-buttons meme: a sweating man hesitating over two red buttons, unable to pick between them">
-      <figcaption>Timeline / process showing development pressure</figcaption>
+      <figcaption>Ship sooner, or keep the process. The pressure was real and the two options were framed as exclusive.</figcaption>
     </figure>
-      <div class="inline-note">Instead of removing UX steps, <span class="mark">we negotiated the timeline and kept the process</span>: <strong>wireframes, approval, responsive design, visual design</strong>.</div>
+      <div class="flow">
+        <div class="flow-step">
+          <span class="flow-b">The conflict</span>
+          <p>Project managers and developers wanted to start building.</p>
+        </div>
+        <div class="flow-step">
+          <span class="flow-b">The risk</span>
+          <p>Requirements and wireframes were still moving. Starting early bought weeks and cost rework.</p>
+        </div>
+        <div class="flow-step is-mine">
+          <span class="flow-b">My response</span>
+          <p>I <strong>negotiated the timeline instead of removing UX steps</strong>, and kept the sequence intact.</p>
+          <div class="steps"><span>Wireframes</span><i></i><span>Approval</span><i></i><span>Responsive</span><i></i><span>Visual design</span><i></i><span>Handoff</span></div>
+        </div>
+        <div class="flow-step">
+          <span class="flow-b">Outcome</span>
+          <p>A structured process, with the UX work still done in the right order.</p>
+        </div>
+      </div>
+      <div class="insight"><p>Instead of removing UX steps to meet the timeline, <span class="mark">we negotiated the process</span>.</p></div>
 
       <h4 class="subhead2">Copy became part of the design process</h4>
+      <div class="tag">Stakeholder constraint</div>
       <p>Because this was an insurance product, the client wanted copy settled before design. In practice the two ran in parallel, and copy changes kept moving the wireframes.</p>
     </section>
 
@@ -904,15 +1099,16 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       <h3>We stopped trying to solve everything at once</h3>
       <p>Instead of letting changing requirements dictate the process, we separated the work into clear stages and kept iterating with the client.</p>
 
-      <h4 class="subhead2">Navigation</h4>
+      <h4 class="subhead2">The navigation challenge</h4>
       <p><span class="mark m2">Navigation was one of the biggest UX challenges.</span></p>
       <div class="inline-note">The desktop structure ran from the landing page, into a persona-based flow, then local navigation, then three subcategories.</div>
-      <p>The challenge was translating this into a responsive mobile experience.</p>
-      <p>We explored three approaches. <strong>The first two were rejected.</strong></p>
-      <p>Instead of defending the original direction, we used the feedback to understand how the client was thinking. The third, a drill-down menu, was the one approved.</p>
+      <p>The challenge was translating that into a responsive mobile experience. We explored three.</p>
+      <div class="tag is-mine">My decision</div>
+      <p>Rather than defending the first direction, I used the rejections to understand how the client was thinking, and carried that into the next pass.</p>
     <figure class="shots">
       <div class="variant rejected">
         <div class="variant-lbl"><b>01</b>Dropdown menu
+          <span class="variant-x">Not taken</span>
         </div>
         <a href="/images/ldp/nav-01-dropdown.jpg" target="_blank" rel="noopener noreferrer">
           <img src="/images/ldp/nav-01-dropdown.jpg" width="1290" height="702" loading="lazy" decoding="async" alt="Mobile concept one — a hamburger opening a flat list of personas, each expanding a dropdown in place">
@@ -920,6 +1116,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       </div>
       <div class="variant rejected">
         <div class="variant-lbl"><b>02</b>Accordion menu
+          <span class="variant-x">Not taken</span>
         </div>
         <a href="/images/ldp/nav-02-accordion.jpg" target="_blank" rel="noopener noreferrer">
           <img src="/images/ldp/nav-02-accordion.jpg" width="1300" height="680" loading="lazy" decoding="async" alt="Mobile concept two — an accordion menu that expands the chosen persona inline, with a breadcrumb above the section">
@@ -936,9 +1133,8 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
           <img src="/images/ldp/nav-03-approved.jpg" width="1300" height="516" loading="lazy" decoding="async" alt="Approved mobile concept — a drill-down menu where choosing a persona slides to its own panel with a back arrow, keeping one level visible at a time">
         </a>
       </div>
-      <figcaption>Mobile navigation explorations. The first two passes were rejected; the drill-down direction was approved.</figcaption>
+      <figcaption>Three mobile passes. The first two were rejected; the drill-down, which keeps one level visible at a time and a back arrow to the last, was approved.</figcaption>
     </figure>
-      <p>The final approach was approved.</p>
     <figure class="shots">
       <div class="variant">
         <div class="variant-lbl"><b>D</b>Desktop</div>
@@ -958,6 +1154,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
     </figure>
 
       <p>We also narrowed down long navigational pages and explored <span class="mark m3">more efficient progress bars, forms, and contextual information</span>.</p>
+      <div class="tag">Developer constraint</div>
       <p>Bootstrap components were another constraint. With the developers, we customized them where usability needed it. Responsive design was built alongside the core experience, not bolted on after.</p>
     </section>
 
@@ -1008,7 +1205,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
           <span class="baf-frame"><img src="/images/ldp/before-home.jpg" width="1008" height="474" loading="lazy" decoding="async" alt="The legacy homepage — a utility strip, a purple brand bar, a navigation row mixing audiences with products, a promotional banner, and plan tiles over the hero photograph"></span>
         </a>
         <a class="baf-item" href="/images/ldp/live-homepage-hero.jpg" target="_blank" rel="noopener noreferrer">
-          <div class="baf-lbl"><b>After</b>The shipped homepage</div>
+          <div class="baf-lbl"><b>After</b>The shipped product</div>
           <span class="baf-frame"><img src="/images/ldp/live-homepage-hero.jpg" width="1600" height="753" loading="lazy" decoding="async" alt="The shipped homepage — a thin language and log-in strip above one navy navigation row with the three personas, search and Find a dentist, over a full-bleed photograph of three generations of a family"></span>
         </a>
       </div>
@@ -1017,6 +1214,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       <p>The shipped direction leads with people. A photograph of three generations answers <strong>who this is for</strong> before a word is read, on a page a member often reaches while worried about a claim.</p>
       <p>The faces are the engagement mechanism, not the ornament.</p>
       <p>The rebrand made that possible. Purple had coated every surface, so it carried no information. The new palette sets a deep navy against quiet warm neutrals and holds one blue back for action.</p>
+      <div class="tag">Design trade-off</div>
       <p>The top of the page is deliberately marketing-led: few surfaces, large imagery, short copy. The density is saved for the screens where members do the work.</p>
 
       <h4 class="subhead2">Typography</h4>
@@ -1034,15 +1232,31 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       <a href="/images/ldp/color-system.jpg" target="_blank" rel="noopener noreferrer">
         <img src="/images/ldp/color-system.jpg" width="1400" height="1090" loading="lazy" decoding="async" alt="The color system — base, primary, deep blue, body text, grey scale and navigation blue ramps with hex values, alongside a usage table mapping each token to text, action, surface and border roles, and example button and card treatments">
       </a>
-      <figcaption>The colour system: every token tied to a named role, with the usage table driving text, action, surface and border decisions.</figcaption>
+      <figcaption>The color system: every token tied to a named role, with the usage table driving text, action, surface and border decisions.</figcaption>
     </figure>
+      <h4 class="subhead2">Accessibility decisions</h4>
+      <p>Accessibility was handled inside the system rather than as a pass at the end. These are the decisions it produced, not an audit.</p>
+      <div class="a11y">
+        <div><b>Color contrast</b><span>Every token tied to a named role, so text, action, surface and border colors are chosen by the usage table rather than by eye.</span></div>
+        <div><b>Typography</b><span>One type scale across desktop, tablet and mobile, with line height and weight fixed per style.</span></div>
+        <div><b>Action clarity</b><span>A firm visual split between primary and secondary actions, carried through the component set.</span></div>
+        <div><b>Responsive behavior</b><span>Built alongside the core experience, so small screens get the same structure rather than a reduced one.</span></div>
+      </div>
     </section>
 
     <section id="p2-result">
       <div class="stage"><b>06</b>Outcome &amp; Handoff</div>
       <h3>A complex product delivered through iteration and collaboration</h3>
-      <p>The final design went through multiple rounds of research, exploration, rejection, client feedback, refinement, and approval.</p>
-      <p>We moved from a legacy application with scattered information toward a more structured, persona-based experience with clearer navigation and responsive behavior.</p>
+      <p>We moved from a legacy application with scattered information to a structured, persona-based experience, after multiple rounds of exploration, rejection, client feedback and approval.</p>
+      <h4 class="subhead">What shipped</h4>
+      <ul class="ship">
+        <li><strong>Persona-based navigation</strong>, approved and running in production</li>
+        <li><strong>Responsive navigation</strong> across desktop and mobile, with the drill-down menu on small screens</li>
+        <li>A restructured <strong>information architecture</strong> and a full page-by-page sitemap</li>
+        <li>A <strong>type scale and color system</strong> with every token tied to a named role</li>
+        <li>More efficient <strong>progress bars, forms and contextual information</strong> on long pages</li>
+        <li><strong>UX reviews continued through production</strong>, not stopped at handoff</li>
+      </ul>
     <div class="showcase">
       <div class="sc-cols">
         <div class="sc-col">
@@ -1084,20 +1298,25 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
         </a>
       </div>
     </div>
-      <p>But visual approval wasn't the end.</p>
-      <p><span class="mark m2">We worked closely with developers during handoff</span> to make sure the implementation matched the intended design.</p>
-      <p>Usability testing happened during the process, and UX reviews continued during production.</p>
+      <h4 class="subhead2">Working with the developers</h4>
+      <div class="tag is-mine">My role</div>
+      <p>Visual approval was not the end. <span class="mark m2">We worked closely with developers during handoff</span> to make sure what got built matched what was designed.</p>
+      <div class="flow">
+        <div class="flow-step"><span class="flow-b">Design</span><p>Wireframes and visual design, approved stage by stage.</p></div>
+        <div class="flow-step is-mine"><span class="flow-b">Handoff</span><p>Walked the developers through the intent, not just the files.</p></div>
+        <div class="flow-step"><span class="flow-b">Component discussions</span><p>Bootstrap components customized together where usability needed it.</p></div>
+        <div class="flow-step is-mine"><span class="flow-b">Implementation review</span><p>Design reviews against the build, with usability testing running alongside.</p></div>
+        <div class="flow-step"><span class="flow-b">Iteration</span><p>UX reviews continued during production rather than ending at handoff.</p></div>
+      </div>
     </section>
 
     <section id="p2-learned">
       <div class="stage"><b>★</b>Reflection &amp; Learnings</div>
       <h3>What I learned</h3>
-      <p>This project was less about creating individual screens and more about <strong>leading design through uncertainty</strong>.</p>
-      <p>The biggest learning was balancing:</p>
-      <div class="inline-note"><strong>User needs, business requirements, technical constraints and deadlines.</strong></div>
-      <p>There were conflicts around information architecture, navigation, copywriting, development pressure, responsive design, and accessibility.</p>
-      <p>Instead of treating these as blockers, we used them to refine the solution.</p>
-      <p>As a Senior UX Designer and Offshore Design Lead, the project also pushed me to improve my leadership, collaboration, stakeholder management, and design-management skills.</p>
+      <p>This project was less about drawing screens and more about <strong>leading design through uncertainty</strong>.</p>
+      <div class="inline-note">The balance that ran through all of it: <strong>user needs, business requirements, technical constraints and deadlines.</strong></div>
+      <p>Conflicts came up around IA, navigation, copy, development pressure, responsive behavior and accessibility. Treated as inputs rather than blockers, each one sharpened the solution.</p>
+      <p>As Senior UX Designer and Offshore Design Lead, it pushed my leadership, stakeholder management and design-management as much as my craft.</p>
       <blockquote><p>A roller coaster, but a useful one.</p></blockquote>
     </section>
 
