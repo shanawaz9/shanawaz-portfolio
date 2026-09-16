@@ -223,6 +223,52 @@ ol.article-list li::before{
   font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.06em;
 }
 ul.article-list li strong,ol.article-list li strong{color:var(--ink)}
+/* the names behind a research line, set faint and a size down so the list
+   still scans as five activities rather than fifteen words */
+.li-note{display:block;font-size:14px;color:var(--ink-faint);line-height:1.55;margin-top:3px}
+.li-note b{font-weight:600;color:var(--ink-soft)}
+
+/* findings table: hairlines between rows and nothing else. No outer border,
+   no zebra, no fill. It should read as a tidied research note in the middle
+   of the article, not as a component borrowed from a dashboard. */
+.ctable-wrap{margin:var(--sp-4) 0 var(--sp-5)}
+table.ctable{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.55}
+table.ctable th,table.ctable td{
+  text-align:left;vertical-align:top;padding:12px 20px 12px 0;
+  border-bottom:1px solid var(--line);letter-spacing:-0.002em;
+}
+table.ctable th:last-child,table.ctable td:last-child{padding-right:0}
+table.ctable thead th{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-faint);padding-bottom:9px;border-bottom-color:var(--line2);
+}
+table.ctable tbody th{font-weight:600;color:var(--ink);width:24%}
+table.ctable td{color:var(--ink-soft)}
+table.ctable td:last-child{color:var(--ink);font-weight:500;width:34%}
+table.ctable tbody tr:last-child th,table.ctable tbody tr:last-child td{border-bottom:none}
+
+/* below 640px the three columns stop fitting, so each row becomes its own
+   small block and the column headings come back as inline labels */
+@media(max-width:640px){
+  table.ctable thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  table.ctable,table.ctable tbody,table.ctable tr,table.ctable th,table.ctable td{display:block;width:auto}
+  table.ctable tr{padding:var(--sp-3) 0;border-bottom:1px solid var(--line)}
+  table.ctable tr:last-child{border-bottom:none}
+  table.ctable th,table.ctable td{border-bottom:none;padding:0 0 6px}
+  table.ctable tbody th{font-size:15.5px;margin-bottom:2px}
+  table.ctable td::before{
+    content:attr(data-l) ' ';
+    font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-faint);display:block;margin-bottom:3px;
+  }
+}
+
+/* the one-line conclusion under a research block */
+p.takeaway{font-size:15.5px;color:var(--ink-soft);margin-bottom:var(--sp-5)}
+p.takeaway b{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-faint);display:block;margin-bottom:5px;
+}
 
 /* pull quote: no bar, no italics. Size and colour carry it. */
 blockquote{margin:var(--sp-6) 0}
@@ -238,6 +284,85 @@ blockquote p{
   margin:0 0 var(--sp-5);font-size:15px;color:var(--ink-soft);line-height:1.65;
 }
 .inline-note strong{color:var(--ink);font-weight:600}
+
+/* ---------- hand marker ----------
+   A highlighter stroke the way it lands in a paperback: the angled gradient
+   starts and ends short of the text, the second pass adds a band of uneven
+   density, and the lopsided radius keeps the ends from reading as a rectangle.
+   Three variants so no two marks on a page trace the same stroke. */
+.mark{
+  background-image:
+    linear-gradient(101deg,
+      rgba(255,238,120,0)   0.4%,
+      rgba(255,230,84,.88)  2.6%,
+      rgba(255,224,66,.74)  6%,
+      rgba(255,231,104,.42) 62%,
+      rgba(255,226,74,.80)  92%,
+      rgba(255,238,120,.18) 97%,
+      rgba(255,238,120,0)   99.3%),
+    linear-gradient(184deg,
+      rgba(255,233,96,0)   0%,
+      rgba(255,233,96,.34) 34%,
+      rgba(255,233,96,.06) 78%,
+      rgba(255,233,96,0)   100%);
+  /* the pen rode low and left a sliver of paper along the top */
+  background-size:100% 82%;
+  background-position:0 76%;
+  background-repeat:no-repeat;
+  padding:.16em .34em .2em;
+  margin:0 -.26em;
+  border-radius:.7em .25em .55em .3em;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+  mix-blend-mode:multiply;
+  color:inherit;
+  text-decoration:none;
+}
+/* second pass of the pen: shorter on the left, heavier at the tail */
+.mark.m2{
+  background-image:
+    linear-gradient(97deg,
+      rgba(255,236,110,0)   1.2%,
+      rgba(255,228,78,.66)  3.4%,
+      rgba(255,233,108,.38) 30%,
+      rgba(255,224,66,.86)  74%,
+      rgba(255,228,80,.58)  95%,
+      rgba(255,236,110,0)   98.6%),
+    linear-gradient(176deg,
+      rgba(255,231,90,0)   0%,
+      rgba(255,231,90,.28) 22%,
+      rgba(255,231,90,.10) 70%,
+      rgba(255,231,90,0)   100%);
+  border-radius:.3em .65em .28em .6em;
+  padding:.2em .3em .14em;
+  background-size:100% 74%;
+  background-position:0 96%;
+}
+/* the mark that overshot the word */
+.mark.m3{
+  background-image:
+    linear-gradient(107deg,
+      rgba(255,240,130,0)   0%,
+      rgba(255,226,70,.80)  1.8%,
+      rgba(255,232,100,.50) 18%,
+      rgba(255,228,84,.70)  55%,
+      rgba(255,233,110,.34) 84%,
+      rgba(255,226,74,.62)  96.5%,
+      rgba(255,240,130,0)   100%),
+    linear-gradient(188deg,
+      rgba(255,236,104,0)   0%,
+      rgba(255,236,104,.30) 46%,
+      rgba(255,236,104,0)   100%);
+  border-radius:.5em .5em .22em .75em;
+  padding:.14em .38em .22em;
+  margin:0 -.3em;
+  background-size:100% 90%;
+  background-position:0 42%;
+}
+.mark strong{color:inherit}
+@media print{
+  .mark,.mark.m2,.mark.m3{background:rgba(255,230,84,.55);border-radius:0}
+}
 
 /* ---------- figures ---------- */
 figure{margin:var(--sp-6) 0 var(--sp-7)}
@@ -264,6 +389,84 @@ figcaption strong{color:var(--ink-soft);font-weight:600}
   width:22px;height:22px;border-radius:50%;background:var(--bg-soft);
   color:var(--ink-faint);font-size:10px;letter-spacing:0;font-weight:700;
 }
+.variant-note{font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin:0 0 var(--sp-2);letter-spacing:-0.002em}
+
+/* three directions side by side. The row breaks out past the 720px measure
+   using the same width trick as the showcase, but keeps a plain white ground
+   and a wide gutter. The comparison should read as three specimens pinned up,
+   not as a panel of cards. */
+/* a block that steps outside the 720px text measure. It works out how far
+   in from the viewport edge it starts (half the leftover margin outside the
+   shell, plus the rail and the article pad), fills what is left, keeps a
+   gutter at the right, and stops at a ceiling so it cannot sprawl. */
+.bleed{
+  --sc-rail:268px;
+  --sc-pad:clamp(32px,5vw,72px);
+  --bleed-lead:calc(max(0px,(100vw - var(--shell-max))/2) + var(--sc-rail) + var(--sc-pad));
+  width:max(100%,min(1040px,calc(100vw - var(--bleed-lead) - var(--sp-6))));
+}
+@media(max-width:1100px){ .bleed{width:100%} }
+/* the pictures widen, the prose does not. A caption set to 940px is a worse
+   read than one set to the measure */
+.bleed > figcaption{max-width:var(--measure)}
+
+.trio{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5);
+  margin:var(--sp-5) 0 var(--sp-3);
+}
+/* these anchors live inside .shots, so the generic figure-link hover would
+   also lift them and draw a second rounded shadow around the whole column,
+   text and all. Only the thumbnail should react. */
+.shots a.trio-item,.shots a.baf-item{border-radius:0;overflow:visible}
+.shots a.trio-item:hover,.shots a.baf-item:hover{transform:none;box-shadow:none}
+.trio-item,.baf-item{display:block;text-decoration:none}
+.trio-lbl{
+  display:flex;align-items:baseline;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:7px;
+}
+.trio-lbl b{color:var(--ink-faint);font-weight:700;letter-spacing:0}
+.trio-note{
+  font-size:13.5px;line-height:1.6;color:var(--ink-soft);
+  margin:0 0 var(--sp-3);letter-spacing:-0.002em;
+}
+
+/* the before/after pair. Two frames on one aspect ratio, because a comparison
+   only works when the only thing changing is the thing being compared. */
+.baf{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5);margin:var(--sp-5) 0 var(--sp-3)}
+/* 17/8 is the shipped hero shot's own ratio, and the legacy shot is cropped
+   to match, so neither loses its logo or its primary action to the frame */
+.baf .baf-frame{aspect-ratio:17/8}
+
+/* these labels are read, not scanned, so they get body-text size rather than
+   the 10px micro-caps used elsewhere. The stage word sits in a pill so the
+   pair reads at a glance without shouting. */
+.baf-lbl{
+  display:flex;align-items:baseline;gap:9px;
+  font-size:15px;font-weight:600;color:var(--ink);
+  letter-spacing:-0.004em;margin-bottom:10px;
+}
+.baf-lbl b{
+  flex-shrink:0;font-size:10px;font-weight:700;letter-spacing:.11em;
+  text-transform:uppercase;padding:4px 9px;border-radius:5px;
+  background:var(--accent-soft);color:var(--accent);
+}
+.baf-item.is-old .baf-lbl{color:var(--ink-soft)}
+.baf-item.is-old .baf-lbl b{background:var(--bg-soft);color:var(--ink-faint)}
+@media(max-width:1100px){ .baf{grid-template-columns:1fr;gap:var(--sp-5)} }
+.trio-frame,.baf-frame{
+  display:block;overflow:hidden;border-radius:10px;background:#fff;
+  aspect-ratio:5/8;box-shadow:0 1px 2px rgba(20,22,34,.07),0 6px 20px rgba(20,22,34,.05);
+  transition:transform .2s,box-shadow .2s;
+}
+.trio-frame img,.baf-frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+.trio-item:hover .trio-frame,.baf-item:hover .baf-frame{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,22,34,.13)}
+/* the rail is still on screen below this, so three columns would squeeze
+   under ~220px. One large column reads better than three cramped ones. */
+@media(max-width:1100px){
+  .trio{grid-template-columns:1fr;gap:var(--sp-6);width:100%}
+  .trio-frame{aspect-ratio:4/5}
+}
 .variant.rejected .variant-lbl{color:var(--ink-faint)}
 .variant.approved .variant-lbl{color:var(--accent)}
 .variant.approved .variant-lbl b{background:var(--accent-soft);color:var(--accent)}
@@ -276,6 +479,12 @@ figcaption strong{color:var(--ink-soft);font-weight:600}
 .variant-tick svg{width:11px;height:11px;flex-shrink:0}
 
 /* withheld artefact: the blur is baked into the file, not applied here */
+/* label that sits above a figure instead of a caption below it, for the
+   images that need naming before you look rather than after */
+.fig-head{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-faint);margin:0 0 var(--sp-3);
+}
 .nda{position:relative;border-radius:10px;overflow:hidden;background:var(--bg-soft)}
 .nda img{display:block;width:100%;height:auto}
 .nda-veil{
@@ -417,11 +626,11 @@ figcaption strong{color:var(--ink-soft);font-weight:600}
 }
 
 /* scroll-reveal, gated on js-motion so reduced-motion users see no animation */
-html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,h3,h4.subhead2,p,ul.article-list,ol.article-list,blockquote,.shots,.inline-note,.authorbox){
+html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,h3,h4.subhead2,p,ul.article-list,ol.article-list,blockquote,.shots,.ctable-wrap,.inline-note,.authorbox){
   opacity:0;transform:translateY(12px);
   transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);
 }
-html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,h3,h4.subhead2,p,ul.article-list,ol.article-list,blockquote,.shots,.inline-note,.authorbox).in{
+html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,h3,h4.subhead2,p,ul.article-list,ol.article-list,blockquote,.shots,.ctable-wrap,.inline-note,.authorbox).in{
   opacity:1;transform:none;
 }
 @media(prefers-reduced-motion:reduce){.progress i{transition:none}}
@@ -530,18 +739,19 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
     <section id="p2-situation">
       <div class="stage"><b>01</b>Discovery &amp; Research</div>
       <h3>Turning a complex healthcare application into a simpler experience</h3>
-      <p>We started with an existing healthcare application that had been around for a long time. Information and navigation were scattered across the product, making the experience difficult to structure.</p>
+      <p>We started with an existing healthcare application that had been around for a long time. Information and <span class="mark m2">navigation were scattered across the product</span>, making the experience difficult to structure.</p>
       <p>The application served three groups of users: <strong>members, providers and brokers</strong>. The client also wanted a mobile-responsive experience.</p>
       <p>Since we were new to US healthcare, we first focused on understanding the domain before jumping into design.</p>
       <p>We conducted:</p>
       <ul class="article-list">
-        <li>US healthcare market research</li>
-        <li>Competitive analysis</li>
+        <li><span class="mark">US healthcare market research</span></li>
+        <li>Competitive analysis <span class="li-note"><b>(6)</b> Delta Dental, DentaQuest, UnitedHealthcare, Aetna, Cigna, MCNA Dental</span></li>
         <li>Existing product analysis</li>
         <li>Client discussions and requirement gathering</li>
         <li>Design workshops and brainstorming</li>
       </ul>
-    <figure class="shots">
+    <figure class="shots bleed">
+      <p class="fig-head">Old screens</p>
       <a href="/images/ldp/existing-01-home.jpg" target="_blank" rel="noopener noreferrer">
         <img src="/images/ldp/existing-01-home.jpg" width="1400" height="857" loading="lazy" decoding="async"
              alt="Existing homepage with the Programs dropdown open over the hero banner">
@@ -558,7 +768,49 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       </div>
       <figcaption>The existing application. Navigation scattered across competing menus: a top-level <strong>Programs</strong> dropdown, a second dropdown nested inside a plan card, and a twelve-item <strong>Members</strong> menu covering most of the page, all reachable from the same screen.</figcaption>
     </figure>
-      <div class="inline-note">From a design lead perspective, the first challenge was clear: <strong>how do we structure the information and navigation around three different personas without making the product fragmented?</strong></div>
+      <h4 class="subhead2">What the rest of the market was already doing</h4>
+      <p>I reviewed the six for the patterns that repeat: navigation, provider search, member self-service, accessibility, personalization and mobile. Not to copy anyone, but to find where LDP could simplify.</p>
+      <div class="ctable-wrap">
+        <table class="ctable">
+          <thead>
+            <tr><th scope="col">Area</th><th scope="col">Key observation</th><th scope="col">LDP opportunity</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Navigation</th>
+              <td data-l="Observed">Complex and scattered across several of the experiences</td>
+              <td data-l="Opportunity">Simplify the information architecture</td>
+            </tr>
+            <tr>
+              <th scope="row">Provider search</th>
+              <td data-l="Observed">Strong filtering and search patterns</td>
+              <td data-l="Opportunity">Make finding a provider faster</td>
+            </tr>
+            <tr>
+              <th scope="row">Member experience</th>
+              <td data-l="Observed">Claims, benefits and tools often take several steps</td>
+              <td data-l="Opportunity">Reduce friction in the key tasks</td>
+            </tr>
+            <tr>
+              <th scope="row">Accessibility</th>
+              <td data-l="Observed">WCAG is increasingly emphasized</td>
+              <td data-l="Opportunity">Build accessibility into the experience</td>
+            </tr>
+            <tr>
+              <th scope="row">Personalization</th>
+              <td data-l="Observed">Some competitors tailor content more strongly</td>
+              <td data-l="Opportunity">Make content more relevant to members</td>
+            </tr>
+            <tr>
+              <th scope="row">Mobile</th>
+              <td data-l="Observed">Quality varies widely</td>
+              <td data-l="Opportunity">Prioritize responsive, mobile-first journeys</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="takeaway"><b>Key takeaway</b>The research moved our focus from adding features to <strong>simplifying the experience</strong>: clearer navigation, better hierarchy, more efficient forms and progress indicators, stronger provider journeys.</p>
+      <div class="inline-note">From a design lead perspective, the first challenge was clear: <strong><span class="mark m3">how do we structure the information and navigation</span> around three different personas without making the product fragmented?</strong></div>
     </section>
 
     <section id="p2-desire">
@@ -592,9 +844,17 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       </div>
       <figcaption>Three proposed navigation approaches</figcaption>
     </figure>
-      <p>We used card sorting, research, client workshops, and multiple design discussions to narrow down the direction.</p>
-      <p>The <strong>persona-based approach</strong> emerged as the strongest direction, and the client agreed to move forward with it.</p>
+      <p>Research, client workshops and repeated design discussions narrowed the field, but the decision itself came out of one exercise.</p>
+
+      <h4 class="subhead2">Card sorting, on a table, with paper</h4>
+      <p>We ran <span class="mark">card sorting</span> inside the UX team. Every page, tool and piece of content in the product went onto its own card, and we sorted them into groups until the grouping stopped moving.</p>
+      <p>Two things decided where a card landed: <strong>what the client had asked the business to surface</strong>, and <strong>how members, providers and brokers actually go looking for information</strong>.</p>
+      <p>Where those two disagreed, the card went onto a list we worked through one by one, then took into the next client discussion as a position rather than a question.</p>
+      <p>That produced the priority order: what earns primary navigation, what belongs a level down, and what had sat on the homepage for years without earning it.</p>
+      <div class="inline-note">We ran it <strong><span class="mark m2">physically rather than in a digital tool</span></strong>. Paper on a table meant everyone reached in and moved something, so disagreements surfaced in an afternoon instead of as comments on a board a week later.</div>
+      <p>The <strong>persona-based approach</strong> emerged as the strongest direction, and <span class="mark m3">the client agreed to move forward with it</span>.</p>
     <figure class="shots">
+      <p class="fig-head">Card sorting &middot; Research artifacts &middot; Final IA</p>
       <div class="nda">
         <img src="/images/ldp/ia-final-nda.jpg" width="1200" height="752" loading="lazy" decoding="async"
              alt="The final information architecture — a site map branching from each persona into five content categories and their child pages. Obscured, withheld under NDA.">
@@ -605,9 +865,8 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
           </span>
         </div>
       </div>
-      <figcaption>Card sorting / research artifacts / final IA</figcaption>
     </figure>
-      <p>We then translated the information architecture into page-to-page user flows.</p>
+      <p>We then translated the information architecture into a full sitemap, page by page.</p>
     <figure class="shots">
       <div class="nda">
         <img src="/images/ldp/sitemap-nda.jpg" width="1200" height="1092" loading="lazy" decoding="async"
@@ -626,23 +885,18 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
     <section id="p2-conflict">
       <div class="stage"><b>03</b>Process &amp; Constraints</div>
       <h3>The timeline started fighting the process</h3>
-      <p>Once the structure started coming together, the project became a balance between UX quality, business expectations, and a tight development timeline.</p>
-      <p>The project managers and developers were pushing toward development while the UX work was still evolving. There was also a misunderstanding around the difference between wireframes and final visual design.</p>
-      <p>The pressure was essentially:</p>
+      <p>Once the structure came together, the project became a balance of UX quality, business expectations and a tight timeline. Developers pushed to start while UX was still moving, and wireframes were read as finished design.</p>
       <blockquote><p>Can we just start development with the wireframes and add the visual design later?</p></blockquote>
-      <p>From my perspective as the offshore design lead, I pushed back because the requirements and designs were still changing. Starting development too early would create rework and potentially affect the quality of the product.</p>
+      <p>As the offshore design lead I pushed back. The requirements and designs were still changing, and starting early would have bought a few weeks at the cost of rework.</p>
     <figure class="shots meme">
       <img src="/images/ldp/pressure-two-buttons.jpg" width="600" height="897" loading="lazy" decoding="async"
            alt="The two-buttons meme: a sweating man hesitating over two red buttons, unable to pick between them">
       <figcaption>Timeline / process showing development pressure</figcaption>
     </figure>
-      <div class="inline-note">Instead of removing UX steps, we negotiated the timeline and kept the process: <strong>wireframes, approval, responsive design, visual design</strong>.</div>
-      <p>But that wasn't the only conflict.</p>
+      <div class="inline-note">Instead of removing UX steps, <span class="mark">we negotiated the timeline and kept the process</span>: <strong>wireframes, approval, responsive design, visual design</strong>.</div>
 
       <h4 class="subhead2">Copy became part of the design process</h4>
-      <p>Because this was an insurance/healthcare product, the client prioritized copywriting before design.</p>
-      <p>While copywriting was being finalized, we were also progressing with wireframes and visual direction. Changes to the copy sometimes affected the design.</p>
-      <p>At the same time, we were exploring multiple visual directions in parallel.</p>
+      <p>Because this was an insurance product, the client wanted copy settled before design. In practice the two ran in parallel, and copy changes kept moving the wireframes.</p>
     </section>
 
     <section id="p2-change">
@@ -651,7 +905,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       <p>Instead of letting changing requirements dictate the process, we separated the work into clear stages and kept iterating with the client.</p>
 
       <h4 class="subhead2">Navigation</h4>
-      <p>Navigation was one of the biggest UX challenges.</p>
+      <p><span class="mark m2">Navigation was one of the biggest UX challenges.</span></p>
       <div class="inline-note">The desktop structure ran from the landing page, into a persona-based flow, then local navigation, then three subcategories.</div>
       <p>The challenge was translating this into a responsive mobile experience.</p>
       <p>We explored three approaches. <strong>The first two were rejected.</strong></p>
@@ -703,9 +957,8 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       <figcaption>The approved navigation, applied across desktop and mobile.</figcaption>
     </figure>
 
-      <h4 class="subhead2">Simplifying the experience</h4>
-      <p>We also narrowed down long navigational pages and explored more efficient progress bars, forms, and contextual information.</p>
-      <p>Bootstrap components were another constraint. With support from the developers, we customized them where usability needed it. Responsive design was built alongside the core experience rather than treated as an afterthought.</p>
+      <p>We also narrowed down long navigational pages and explored <span class="mark m3">more efficient progress bars, forms, and contextual information</span>.</p>
+      <p>Bootstrap components were another constraint. With the developers, we customized them where usability needed it. Responsive design was built alongside the core experience, not bolted on after.</p>
     </section>
 
     <section id="p2-visual">
@@ -723,8 +976,51 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
         <span class="chip">Responsive behavior</span>
       </div>
 
+      <h4 class="subhead2">Three visual directions</h4>
+      <p>Before settling the system, we built the same homepage three times so the client could compare like with like rather than react to adjectives.</p>
+    <figure class="shots">
+      <div class="trio bleed">
+        <a class="trio-item" href="/images/ldp/vis-01-flat.jpg" target="_blank" rel="noopener noreferrer">
+          <div class="trio-lbl"><b>01</b>Minimal &amp; flat</div>
+          <p class="trio-note">Clean layouts, soft palette and real photography, with a firm split between primary and secondary actions.</p>
+          <span class="trio-frame"><img src="/images/ldp/vis-01-flat.jpg" width="1400" height="2143" loading="lazy" decoding="async" alt="The flat, image-led direction — a dark photographic hero with overlaid stat cards, a provider section and a pink plan panel"></span>
+        </a>
+        <a class="trio-item" href="/images/ldp/vis-02-glass.jpg" target="_blank" rel="noopener noreferrer">
+          <div class="trio-lbl"><b>02</b>Glassmorphism</div>
+          <p class="trio-note">Frosted panels over vivid gradients, with shadow doing the separating. Elegant, but it cost us contrast.</p>
+          <span class="trio-frame"><img src="/images/ldp/vis-02-glass.jpg" width="1400" height="1966" loading="lazy" decoding="async" alt="The glassmorphism direction — a soft photographic hero with a frosted stat panel floating over it, and a deep blue plans section"></span>
+        </a>
+        <a class="trio-item" href="/images/ldp/vis-03-gradient.jpg" target="_blank" rel="noopener noreferrer">
+          <div class="trio-lbl"><b>03</b>Soft gradient</div>
+          <p class="trio-note">White space and gentle purple-pink gradients, laid out to an F-pattern so a content-heavy page still scans.</p>
+          <span class="trio-frame"><img src="/images/ldp/vis-03-gradient.jpg" width="1400" height="2257" loading="lazy" decoding="async" alt="The soft-gradient direction — a centred hero on a pale purple gradient with floating tooth icons and tag-style plan features"></span>
+        </a>
+      </div>
+      <figcaption>The same homepage in three directions, reviewed side by side with the client. Open any one for the full page.</figcaption>
+    </figure>
+
+      <h4 class="subhead2">What actually changed</h4>
+      <p>The whole redesign is legible in the first screen of the homepage, so it is worth putting the two side by side.</p>
+    <figure class="shots bleed">
+      <div class="baf">
+        <a class="baf-item is-old" href="/images/ldp/before-home.jpg" target="_blank" rel="noopener noreferrer">
+          <div class="baf-lbl"><b>Before</b>The legacy homepage</div>
+          <span class="baf-frame"><img src="/images/ldp/before-home.jpg" width="1008" height="474" loading="lazy" decoding="async" alt="The legacy homepage — a utility strip, a purple brand bar, a navigation row mixing audiences with products, a promotional banner, and plan tiles over the hero photograph"></span>
+        </a>
+        <a class="baf-item" href="/images/ldp/live-homepage-hero.jpg" target="_blank" rel="noopener noreferrer">
+          <div class="baf-lbl"><b>After</b>The shipped homepage</div>
+          <span class="baf-frame"><img src="/images/ldp/live-homepage-hero.jpg" width="1600" height="753" loading="lazy" decoding="async" alt="The shipped homepage — a thin language and log-in strip above one navy navigation row with the three personas, search and Find a dentist, over a full-bleed photograph of three generations of a family"></span>
+        </a>
+      </div>
+      <figcaption>The same screen, before and after. Both shown at the fold, where the decisions are densest.</figcaption>
+    </figure>
+      <p>The shipped direction leads with people. A photograph of three generations answers <strong>who this is for</strong> before a word is read, on a page a member often reaches while worried about a claim.</p>
+      <p>The faces are the engagement mechanism, not the ornament.</p>
+      <p>The rebrand made that possible. Purple had coated every surface, so it carried no information. The new palette sets a deep navy against quiet warm neutrals and holds one blue back for action.</p>
+      <p>The top of the page is deliberately marketing-led: few surfaces, large imagery, short copy. The density is saved for the screens where members do the work.</p>
+
       <h4 class="subhead2">Typography</h4>
-      <p>We had to balance SEO requirements, readability, and visual hierarchy.</p>
+      <p>We had to balance <span class="mark">SEO requirements</span>, readability, and visual hierarchy.</p>
     <figure class="shots">
       <a href="/images/ldp/typography-system.jpg" target="_blank" rel="noopener noreferrer">
         <img src="/images/ldp/typography-system.jpg" width="1400" height="1091" loading="lazy" decoding="async" alt="The typography system — Avenir Next LT Pro across three weights, with a type scale from H1 to button text giving desktop, tablet and mobile sizes, line heights and usage for each style">
@@ -789,7 +1085,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
       </div>
     </div>
       <p>But visual approval wasn't the end.</p>
-      <p>We worked closely with developers during handoff to make sure the implementation matched the intended design.</p>
+      <p><span class="mark m2">We worked closely with developers during handoff</span> to make sure the implementation matched the intended design.</p>
       <p>Usability testing happened during the process, and UX reviews continued during production.</p>
     </section>
 
@@ -863,7 +1159,7 @@ html.js-motion :is(h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,
 /* Scroll-reveal */
 (function(){
   if(!document.documentElement.classList.contains('js-motion')) return;
-  var sel='h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,h3,h4.subhead2,p,ul.article-list,ol.article-list,blockquote,.ph,.shots,.baf,.inline-note,.authorbox';
+  var sel='h1,.lead,.facts,.nda-line,.chips,.hero-shot,.showcase,.stage,h3,h4.subhead2,p,ul.article-list,ol.article-list,blockquote,.ph,.shots,.ctable-wrap,.baf,.inline-note,.authorbox';
   var els=Array.prototype.slice.call(document.querySelectorAll(sel));
   if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in');});return;}
   var io=new IntersectionObserver(function(entries){
