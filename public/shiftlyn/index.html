@@ -3,242 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shiftlyn — Case Study</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Shiftlyn &mdash; Case Study</title>
+<meta name="description" content="A product design case study: taking Shiftlyn, an AI readiness and upskilling product, from idea to MVP to product.">
+<link rel="stylesheet" href="/cs/system.css">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
+/* -------------------------------------------------------------------
+   SHIFTLYN — project layer.
+   The shared system supplies the shell, rail, type, grid and spacing.
+   This layer supplies the brand accent, the four-part structure this
+   case study alone uses, and the data components that stand in for
+   screenshots. They are drawn with the system's hairlines and paper,
+   and spend the accent only on data points and active states.
+   ------------------------------------------------------------------- */
 :root{
-  --ink:    #0c0b0a;
-  --ink2:   #28261f;
-  --ink3:   #5a5750;
-  --ink4:   #76726a;
-  --line2:  #c7c2b8;
-  --red:    #c1321f;
-  --green:  #1e6e43;
-  --amber:  #ab6a1f;
-  --gbg:    #edf6f1;
-  --line:   #e4e1db;
-  --bg:     #ffffff;
-  --bg2:    #f7f6f4;
-  --bg3:    #f0eeea;
-
-  /* spacing scale (8pt-based) */
-  --sp-1:8px;  --sp-2:12px; --sp-3:16px; --sp-4:24px;
-  --sp-5:32px; --sp-6:48px; --sp-7:64px; --sp-8:96px;
-
-  /* layout widths — --wide grows on large displays so the data components use
-     the available canvas; --read stays fixed, a reading measure must not. */
-  --read:720px;
-  --wide:1100px;
-  --pad:32px;
-}
-@media(min-width:1600px){:root{--wide:1240px;--pad:40px;}}
-@media(min-width:1920px){:root{--wide:1340px;--pad:48px;}}
-@media(max-width:640px){:root{--pad:20px;}}
-@media(max-width:400px){:root{--pad:16px;}}
-
-html{scroll-behavior:smooth}
-
-body{
-  font-family:'Sora',sans-serif;
-  font-size:16.5px;
-  line-height:1.75;
-  color:var(--ink2);
-  background:var(--bg);
-  -webkit-font-smoothing:antialiased;
+  /* Shiftlyn's brand red */
+  --accent:      #c1321f;
+  --accent-soft: rgba(193,50,31,.08);
+  --accent-line: rgba(193,50,31,.34);
+  /* the components below were authored against --red; it is the accent */
+  --red:         var(--accent);
 }
 
-/* layout — .t is the reading column (~74ch at 16.5px), .w carries the wider
-   data components. Both stay proportional so neither reads as an afterthought. */
-.t{max-width:var(--read);margin:0 auto;padding:0 var(--pad)}
-.w{max-width:var(--wide);margin:0 auto;padding:0 var(--pad)}
+/* ---------- column helpers ----------
+   Every block in this case study is wrapped in .t (reading measure) or
+   .w (wide canvas). Inside the shared shell they stop centring and
+   simply cap width, so the whole page hangs off one left edge. */
+.t{max-width:var(--measure);margin:0;padding:0}
+.w{max-width:var(--wide);margin:0;padding:0}
 
-/* header */
-.hdr{padding:72px 0 60px;border-bottom:1px solid var(--line);margin-bottom:64px}
-
-.badge{
-  display:inline-flex;align-items:center;gap:7px;
-  font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:0.13em;text-transform:uppercase;
-  color:var(--ink4);margin-bottom:28px;
+/* ---------- part divider ----------
+   Groups the seventeen chapters into a four-part arc. Heavier rule than
+   a chapter, so the reader feels the act change. */
+.part{margin:var(--s9) 0 0;padding-top:var(--s4);border-top:2px solid var(--ink)}
+.part-inner{display:flex;align-items:baseline;gap:var(--s4);flex-wrap:wrap}
+.part-no{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);flex-shrink:0;
 }
-.dot{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
-
-h1{
-  font-size:clamp(38px,5.5vw,60px);
-  font-weight:800;color:var(--ink);
-  line-height:1.06;letter-spacing:-0.03em;
-  margin-bottom:20px;
+.part-title{
+  font-size:clamp(26px,3.6vw,38px);font-weight:700;color:var(--ink);
+  letter-spacing:-0.025em;line-height:1;flex-shrink:0;margin:0;max-width:none;
 }
-h1 em{color:var(--ink4);font-weight:300;font-style:normal}
-
-.lead{
-  font-size:19px;font-weight:300;
-  color:var(--ink3);line-height:1.6;
-  max-width:560px;margin-bottom:40px;
+.part-desc{
+  font-size:14.5px;color:var(--ink3);line-height:1.5;max-width:340px;
+  margin:0 0 0 auto;text-align:right;
 }
-
-.meta{
-  display:grid;grid-template-columns:repeat(4,auto);
-  border:1px solid var(--line);
-  border-radius:8px;overflow:hidden;
-  width:fit-content;
-}
-/* 15px keeps all four cells on one line now that Stage carries three steps */
-.mi{padding:11px 15px;border-right:1px solid var(--line)}
-.mi:last-child{border-right:none}
-.ml{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:2px}
-.mv{font-size:13px;font-weight:600;color:var(--ink)}
-
-/* toc — grouped into the same 4 parts as the in-page dividers, so the
-   index doubles as a map of the story rather than a flat 17-item list */
-.toc{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:32px 36px;margin-bottom:var(--sp-7)}
-.toc-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--ink4);margin-bottom:22px}
-.toc-groups{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-.toc-group-hd{
-  font-family:'DM Mono',monospace;font-size:10px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--red);
-  margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--line);
-}
-.toc-group ul{list-style:none}
-.toc-group a{display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:400;color:var(--ink3);text-decoration:none;padding:6px 0;transition:color .12s}
-.toc-group a:hover{color:var(--red)}
-.tn{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);flex-shrink:0}
-@media(max-width:860px){.toc-groups{grid-template-columns:1fr 1fr;row-gap:24px}}
-@media(max-width:520px){.toc-groups{grid-template-columns:1fr}}
-
-/* part divider — groups chapters into a 4-part narrative arc.
-   Heavier than a chapter break: signals a real shift in the story. */
-.part{margin:0 0 var(--sp-7)}
-.part-inner{
-  display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 24px;
-  padding-bottom:26px;border-bottom:1.5px solid var(--ink);
-}
-.part-no{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--ink4);letter-spacing:.04em;flex-shrink:0}
-.part-title{font-size:clamp(26px,3.6vw,38px);font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1;flex-shrink:0}
-.part-desc{font-size:14.5px;font-weight:300;color:var(--ink3);line-height:1.5;max-width:360px;margin-left:auto;text-align:right}
-@media(max-width:640px){
-  .part-inner{flex-direction:column;align-items:flex-start;gap:8px}
-  .part-desc{text-align:left;margin-left:0;max-width:none}
+/* the chapter that opens a part already has the part rule above it */
+.part + .chapter{margin-top:var(--s7);padding-top:0;border-top:0}
+@media(max-width:760px){
+  .part-inner{gap:var(--s2)}
+  .part-desc{margin-left:0;text-align:left;max-width:none;flex-basis:100%}
 }
 
-/* chapter */
-.ch{margin-bottom:var(--sp-6)}
-
-.ch-num{
-  font-family:'DM Mono',monospace;font-size:11px;
-  letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--red);margin-bottom:14px;
-  display:flex;align-items:center;gap:10px;
-}
-.ch-num::before{content:'';width:16px;height:1px;background:var(--red)}
-
-h2{
-  font-size:clamp(24px,3.2vw,34px);
-  font-weight:700;color:var(--ink);
-  line-height:1.16;letter-spacing:-0.025em;
-  margin-bottom:22px;
-}
-
-h3{
-  font-size:11.5px;font-weight:700;
-  letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--ink3);margin-top:var(--sp-6);margin-bottom:16px;
-}
-
-p{font-weight:300;color:var(--ink2);margin-bottom:18px;font-size:16.5px}
-p:last-child{margin-bottom:0}
-em{font-style:italic;color:var(--ink3)}
-strong{font-weight:600;color:var(--ink);font-style:normal}
-
-/* pullquote */
+/* ---------- pull statement (same device as the rest of the portfolio) ---------- */
 .pq{
-  margin:44px 0;padding:26px 32px;
-  background:var(--bg2);
-  border-left:3px solid var(--red);
-  border-radius:0 8px 8px 0;
+  margin:var(--s6) 0;padding:var(--s4) 0 var(--s4) var(--s4);
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  border-left:2px solid var(--accent);max-width:var(--measure);
 }
-.pq p{font-size:19px;font-weight:500;color:var(--ink);line-height:1.5;margin:0;font-style:normal}
+.pq p{
+  font-size:clamp(19px,2.2vw,24px);font-weight:700;line-height:1.32;
+  letter-spacing:-0.019em;color:var(--ink);margin:0;max-width:34ch;
+}
 
-/* stat row (3 cols) */
+/* ---------- three key numbers ---------- */
 .sr{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:8px;
-  overflow:hidden;margin:32px 0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4) var(--s5);
+  margin:var(--s5) 0;padding-top:var(--s4);border-top:1px solid var(--ink);
 }
-.sc{background:var(--bg);padding:20px 18px;border-top:3px solid var(--red)}
-.sn{font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:1;margin-bottom:6px}
-.sd{font-size:12px;font-weight:400;color:var(--ink3);line-height:1.4}
-.ss{font-family:'DM Mono',monospace;font-size:9px;color:var(--ink4);margin-top:4px}
+.sc{background:none;padding:12px 0 0;border-top:1px solid var(--rule2)}
+.sn{font-size:clamp(24px,2.6vw,30px);font-weight:700;color:var(--accent);letter-spacing:-0.024em;line-height:1.05;margin-bottom:6px}
+.sd{font-size:13.5px;color:var(--ink3);line-height:1.5}
+.ss{font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:4px}
+@media(max-width:760px){.sr{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.sr{grid-template-columns:1fr}}
 
-/* learnings */
-.lrn{padding:22px 0;border-top:1px solid var(--line)}
-.lrn:last-child{border-bottom:1px solid var(--line)}
-.lt{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:7px}
-.lrn p{font-size:13px;color:var(--ink3);margin:0;font-weight:300}
+/* ---------- learnings ---------- */
+.lrn{padding:20px 0;border-top:1px solid var(--rule2);max-width:var(--measure)}
+.lrn:first-of-type{border-top:1px solid var(--rule)}
+.lrn:last-child{border-bottom:1px solid var(--rule)}
+.lt{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:7px}
+.lrn p{font-size:13.5px;color:var(--ink3);margin:0}
 
-/* rule */
-/* A light tick, not a full-width rule — chapters within a part are related,
-   so the break should read as a pause, not a wall. Parts use the heavier .part-inner border instead. */
-hr{border:none;width:56px;height:2px;background:var(--line2);margin:var(--sp-6) auto;}
-
-/* canvas guide rules — on wide screens, frame the --wide content column with
-   faint fixed verticals so the page reads as a deliberate canvas, not text
-   floating in an unbounded void. Tracks --wide so the frame stays on the
-   content edge as the column steps up. */
-@media(min-width:1240px){
-  body::before,body::after{
-    content:'';position:fixed;top:0;bottom:0;width:1px;
-    background:var(--line);z-index:0;pointer-events:none;
-  }
-  body::before{left:calc(50% - var(--wide) / 2)}
-  body::after{right:calc(50% - var(--wide) / 2)}
+/* ---------- plain lists ---------- */
+ul.pl,ol.pl{margin:0 0 var(--s4);padding-left:0;list-style:none;max-width:var(--measure)}
+ul.pl li,ol.pl li{position:relative;padding-left:20px;margin-bottom:10px;color:var(--ink2)}
+ul.pl li::before{content:'';position:absolute;left:0;top:12px;width:9px;height:1px;background:var(--accent)}
+ol.pl{counter-reset:pl}
+ol.pl li{counter-increment:pl;padding-left:26px}
+ol.pl li::before{
+  content:counter(pl,decimal-leading-zero);position:absolute;left:0;top:0;
+  font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.06em;
 }
 
-/* footer */
-footer{border-top:1px solid var(--line);padding:48px 0 72px;margin-top:64px}
-.fi{max-width:var(--read);margin:0 auto;padding:0 var(--pad);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
-.fb{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-0.02em}
-.fb span{color:var(--red)}
-.fn{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);text-align:right;line-height:1.9}
-.fn a{color:var(--red);text-decoration:none}
+/* ---------- interlude ---------- */
+.ib{margin:var(--s7) 0;display:flex;flex-direction:column;align-items:flex-start;gap:var(--s4)}
+.ic{margin-top:0;max-width:var(--measure)}
+.il{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.id{display:block;font-size:13.5px;color:var(--ink3);line-height:1.55}
 
-@media(max-width:640px){
-  .t,.w{padding:0 20px}
-  .sr{grid-template-columns:1fr}
-  .ic{margin-top:12px}
-  .id{font-size:12px}
-  .meta{grid-template-columns:repeat(2,1fr);width:100%}
-  .mi{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .mi:nth-child(2n){border-right:none}
-  .mi:nth-child(n+3){border-bottom:none}
-  .fi{flex-direction:column}
-  .fn{text-align:left}
+/* ---------- cover ---------- */
+.cover{margin:var(--s6) 0}
+
+/* ---------- footer ---------- */
+footer{margin-top:var(--s9);padding-top:var(--s4);border-top:1px solid var(--ink)}
+.fi{
+  max-width:var(--wide);margin:0;padding:0;
+  display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:var(--s4);
 }
-.cover{margin:0 0 64px}
-@media(max-width:640px){.cover{margin:0 0 40px}}
-.float-cta{
-  position:fixed;bottom:20px;right:20px;z-index:50;
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--ink);color:#fff;text-decoration:none;
-  font-family:'Sora',sans-serif;
-  padding:16px 24px;border-radius:16px;
-  box-shadow:0 8px 24px rgba(12,11,10,0.25);
-  transition:background .15s, transform .15s;
-  line-height:1.4;
-}
-.float-cta span{font-size:11px;font-weight:400;color:rgba(255,255,255,0.7)}
-.float-cta strong{font-size:14px;font-weight:700;color:#fff}
-.float-cta:hover{background:var(--red);transform:translateY(-2px)}
-.float-cta .dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:2px}
-.float-cta:hover .dot{background:#fff}
-@media(max-width:640px){.float-cta{bottom:16px;right:16px;padding:13px 18px}.float-cta span{font-size:10px}.float-cta strong{font-size:13px}}
-ul.pl{margin:0 0 18px 0;padding-left:22px;color:var(--ink2);font-weight:300;font-size:16.5px}
-ul.pl li{margin-bottom:7px}
-ol.pl{margin:0 0 18px 0;padding-left:22px;color:var(--ink2);font-weight:300;font-size:16.5px}
-ol.pl li{margin-bottom:7px}
+.fb{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.02em}
+.fb span{color:var(--accent)}
+.fn{font-family:var(--mono);font-size:10px;color:var(--ink4);line-height:1.9}
+.fn a{color:var(--accent);text-decoration:none}
+.f-sub{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-top:5px;letter-spacing:.04em}
+@media(max-width:640px){.fi{flex-direction:column;gap:var(--s3)}}
+
+/* ===================================================================
+   COMPONENT SYSTEM — these replace static case-study screenshots.
+   White surfaces, ink text, hairline rules; the accent is reserved for
+   data points, active states and calls to action.
+   =================================================================== */
 
 /* ============================================================
    COMPONENT SYSTEM — replaces static case-study screenshots.
@@ -248,7 +132,7 @@ ol.pl li{margin-bottom:7px}
 
 .icon{width:20px;height:20px;flex-shrink:0;display:block}
 .icon-badge{
-  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  width:38px;height:38px;border-radius:2px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   background:var(--bg2);border:1px solid var(--line);color:var(--red);
 }
@@ -258,26 +142,24 @@ ol.pl li{margin-bottom:7px}
 
 /* generic panel */
 .panel{
-  border:1px solid var(--line);border-radius:10px;background:var(--bg);
-  box-shadow:0 1px 2px rgba(12,11,10,0.04),0 6px 16px rgba(12,11,10,0.04);
+  border:1px solid var(--line);border-radius:2px;background:var(--bg);
 }
 .panel--dark{background:var(--ink);border-color:var(--ink);color:#fff}
 
 /* ---------- browser-frame mockup (landing / results page recreations) ---------- */
 .frame{
-  border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg);
-  box-shadow:0 1px 2px rgba(12,11,10,0.04),0 16px 36px rgba(12,11,10,0.07);
+  border:1px solid var(--line);border-radius:2px;overflow:hidden;background:var(--bg);
 }
 .frame-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--line)}
 .frame-dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
 .frame-url{
-  margin-left:10px;font-family:'DM Mono',monospace;font-size:9px;color:var(--ink4);
-  background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:4px 12px;
+  margin-left:10px;font-family:var(--mono);font-size:9px;color:var(--ink4);
+  background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:4px 12px;
 }
 .frame img{display:block;width:100%}
 
 .mk-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-.mk-step{padding:14px;border:1px solid var(--line);border-radius:8px}
+.mk-step{padding:14px;border:1px solid var(--line);border-radius:2px}
 .mk-step b{display:block;font-size:18px;color:var(--ink4);font-weight:800;margin-bottom:6px}
 .mk-step span{display:block;font-size:11px;font-weight:600;color:var(--ink)}
 .mk-step em{display:block;font-size:9.5px;font-weight:300;color:var(--ink3);font-style:normal;margin-top:3px;line-height:1.5}
@@ -288,17 +170,17 @@ ol.pl li{margin-bottom:7px}
 
 /* ---------- stat grid (market / data) ---------- */
 .stat-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
-.stat-card{border:1px solid var(--line);border-radius:10px;padding:20px}
+.stat-card{border:1px solid var(--line);border-radius:2px;padding:20px}
 .stat-card-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .stat-card-hd h4{font-size:12px;font-weight:700;color:var(--ink);letter-spacing:-0.01em}
 .bars{display:flex;align-items:flex-end;gap:10px;height:54px;margin:10px 0 6px}
 .bars i{flex:1;background:var(--bg3);border-radius:3px 3px 0 0;display:block;position:relative}
 .bars i.on{background:var(--red)}
-.bar-lbls{display:flex;gap:10px;font-family:'DM Mono',monospace;font-size:8px;color:var(--ink4)}
+.bar-lbls{display:flex;gap:10px;font-family:var(--mono);font-size:8px;color:var(--ink4)}
 .bar-lbls span{flex:1;text-align:center}
 .kpi-row{display:flex;gap:22px;margin-top:14px}
 .kpi b{display:block;font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-0.02em}
-.kpi span{display:block;font-size:9.5px;color:var(--ink4);font-family:'DM Mono',monospace;letter-spacing:.03em;margin-top:2px}
+.kpi span{display:block;font-size:9.5px;color:var(--ink4);font-family:var(--mono);letter-spacing:.03em;margin-top:2px}
 .ring-row{display:flex;gap:18px}
 .ring-item{display:flex;align-items:center;gap:12px;flex:1}
 .ring{
@@ -312,47 +194,47 @@ ol.pl li{margin-bottom:7px}
 /* ---------- journey / flow ---------- */
 .flow{display:flex;align-items:stretch;gap:10px;margin:32px 0}
 .flow-step{
-  flex:1;border:1px solid var(--line);border-radius:10px;padding:18px 14px;text-align:center;
+  flex:1;border:1px solid var(--line);border-radius:2px;padding:18px 14px;text-align:center;
   display:flex;flex-direction:column;align-items:center;gap:10px;
 }
 .flow-step .icon-badge{margin:0 auto}
-.flow-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--red);letter-spacing:.08em}
+.flow-num{font-family:var(--mono);font-size:9px;color:var(--red);letter-spacing:.08em}
 .flow-step strong{font-size:11.5px;font-weight:700;color:var(--ink);letter-spacing:.02em;text-transform:uppercase}
 .flow-arrow{display:flex;align-items:center;color:var(--ink4);flex-shrink:0}
 .flow-arrow .icon{width:16px;height:16px}
 .callout{
   display:flex;gap:14px;align-items:flex-start;background:var(--bg2);border:1px solid var(--line);
-  border-radius:10px;padding:18px 20px;margin-top:8px;
+  border-radius:2px;padding:18px 20px;margin-top:8px;
 }
-.callout h5{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
+.callout h5{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
 .callout p{margin:0;font-size:13px;color:var(--ink2)}
 
 /* ---------- funnel ---------- */
 .funnel{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:32px 0}
 .funnel-step{position:relative;padding:18px 16px;border:1px solid var(--line);text-align:center}
 .funnel-step+.funnel-step{border-left:none}
-.funnel-step:first-child{border-radius:8px 0 0 8px}
-.funnel-step:last-child{border-radius:0 8px 8px 0}
+.funnel-step:first-child{border-radius:2px 0 0 2px}
+.funnel-step:last-child{border-radius:0 2px 2px 0}
 .funnel-step .icon-badge{margin:0 auto 10px}
-.fs-lbl{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--ink4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.fs-lbl{font-family:var(--mono);font-size:8.5px;color:var(--ink4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
 .fs-pct{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1}
 .fs-n{font-size:10px;color:var(--ink3);margin-top:4px}
-.fs-drop{position:absolute;top:-11px;right:-30px;z-index:2;font-family:'DM Mono',monospace;font-size:8px;color:#fff;background:var(--ink3);border-radius:20px;padding:3px 8px;white-space:nowrap}
-.bench{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:18px 0}
+.fs-drop{position:absolute;top:-11px;right:-30px;z-index:2;font-family:var(--mono);font-size:8px;color:#fff;background:var(--ink3);border-radius:2px;padding:3px 8px;white-space:nowrap}
+.bench{border:1px solid var(--line);border-radius:2px;padding:18px 20px;margin:18px 0}
 .bench-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line)}
 .bench-row:first-child{border-top:none}
 .bench-row b{font-size:11.5px;font-weight:600;color:var(--ink)}
-.bench-row span{font-size:10.5px;color:var(--ink3);font-family:'DM Mono',monospace}
+.bench-row span{font-size:10.5px;color:var(--ink3);font-family:var(--mono)}
 
 /* ---------- charts (market research) ----------
    Real scales, labelled axes, gridlines. Same 60/30/10 rule as everything
    else: white surface, ink type, red reserved for the actual data mark. */
 /* min-width:0 lets the card shrink inside .stat-2 so .chart-scroll — not the
    page — absorbs the overflow when the svg hits its legibility floor */
-.chart{border:1px solid var(--line);border-radius:10px;padding:20px 22px 18px;background:var(--bg);min-width:0}
+.chart{border:1px solid var(--line);border-radius:2px;padding:20px 22px 18px;background:var(--bg);min-width:0}
 .chart-hd{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .chart-hd h4{font-size:12px;font-weight:700;color:var(--ink);letter-spacing:-0.01em}
-.chart-sub{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.chart-sub{font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
 /* charts scroll rather than shrink below legibility — same escape hatch as .tbl-wrap */
 .chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .chart-scroll > svg{display:block;width:100%;height:auto}
@@ -361,9 +243,9 @@ ol.pl li{margin-bottom:7px}
 }
 .c-grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
 .c-axis{stroke:var(--line2);stroke-width:1}
-.c-lbl{font-family:'DM Mono',monospace;font-size:8.5px;fill:var(--ink4);letter-spacing:.05em}
-.c-val{font-family:'Sora',sans-serif;font-size:13px;font-weight:800;fill:var(--ink)}
-.c-name{font-family:'Sora',sans-serif;font-size:10.5px;font-weight:600;fill:var(--ink3)}
+.c-lbl{font-family:var(--mono);font-size:8.5px;fill:var(--ink4);letter-spacing:.05em}
+.c-val{font-family:var(--sans);font-size:13px;font-weight:800;fill:var(--ink)}
+.c-name{font-family:var(--sans);font-size:10.5px;font-weight:600;fill:var(--ink3)}
 .c-area{fill:rgba(193,50,31,.07)}
 .c-line{fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .c-line--proj{stroke-dasharray:5 4}
@@ -372,13 +254,13 @@ ol.pl li{margin-bottom:7px}
 .c-dot{fill:var(--red)}
 .c-dot--open{fill:var(--bg);stroke:var(--red);stroke-width:2}
 .chart-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;padding-top:13px;border-top:1px solid var(--line)}
-.chart-legend span{display:flex;align-items:center;gap:7px;font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4)}
+.chart-legend span{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4)}
 .chart-legend i{width:12px;height:3px;border-radius:2px;background:var(--red);display:block;flex-shrink:0}
 .chart-legend i.mut{background:var(--line2)}
 .chart-legend i.proj{background:repeating-linear-gradient(90deg,var(--red) 0 5px,transparent 5px 9px)}
 /* context that isn't a plotted series — kept out of the legend so every
    legend swatch still maps to something on the chart */
-.chart-note{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.05em;color:var(--ink4);margin-top:10px;line-height:1.6}
+.chart-note{font-family:var(--mono);font-size:8.5px;letter-spacing:.05em;color:var(--ink4);margin-top:10px;line-height:1.6}
 
 /* ---------- vertical market funnel (TAM → SAM → SOM → paying) ----------
    Width carries the narrowing; the last band flips to ink so the number
@@ -386,20 +268,19 @@ ol.pl li{margin-bottom:7px}
 .vfunnel{margin:32px 0;display:flex;flex-direction:column;align-items:center}
 .vf-band{
   width:var(--w,100%);min-width:min(100%,320px);
-  border:1px solid var(--line);border-radius:10px;background:var(--bg);
+  border:1px solid var(--line);border-radius:2px;background:var(--bg);
   padding:20px 24px;display:grid;grid-template-columns:1fr auto;gap:16px 28px;align-items:center;
-  box-shadow:0 1px 2px rgba(12,11,10,0.03);
 }
 .vf-band--som{border-color:rgba(193,50,31,.3)}
 .vf-band--pay{background:var(--ink);border-color:var(--ink)}
-.vf-lbl{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:7px}
+.vf-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:7px}
 .vf-b strong{display:block;font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;margin-bottom:9px}
 .vf-list{list-style:none;display:flex;flex-direction:column;gap:5px}
 .vf-list li{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;font-weight:300;color:var(--ink3);line-height:1.5}
 .vf-list li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--line2);flex-shrink:0;margin-top:7px}
 .vf-n{text-align:right}
 .vf-n b{display:block;font-size:30px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums}
-.vf-n span{display:block;font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-top:7px}
+.vf-n span{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-top:7px}
 .vf-band--pay .vf-lbl{color:rgba(255,255,255,.6)}
 .vf-band--pay .vf-b strong{color:#fff}
 .vf-band--pay .vf-list li{color:rgba(255,255,255,.72)}
@@ -408,7 +289,7 @@ ol.pl li{margin-bottom:7px}
 .vf-band--pay .vf-n span{color:rgba(255,255,255,.5)}
 .vf-arrow{display:flex;flex-direction:column;align-items:center;color:var(--ink4);padding:9px 0}
 .vf-arrow .icon{width:15px;height:15px}
-.vf-arrow em{font-family:'DM Mono',monospace;font-size:8px;font-style:normal;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);margin-top:3px}
+.vf-arrow em{font-family:var(--mono);font-size:8px;font-style:normal;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);margin-top:3px}
 @media(max-width:760px){
   .vfunnel .vf-band{width:100%;grid-template-columns:1fr;gap:14px}
   .vf-n{text-align:left}
@@ -416,10 +297,10 @@ ol.pl li{margin-bottom:7px}
 
 /* ---------- compare (before / after) ---------- */
 .cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
-.cmp-col{border:1px solid var(--line);border-radius:10px;padding:20px;position:relative}
+.cmp-col{border:1px solid var(--line);border-radius:2px;padding:20px;position:relative}
 .cmp-col.after{border-color:var(--red)}
 .cmp-tag{
-  font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink4);margin-bottom:14px;display:flex;align-items:center;gap:7px;
 }
 .cmp-col.after .cmp-tag{color:var(--red)}
@@ -431,7 +312,7 @@ ol.pl li{margin-bottom:7px}
 .cmp-visual i:nth-child(2){width:88%}
 .cmp-visual i:nth-child(3){width:64%}
 .cmp-visual.sectioned{gap:10px}
-.cmp-visual.sectioned i{height:16px;border-radius:5px;width:100%}
+.cmp-visual.sectioned i{height:16px;border-radius:2px;width:100%}
 .cmp-people{display:flex;gap:6px;margin-bottom:14px}
 .cmp-people i{width:22px;height:22px;border-radius:50%;background:var(--bg3);display:block}
 .cmp-col.after .cmp-people i{background:rgba(193,50,31,0.16)}
@@ -443,7 +324,7 @@ ol.pl li{margin-bottom:7px}
 .fw-item:last-child{padding-bottom:0}
 .fw-num{
   width:30px;height:30px;border-radius:50%;border:1.5px solid var(--red);color:var(--red);
-  display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:600;
   background:var(--bg);position:relative;z-index:1;flex-shrink:0;
 }
 .fw-item:not(:last-child)::before{
@@ -456,17 +337,17 @@ ol.pl li{margin-bottom:7px}
 .icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:32px 0}
 /* 6-lens teardown grid — same card, three up */
 .icon-grid--3{grid-template-columns:repeat(3,1fr)}
-.ig-card{border:1px solid var(--line);border-radius:10px;padding:18px 16px}
+.ig-card{border:1px solid var(--line);border-radius:2px;padding:18px 16px}
 .ig-card .icon-badge{margin-bottom:14px}
 .ig-card strong{display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.35}
 .ig-card span{display:block;font-size:10.5px;color:var(--ink3);font-weight:300;line-height:1.5}
 
 /* ---------- learning path levels ---------- */
 .levels{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0}
-.level{border:1px solid var(--line);border-radius:10px;padding:20px}
+.level{border:1px solid var(--line);border-radius:2px;padding:20px}
 .level-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .level-hd b{font-size:13px;font-weight:700;color:var(--ink)}
-.level-hd span{font-family:'DM Mono',monospace;font-size:8.5px;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em}
+.level-hd span{font-family:var(--mono);font-size:8.5px;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em}
 .chip-list{display:flex;flex-direction:column;gap:8px}
 .chip{
   display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink2);
@@ -476,33 +357,33 @@ ol.pl li{margin-bottom:7px}
 .chip i{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0}
 
 /* ---------- architecture diagram ---------- */
-.arch{border:1px solid var(--line);border-radius:10px;padding:26px;margin:32px 0}
+.arch{border:1px solid var(--line);border-radius:2px;padding:26px;margin:32px 0}
 .arch-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .arch-row:last-child{margin-bottom:0}
 .arch-box{
-  border:1px solid var(--line);border-radius:8px;padding:13px 15px;
+  border:1px solid var(--line);border-radius:2px;padding:13px 15px;
   display:flex;align-items:center;gap:10px;background:var(--bg2);
 }
 .arch-box strong{display:block;font-size:11.5px;font-weight:700;color:var(--ink)}
-.arch-box span{display:block;font-size:9.5px;color:var(--ink4);font-family:'DM Mono',monospace;margin-top:1px}
+.arch-box span{display:block;font-size:9.5px;color:var(--ink4);font-family:var(--mono);margin-top:1px}
 .arch-box.accent{background:rgba(193,50,31,0.05);border-color:rgba(193,50,31,0.22)}
 .arch-box.accent strong{color:var(--red)}
 .arch-link{display:flex;align-items:center;justify-content:center;color:var(--ink4);margin:2px 0}
 .arch-link .icon{width:14px;height:14px;transform:rotate(90deg)}
 
 /* ---------- flowchart (information architecture before/after) ---------- */
-.flowchart{border:1px solid var(--line);border-radius:12px;padding:28px;margin:32px 0;background:var(--bg)}
-.fc-lbl{display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
+.flowchart{border:1px solid var(--line);border-radius:2px;padding:28px;margin:32px 0;background:var(--bg)}
+.fc-lbl{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:16px}
 .fc-lbl.after{color:var(--red);margin-top:30px}
 
-.fc-jumble{display:flex;flex-wrap:wrap;gap:8px;padding:18px;border:1.5px dashed var(--line2);border-radius:10px;background:var(--bg2)}
-.fc-chip-flat{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:7px;border:1px dashed var(--line2);background:var(--bg);font-size:11.5px;font-weight:600;color:var(--ink3)}
+.fc-jumble{display:flex;flex-wrap:wrap;gap:8px;padding:18px;border:1.5px dashed var(--line2);border-radius:2px;background:var(--bg2)}
+.fc-chip-flat{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:2px;border:1px dashed var(--line2);background:var(--bg);font-size:11.5px;font-weight:600;color:var(--ink3)}
 .fc-chip-flat .icon{width:13px;height:13px;flex-shrink:0}
 .fc-warn{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--red);font-weight:500}
 .fc-warn .icon{width:15px;height:15px;flex-shrink:0}
 
 .fc-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 4px}
-.fc-node{display:flex;align-items:center;gap:7px;padding:10px 14px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg);font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
+.fc-node{display:flex;align-items:center;gap:7px;padding:10px 14px;border-radius:2px;border:1.5px solid var(--line);background:var(--bg);font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
 .fc-node .icon{width:14px;height:14px;color:var(--ink4);flex-shrink:0}
 .fc-node--gate{border-color:rgba(193,50,31,.4);background:rgba(193,50,31,.045)}
 .fc-node--gate .icon{color:var(--red)}
@@ -512,8 +393,8 @@ ol.pl li{margin-bottom:7px}
 .fc-arrow .icon{width:13px;height:13px}
 
 .fc-branch{margin-top:18px;padding-top:18px;border-top:1px dashed var(--line);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.fc-branch-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);flex-shrink:0}
-.fc-chip{font-size:11px;font-weight:500;color:var(--ink3);background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:5px 12px}
+.fc-branch-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);flex-shrink:0}
+.fc-chip{font-size:11px;font-weight:500;color:var(--ink3);background:var(--bg2);border:1px solid var(--line);border-radius:2px;padding:5px 12px}
 
 @media(max-width:640px){
   .fc-row{flex-direction:column;align-items:stretch}
@@ -522,10 +403,10 @@ ol.pl li{margin-bottom:7px}
 }
 
 /* ---------- comparison table ---------- */
-.tbl-wrap{overflow-x:auto;margin:28px 0;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
+.tbl-wrap{overflow-x:auto;margin:28px 0;border:1px solid var(--line);border-radius:2px;-webkit-overflow-scrolling:touch}
 .tbl{width:100%;min-width:780px;border-collapse:collapse;font-size:12.5px}
 .tbl th{
-  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink4);padding:12px 16px;text-align:left;border-bottom:1px solid var(--line);
   background:var(--bg2);font-weight:600;
 }
@@ -535,7 +416,7 @@ ol.pl li{margin-bottom:7px}
 .tbl td:first-child{font-weight:600;color:var(--ink);font-size:13px;white-space:nowrap}
 .tbl tbody tr:last-child{background:var(--gbg)}
 .tbl tbody tr:last-child td:first-child{color:var(--green)}
-.tbl-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink4);border:1px solid var(--line);border-radius:10px;padding:2px 7px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.tbl-tag{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink4);border:1px solid var(--line);border-radius:2px;padding:2px 7px;margin-left:6px;vertical-align:middle;white-space:nowrap}
 
 .risk,.fit{font-weight:700}
 .risk-high,.fit-bad{color:var(--red)}
@@ -546,7 +427,7 @@ ol.pl li{margin-bottom:7px}
 /* image-section frame */
 .ib{margin:56px auto;display:flex;flex-direction:column;align-items:center;gap:20px}
 .ic{margin-top:0;text-align:center;max-width:620px;margin-left:auto;margin-right:auto;padding:0 8px}
-.il{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.il{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
 .id{display:block;font-size:13px;color:var(--ink3);line-height:1.55;font-weight:300}
 
 /* these grids carry denser nested content (rings, chip lists, visuals) and
@@ -559,10 +440,10 @@ ol.pl li{margin-bottom:7px}
   .flow{flex-direction:column}
   .flow-arrow{transform:rotate(90deg);align-self:center}
   .funnel{grid-template-columns:1fr 1fr}
-  .funnel-step:nth-child(2){border-radius:0 8px 0 0}
-  .funnel-step:nth-child(3){border-radius:0 0 0 8px;border-left:1px solid var(--line);border-top:none}
-  .funnel-step:first-child{border-radius:8px 0 0 0}
-  .funnel-step:last-child{border-radius:0 0 8px 0;border-top:none}
+  .funnel-step:nth-child(2){border-radius:0 2px 0 0}
+  .funnel-step:nth-child(3){border-radius:0 0 0 2px;border-left:1px solid var(--line);border-top:none}
+  .funnel-step:first-child{border-radius:2px 0 0 0}
+  .funnel-step:last-child{border-radius:0 0 2px 0;border-top:none}
   .fs-drop{right:8px}
   .icon-grid{grid-template-columns:1fr 1fr}
   .mk-grid3{grid-template-columns:1fr}
@@ -574,199 +455,193 @@ ol.pl li{margin-bottom:7px}
 .vtabs-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
 .vtab{
   display:inline-flex;align-items:baseline;gap:8px;cursor:pointer;
-  font-family:'Sora',sans-serif;font-size:12.5px;font-weight:600;color:var(--ink3);
-  background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:8px 16px;
+  font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--ink3);
+  background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:8px 16px;
   transition:color .15s,background .15s,border-color .15s;
 }
 .vtab:hover{color:var(--ink);border-color:var(--line2)}
-.vtab-no{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--ink4)}
+.vtab-no{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--ink4)}
 .vtab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
 .vtab[aria-selected="true"] .vtab-no{color:rgba(255,255,255,0.55)}
 .vtab:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 .vtab-panel[hidden]{display:none}
 .vtab-panel:focus{outline:none}
 .vtab-meta{
-  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink4);padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid var(--line);
 }
 .vtab-meta b{color:var(--red);font-weight:500}
 
 /* ---------- screenshot thumbnails (dashboard surfaces) ---------- */
-.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:32px 0}
-.shot .frame{box-shadow:0 1px 2px rgba(12,11,10,0.04),0 8px 20px rgba(12,11,10,0.05)}
+
+/* ---------- screenshot trio ---------- */
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin:var(--s6) 0}
 .shot-cap{margin-top:12px}
 .shot-cap b{display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:3px}
-.shot-cap span{display:block;font-size:10.5px;font-weight:300;color:var(--ink3);line-height:1.5}
-@media(max-width:760px){.shots{grid-template-columns:1fr;gap:26px}}
+.shot-cap span{display:block;font-size:10.5px;color:var(--ink3);line-height:1.5}
+@media(max-width:760px){.shots{grid-template-columns:1fr;gap:var(--s5)}}
 
-/* ============================================================
-   PROGRESSIVE STAGE NAV — pinned to the top from Part 01 onward.
-   Each stage tab appears as its part is reached and stays pinned,
-   so the bar accumulates into a record of how far you've come.
-   Chips stay ink/line; red is spent only on the progress fill.
-   ============================================================ */
-.snav{
-  position:fixed;top:0;left:0;right:0;z-index:45;
-  background:rgba(255,255,255,0.9);
-  -webkit-backdrop-filter:saturate(180%) blur(14px);
-  backdrop-filter:saturate(180%) blur(14px);
-  border-bottom:1px solid var(--line);
-  transform:translateY(-101%);
-  transition:transform .3s cubic-bezier(.22,1,.36,1);
+/* ---------- reveal for this page's own components ----------
+   The system reveals its own elements; these are Shiftlyn's, listed
+   again on <body data-reveal> so the script picks them up. */
+html.js-motion :is(
+  .part-inner,.pq,.sr,.lrn,.frame,.stat-2,.flow,.funnel,.vfunnel,.vtabs-bar,
+  .bench,.cmp,.fw-list,.icon-grid,.levels,.arch,.flowchart,.tbl-wrap,.chart,
+  .split,.ib,footer .fi
+){
+  opacity:0;transform:translateY(10px);
+  transition:opacity .5s ease,transform .5s ease;
 }
-.snav.show{transform:none}
-.snav-in{
-  max-width:var(--wide);margin:0 auto;padding:10px var(--pad);
-  display:flex;align-items:center;gap:18px;
-}
-.snav-tabs{
-  display:flex;align-items:center;gap:6px;flex:1;min-width:0;
-  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
-}
-.snav-tabs::-webkit-scrollbar{display:none}
-.snav-tab{
-  display:inline-flex;align-items:baseline;gap:7px;flex-shrink:0;
-  font-size:12px;font-weight:600;color:var(--ink3);text-decoration:none;
-  background:var(--bg);border:1px solid var(--line);border-radius:20px;
-  padding:6px 14px;white-space:nowrap;
-  opacity:0;transform:translateY(7px);pointer-events:none;
-  transition:opacity .34s cubic-bezier(.22,1,.36,1),transform .34s cubic-bezier(.22,1,.36,1),
-             color .15s,background .15s,border-color .15s;
-}
-.snav-tab.rev{opacity:1;transform:none;pointer-events:auto}
-.snav-no{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--ink4)}
-.snav-tab:hover{color:var(--ink);border-color:var(--line2)}
-.snav-tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
-.snav-tab.active .snav-no{color:rgba(255,255,255,0.55)}
-.snav-pct{
-  flex-shrink:0;font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);
-}
-.snav-pct b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
-.snav-track{height:2px;background:var(--bg3)}
-.snav-fill{display:block;height:100%;width:0;background:var(--red);transition:width .1s linear}
-
-/* anchor jumps must clear the pinned bar */
-.part,.ch{scroll-margin-top:80px}
-
-@media(max-width:640px){
-  .snav-in{padding:8px 20px;gap:12px}
-  .snav-tab{font-size:11px;padding:5px 11px;gap:5px}
-  .snav-no{display:none}
-  .snav-pct span{display:none}
-}
-@media(prefers-reduced-motion:reduce){
-  .snav,.snav-tab,.snav-fill{transition:none}
-}
-
-/* scroll-reveal motion — soft fade + rise, matching the portfolio's easing.
-   Gated on .js-motion (set before paint) so there's no flash and reduced-motion is fully respected. */
-html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-inner,.ch-num,.ch h2,.ch h3,.pq,.sr,.lrn,.frame,.stat-2,.flow,.funnel,.vfunnel,.vtabs-bar,.bench,.cmp,.fw-list,.icon-grid,.levels,.arch,.flowchart,.tbl-wrap,footer .fi){
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);
-  will-change:opacity,transform;
-}
-html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-inner,.ch-num,.ch h2,.ch h3,.pq,.sr,.lrn,.frame,.stat-2,.flow,.funnel,.vfunnel,.vtabs-bar,.bench,.cmp,.fw-list,.icon-grid,.levels,.arch,.flowchart,.tbl-wrap,footer .fi).in{
-  opacity:1;
-  transform:none;
+html.js-motion :is(
+  .part-inner,.pq,.sr,.lrn,.frame,.stat-2,.flow,.funnel,.vfunnel,.vtabs-bar,
+  .bench,.cmp,.fw-list,.icon-grid,.levels,.arch,.flowchart,.tbl-wrap,.chart,
+  .split,.ib,footer .fi
+).in{
+  opacity:1;transform:none;
 }
 </style>
 <script>
-  /* Enable scroll-reveal unless the visitor prefers reduced motion. Runs before paint to avoid any flash. */
-  (function(){try{if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' js-motion';}}catch(e){}})();
+/* Set before first paint so revealed elements never flash in then out. */
+(function(){try{if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' js-motion';}}catch(e){}})();
 </script>
 </head>
-<body>
+<body data-reveal=".part-inner,.pq,.sr,.lrn,.frame,.stat-2,.flow,.funnel,.vfunnel,.vtabs-bar,.bench,.cmp,.fw-list,.icon-grid,.levels,.arch,.flowchart,.tbl-wrap,.chart,.split,.ib,footer .fi">
 
-<!-- PROGRESSIVE STAGE NAV -->
-<nav class="snav" id="snav" aria-label="Case study stages and reading progress">
-  <div class="snav-in">
-    <div class="snav-tabs">
-      <a class="snav-tab" href="#p1" tabindex="-1" aria-hidden="true"><span class="snav-no">01</span>Discover</a>
-      <a class="snav-tab" href="#p2" tabindex="-1" aria-hidden="true"><span class="snav-no">02</span>Build</a>
-      <a class="snav-tab" href="#p3" tabindex="-1" aria-hidden="true"><span class="snav-no">03</span>Refine</a>
-      <a class="snav-tab" href="#p4" tabindex="-1" aria-hidden="true"><span class="snav-no">04</span>Reflect</a>
-    </div>
-    <div class="snav-pct"><b>0%</b> <span>read</span></div>
-  </div>
-  <div class="snav-track" role="progressbar" aria-label="Case study read" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i class="snav-fill"></i></div>
-</nav>
+<div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
-<!-- HEADER -->
-<header class="hdr">
-<div class="t">
-  <div class="badge"><span class="dot"></span>Product Design Case Study</div>
-  <h1>Building an AI<br><em>Upskilling Platform.</em></h1>
-  <p class="lead">From idea to MVP to product — <strong>Shiftlyn</strong> helps people understand their AI readiness and find the right path to upskill.</p>
-  <div class="meta">
-    <div class="mi"><div class="ml">Role</div><div class="mv">UX Designer &amp; Product Strategist</div></div>
-    <div class="mi"><div class="ml">Stage</div><div class="mv">Idea → MVP → Product</div></div>
-    <div class="mi"><div class="ml">Status</div><div class="mv">In progress</div></div>
-    <div class="mi"><div class="ml">Read time</div><div class="mv">~14 min</div></div>
-  </div>
-</div>
-</header>
-
-<!-- COVER -->
-<div class="w">
-<div class="cover">
-  <div class="frame">
-    <div class="frame-bar">
-      <span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span>
-      <span class="frame-url">shiftlyn.com</span>
-    </div>
-    <img src="/cover.png" alt="Shiftlyn landing page — headline reads Will AI take your job, or just change it, with a Start your check call to action">
-  </div>
-</div>
+<!-- MOBILE CHROME -->
+<div class="mobbar">
+  <a class="mobbar-back" href="/#work">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    Portfolio
+  </a>
+  <span class="mobbar-here" data-default="Shiftlyn"></span>
+  <button class="mobbar-toggle" type="button" aria-expanded="false" aria-controls="mobnav">
+    <span class="bars" aria-hidden="true"></span>Sections
+  </button>
 </div>
 
-<!-- TOC -->
-<div class="w">
-<nav class="toc">
-  <div class="toc-lbl">On this page — 17 chapters in 4 parts</div>
-  <div class="toc-groups">
-    <div class="toc-group">
-      <div class="toc-group-hd">Part 01 · Discover</div>
-      <ul>
-        <li><a href="#s1"><span class="tn">01</span>The problem</a></li>
-        <li><a href="#s2"><span class="tn">02</span>Understanding the market</a></li>
-        <li><a href="#s3"><span class="tn">03</span>MVP approach</a></li>
-        <li><a href="#s4"><span class="tn">04</span>Learning from existing products</a></li>
-      </ul>
-    </div>
-    <div class="toc-group">
-      <div class="toc-group-hd">Part 02 · Build</div>
-      <ul>
-        <li><a href="#s5"><span class="tn">05</span>Discovering the core product</a></li>
-        <li><a href="#s6"><span class="tn">06</span>The dashboard</a></li>
-        <li><a href="#s7"><span class="tn">07</span>Measuring success</a></li>
-        <li><a href="#s8"><span class="tn">08</span>Designing for trust &amp; conversion</a></li>
-      </ul>
-    </div>
-    <div class="toc-group">
-      <div class="toc-group-hd">Part 03 · Refine</div>
-      <ul>
-        <li><a href="#s9"><span class="tn">09</span>Results page evolution</a></li>
-        <li><a href="#s10"><span class="tn">10</span>Usability testing</a></li>
-        <li><a href="#s11"><span class="tn">11</span>Before vs after</a></li>
-        <li><a href="#s12"><span class="tn">12</span>Key insights</a></li>
-        <li><a href="#s13"><span class="tn">13</span>Retention challenges</a></li>
-        <li><a href="#s14"><span class="tn">14</span>Long-term vision</a></li>
-        <li><a href="#s15"><span class="tn">15</span>Business constraints</a></li>
-      </ul>
-    </div>
-    <div class="toc-group">
-      <div class="toc-group-hd">Part 04 · Reflect</div>
-      <ul>
-        <li><a href="#s16"><span class="tn">16</span>Impact &amp; learnings</a></li>
-        <li><a href="#s17"><span class="tn">17</span>Conclusion</a></li>
-      </ul>
-    </div>
+<nav class="mobnav" id="mobnav" aria-label="Case study sections">
+  <div class="mobnav-in">
+    <div class="mobnav-kicker">Shiftlyn &middot; 17 chapters in 4 parts</div>
+    <div class="mobnav-group-title">Part 01 &middot; Discover</div>
+    <ul>
+      <li><a href="#s1"><span class="n">01</span><span class="lbl">The problem</span></a></li>
+      <li><a href="#s2"><span class="n">02</span><span class="lbl">Understanding the market</span></a></li>
+      <li><a href="#s3"><span class="n">03</span><span class="lbl">MVP approach</span></a></li>
+      <li><a href="#s4"><span class="n">04</span><span class="lbl">Learning from existing products</span></a></li>
+    </ul>
+    <div class="mobnav-group-title">Part 02 &middot; Build</div>
+    <ul>
+      <li><a href="#s5"><span class="n">05</span><span class="lbl">Discovering the core product</span></a></li>
+      <li><a href="#s6"><span class="n">06</span><span class="lbl">The dashboard</span></a></li>
+      <li><a href="#s7"><span class="n">07</span><span class="lbl">Measuring success</span></a></li>
+      <li><a href="#s8"><span class="n">08</span><span class="lbl">Designing for trust &amp; conversion</span></a></li>
+    </ul>
+    <div class="mobnav-group-title">Part 03 &middot; Refine</div>
+    <ul>
+      <li><a href="#s9"><span class="n">09</span><span class="lbl">Results page evolution</span></a></li>
+      <li><a href="#s10"><span class="n">10</span><span class="lbl">Usability testing</span></a></li>
+      <li><a href="#s11"><span class="n">11</span><span class="lbl">Before vs after</span></a></li>
+      <li><a href="#s12"><span class="n">12</span><span class="lbl">Key insights</span></a></li>
+      <li><a href="#s13"><span class="n">13</span><span class="lbl">Retention challenges</span></a></li>
+      <li><a href="#s14"><span class="n">14</span><span class="lbl">Long-term vision</span></a></li>
+      <li><a href="#s15"><span class="n">15</span><span class="lbl">Business constraints</span></a></li>
+    </ul>
+    <div class="mobnav-group-title">Part 04 &middot; Reflect</div>
+    <ul>
+      <li><a href="#s16"><span class="n">16</span><span class="lbl">Impact &amp; learnings</span></a></li>
+      <li><a href="#s17"><span class="n">17</span><span class="lbl">Conclusion</span></a></li>
+    </ul>
+    <div class="mobnav-foot">Idea &rarr; MVP &rarr; Product &middot; ~14 min read</div>
   </div>
 </nav>
-</div>
 
+<div class="shell">
+
+  <!-- PERSISTENT LEFT RAIL -->
+  <aside class="rail">
+    <a class="rail-back" href="/#work">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      Back to portfolio
+    </a>
+    <div class="rail-project">Shiftlyn</div>
+    <div class="rail-kicker">On this page</div>
+    <nav aria-label="Case study sections">
+      <div class="rail-group">
+        <div class="rail-group-title">01 &middot; Discover</div>
+        <ul>
+          <li><a class="raillink" href="#s1"><span class="n">01</span><span class="lbl">The problem</span></a></li>
+          <li><a class="raillink" href="#s2"><span class="n">02</span><span class="lbl">Understanding the market</span></a></li>
+          <li><a class="raillink" href="#s3"><span class="n">03</span><span class="lbl">MVP approach</span></a></li>
+          <li><a class="raillink" href="#s4"><span class="n">04</span><span class="lbl">Learning from existing products</span></a></li>
+        </ul>
+      </div>
+      <div class="rail-group">
+        <div class="rail-group-title">02 &middot; Build</div>
+        <ul>
+          <li><a class="raillink" href="#s5"><span class="n">05</span><span class="lbl">Discovering the core product</span></a></li>
+          <li><a class="raillink" href="#s6"><span class="n">06</span><span class="lbl">The dashboard</span></a></li>
+          <li><a class="raillink" href="#s7"><span class="n">07</span><span class="lbl">Measuring success</span></a></li>
+          <li><a class="raillink" href="#s8"><span class="n">08</span><span class="lbl">Designing for trust &amp; conversion</span></a></li>
+        </ul>
+      </div>
+      <div class="rail-group">
+        <div class="rail-group-title">03 &middot; Refine</div>
+        <ul>
+          <li><a class="raillink" href="#s9"><span class="n">09</span><span class="lbl">Results page evolution</span></a></li>
+          <li><a class="raillink" href="#s10"><span class="n">10</span><span class="lbl">Usability testing</span></a></li>
+          <li><a class="raillink" href="#s11"><span class="n">11</span><span class="lbl">Before vs after</span></a></li>
+          <li><a class="raillink" href="#s12"><span class="n">12</span><span class="lbl">Key insights</span></a></li>
+          <li><a class="raillink" href="#s13"><span class="n">13</span><span class="lbl">Retention challenges</span></a></li>
+          <li><a class="raillink" href="#s14"><span class="n">14</span><span class="lbl">Long-term vision</span></a></li>
+          <li><a class="raillink" href="#s15"><span class="n">15</span><span class="lbl">Business constraints</span></a></li>
+        </ul>
+      </div>
+      <div class="rail-group">
+        <div class="rail-group-title">04 &middot; Reflect</div>
+        <ul>
+          <li><a class="raillink" href="#s16"><span class="n">16</span><span class="lbl">Impact &amp; learnings</span></a></li>
+          <li><a class="raillink" href="#s17"><span class="n">17</span><span class="lbl">Conclusion</span></a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="rail-foot">Idea &rarr; MVP &rarr; Product &middot; ~14 min read</div>
+  </aside>
+
+  <!-- ARTICLE -->
+  <main class="article">
+  <div class="article-in">
+
+    <div class="kicker">
+      <i></i><span>Shiftlyn</span><span class="sep">&middot;</span>
+      <span>Product Design Case Study</span><span class="sep">&middot;</span>
+      <span>In progress</span><span class="sep">&middot;</span>
+      <span>~14 min read</span>
+    </div>
+
+    <h1>Building an AI Upskilling Platform</h1>
+    <p class="lead">From idea to MVP to product &mdash; <strong>Shiftlyn</strong> helps people understand their AI readiness and find the right path to upskill.</p>
+
+    <div class="meta">
+      <div><b>Role</b><span>UX Designer &amp; Product Strategist</span></div>
+      <div><b>Stage</b><span>Idea &rarr; MVP &rarr; Product</span></div>
+      <div><b>Status</b><span>In progress</span></div>
+      <div><b>Read time</b><span>~14 min</span></div>
+    </div>
+
+    <!-- COVER -->
+    <div class="w">
+    <div class="cover">
+      <div class="frame">
+        <div class="frame-bar">
+          <span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span>
+          <span class="frame-url">shiftlyn.com</span>
+        </div>
+        <img src="/cover.png" alt="Shiftlyn landing page — headline reads Will AI take your job, or just change it, with a Start your check call to action">
+      </div>
+    </div>
+    </div>
 <!-- PART 01 -->
 <div class="w"><div class="part" id="p1">
   <div class="part-inner">
@@ -777,9 +652,9 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 </div></div>
 
 <!-- 01 -->
-<div class="t"><section class="ch" id="s1">
-  <div class="ch-num">01 — The Problem</div>
-  <h2>AI is changing the job market<br>faster than people can adapt.</h2>
+<section class="chapter" id="s1"><div class="t">
+  <div class="chapter-no"><b>01</b>&nbsp;&nbsp;The Problem</div>
+  <h2 class="title">AI is changing the job market<br>faster than people can adapt.</h2>
   <p>New skills are becoming essential, but most professionals aren't learning or adapting to them. We saw an opportunity to help people understand:</p>
   <ul class="pl">
     <li>How AI impacts their career</li>
@@ -788,14 +663,13 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
     <li>How they can transition into AI-driven roles</li>
   </ul>
   <div class="pq"><p>Can we build a product — Shiftlyn — that helps people understand their AI readiness and guides them toward the right upskilling path?</p></div>
-</section></div>
+</div></section>
 
-<hr>
 
 <!-- 02 -->
-<div class="t"><section class="ch" id="s2">
-  <div class="ch-num">02 — Understanding the Market</div>
-  <h2>EdTech is hard.<br>AI upskilling is still early.</h2>
+<section class="chapter" id="s2"><div class="t">
+  <div class="chapter-no"><b>02</b>&nbsp;&nbsp;Understanding the Market</div>
+  <h2 class="title">EdTech is hard.<br>AI upskilling is still early.</h2>
   <p>Before building anything, we researched the market.</p>
   <h3>Key findings</h3>
   <ul class="pl">
@@ -804,7 +678,7 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
     <li>Competition is lower compared to traditional learning platforms.</li>
     <li>Users need guidance more than they need another course library.</li>
   </ul>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="stat-2">
@@ -993,16 +867,15 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 <div class="ic"><span class="il">Audience Refinement Journey</span></div>
 </div>
 
-<hr>
 
 <!-- 03 -->
-<div class="t"><section class="ch" id="s3">
-  <div class="ch-num">03 — MVP Approach</div>
-  <h2>Validate the idea<br>before building the ecosystem.</h2>
+<section class="chapter" id="s3"><div class="t">
+  <div class="chapter-no"><b>03</b>&nbsp;&nbsp;MVP Approach</div>
+  <h2 class="title">Validate the idea<br>before building the ecosystem.</h2>
   <p>Instead of building a complete learning ecosystem, we focused on validating the idea first — Shiftlyn started as a lean MVP.</p>
   <h3>Initial user journey</h3>
   <p>Landing Page → Quiz → Score → Learn</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="flow">
@@ -1036,15 +909,14 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 </div>
 </div>
 
-<hr>
 
 <!-- 04 -->
-<div class="t"><section class="ch" id="s4">
-  <div class="ch-num">04 — Learning From Existing Products</div>
-  <h2>Study what already works,<br>then earn the paywall.</h2>
+<section class="chapter" id="s4"><div class="t">
+  <div class="chapter-no"><b>04</b>&nbsp;&nbsp;Learning From Existing Products</div>
+  <h2 class="title">Study what already works,<br>then earn the paywall.</h2>
   <p>Rather than guess at what makes someone trust an assessment — or pay for one — we took apart products that had already solved a version of this problem. <strong>Duolingo</strong> for habit and engagement, <strong>16Personalities</strong> for personalized assessments and a results experience people actually forward to their friends.</p>
   <p>Both were read through the same six lenses, so the exercise stayed a teardown rather than a list of features we happened to like.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="icon-grid icon-grid--3">
@@ -1137,14 +1009,14 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 </div></div>
 
 <!-- 05 -->
-<div class="t"><section class="ch" id="s5">
-  <div class="ch-num">05 — Discovering the Core Product</div>
-  <h2>The results page<br>is the product.</h2>
+<section class="chapter" id="s5"><div class="t">
+  <div class="chapter-no"><b>05</b>&nbsp;&nbsp;Discovering the Core Product</div>
+  <h2 class="title">The results page<br>is the product.</h2>
   <p>The assessment simply collected data. The <strong>results page</strong> is where the user actually experiences Shiftlyn.</p>
   <h3>Designing for emotion</h3>
   <p>This is also the moment users are most emotionally invested — anxious about what the score will say, and looking for reassurance as much as information. So the results page couldn't just present data; it had to be designed around how someone feels reading it.</p>
   <p>We designed it as an emotional arc: <strong>Anxiety → Understanding → Acceptance → Action.</strong> Reassuring language, a calm color system, and a clear next step turned what could feel like a verdict into guidance.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="split">
@@ -1175,15 +1047,14 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 <div class="ic"><span class="il">Results Page — Emotion-Driven Design</span><span class="id">Recreated from the live product. The score is never left alone — it's always followed by context and a next step.</span></div>
 </div>
 
-<hr>
 
 <!-- 06 -->
-<div class="t"><section class="ch" id="s6">
-  <div class="ch-num">06 — The Dashboard</div>
-  <h2>What happens after<br>the report is read.</h2>
+<section class="chapter" id="s6"><div class="t">
+  <div class="chapter-no"><b>06</b>&nbsp;&nbsp;The Dashboard</div>
+  <h2 class="title">What happens after<br>the report is read.</h2>
   <p>A report is a one-time event. Once someone has read theirs, the product has no claim on them — which is the entire retention problem in one sentence.</p>
   <p>The dashboard is the answer we built: a place where the result keeps changing because the world around it does. It opens on the user's current risk, how it moved since the last check, and how far along their skills are.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="frame">
@@ -1258,16 +1129,15 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 <div class="ic"><span class="il">Dashboard Surfaces</span><span class="id">Three of the six loops in the product: people to join, signal to track, and a way to close the gaps the report found.</span></div>
 </div>
 
-<hr>
 
 <!-- 07 -->
-<div class="t"><section class="ch" id="s7">
-  <div class="ch-num">07 — Measuring Success</div>
-  <h2>Decisions backed<br>by data.</h2>
+<section class="chapter" id="s7"><div class="t">
+  <div class="chapter-no"><b>07</b>&nbsp;&nbsp;Measuring Success</div>
+  <h2 class="title">Decisions backed<br>by data.</h2>
   <h3>Conversion funnel</h3>
   <p>Landing Page → Quiz → Results → Purchase → Login → Dashboard</p>
   <p>We tracked conversion at every stage. The login step was the main concern — drop-off is always highest at authentication.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="funnel">
@@ -1302,15 +1172,14 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 <div class="ic"><span class="il">Conversion Funnel &amp; Drop-off Analysis</span><span class="id">Stage-by-stage conversion on the MVP flow — the login step is where a paying user is most likely to be lost.</span></div>
 </div>
 
-<hr>
 
 <!-- 08 -->
-<div class="t"><section class="ch" id="s8">
-  <div class="ch-num">08 — Designing for Trust and Conversion</div>
-  <h2>Marketing landing page:<br>trust before action.</h2>
+<section class="chapter" id="s8"><div class="t">
+  <div class="chapter-no"><b>08</b>&nbsp;&nbsp;Designing for Trust and Conversion</div>
+  <h2 class="title">Marketing landing page:<br>trust before action.</h2>
   <p>AI career displacement is an emotionally charged topic. Users arrive with uncertainty about how AI might affect their future. The challenge wasn't just getting users to start the assessment — it was building enough trust for them to believe the results and take action.</p>
   <p>To solve this, I designed the landing page using the <strong>C-TRUST-A Framework</strong>, a structure that guides users from awareness to action by progressively building clarity, credibility, and confidence.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="split">
@@ -1342,12 +1211,12 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 </div></div>
 
 <!-- 09 -->
-<div class="t"><section class="ch" id="s9">
-  <div class="ch-num">09 — Results Page Evolution</div>
-  <h2>Three passes at<br>the same screen.</h2>
+<section class="chapter" id="s9"><div class="t">
+  <div class="chapter-no"><b>09</b>&nbsp;&nbsp;Results Page Evolution</div>
+  <h2 class="title">Three passes at<br>the same screen.</h2>
   <p>Because the results page carried the whole product, it got rewritten more than anything else we built. Three versions matter: the free state a user sees before paying, the first full report, and the report as it stands now.</p>
   <p>The data behind them barely changed. What changed is how much work the user has to do to understand it.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="vtabs" id="rpe">
@@ -1487,12 +1356,11 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
   </div>
 </div>
 
-<hr>
 
 <!-- 10 -->
-<div class="t"><section class="ch" id="s10">
-  <div class="ch-num">10 — Usability Testing</div>
-  <h2>Users wanted an<br>action plan, not a diagnosis.</h2>
+<section class="chapter" id="s10"><div class="t">
+  <div class="chapter-no"><b>10</b>&nbsp;&nbsp;Usability Testing</div>
+  <h2 class="title">Users wanted an<br>action plan, not a diagnosis.</h2>
   <p>Once the Shiftlyn MVP was ready, I conducted usability testing with approximately <strong>20–25 users</strong>.</p>
   <h3>What users loved</h3>
   <ul class="pl">
@@ -1506,17 +1374,16 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
     <li>Deeper recommendations</li>
     <li>AI updates related to their profession</li>
   </ol>
-</section></div>
+</div></section>
 
-<hr>
 
 <!-- 11 -->
-<div class="t"><section class="ch" id="s11">
-  <div class="ch-num">11 — Before vs After</div>
-  <h2>Structure and entry —<br>refined.</h2>
+<section class="chapter" id="s11"><div class="t">
+  <div class="chapter-no"><b>11</b>&nbsp;&nbsp;Before vs After</div>
+  <h2 class="title">Structure and entry —<br>refined.</h2>
   <h3>1. Product structure</h3>
   <p>Everything happened on one page. Splitting it into a step-by-step flow is what made the product readable.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="flowchart">
@@ -1643,16 +1510,15 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 </div>
 </div>
 
-<hr>
 
 <!-- 12 -->
-<div class="t"><section class="ch" id="s12">
-  <div class="ch-num">12 — Key Insights</div>
-  <h2>What we heard,<br>again and again.</h2>
+<section class="chapter" id="s12"><div class="t">
+  <div class="chapter-no"><b>12</b>&nbsp;&nbsp;Key Insights</div>
+  <h2 class="title">What we heard,<br>again and again.</h2>
   <p>Testing told us whether the product worked. Living with it told us something harder: which problems were about the interface, and which were about the product itself. Four themes kept surfacing — and none were fixable by moving something on a screen.</p>
   <div class="pq"><p>How many runs do I get for this price?</p></div>
   <p>That question came up more than any other. We had priced a <strong>report</strong> while users were trying to work out whether they were buying a <strong>tool</strong> — and no amount of layout work answers that.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="icon-grid">
@@ -1680,17 +1546,16 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 <div class="ic"><span class="il">Key Insights — Beyond the Interface</span><span class="id">Four themes that usability fixes couldn't reach: audience depth, pricing model, identity, and the need for other people.</span></div>
 </div>
 
-<hr>
 
 <!-- 13 -->
-<div class="t"><section class="ch" id="s13">
-  <div class="ch-num">13 — Retention Challenges</div>
-  <h2>Why should users<br>come back?</h2>
+<section class="chapter" id="s13"><div class="t">
+  <div class="chapter-no"><b>13</b>&nbsp;&nbsp;Retention Challenges</div>
+  <h2 class="title">Why should users<br>come back?</h2>
   <p>Shiftlyn has a structural retention problem, and it isn't attention span. Duolingo — one of the products we took apart early on — has a daily loop built into what it teaches. An AI readiness check doesn't. Once you know your score, the product has done its job.</p>
   <p>So the return visit can't come from the score. It has to come from things that keep moving on their own — the market, the roles, the skills — while the user's report sits still.</p>
   <h3>Retention opportunities</h3>
   <p>Four kinds of value keep changing after the report is delivered, and each one is a reason to reopen it. These are what the dashboard was eventually built around.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="icon-grid">
@@ -1726,15 +1591,14 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 <div class="ic"><span class="il">Retention — Where the Four Loops Live</span><span class="id">The dashboard is where all four land: risk that moves, jobs and courses that refresh, and a skills bar that stays unfinished until the user comes back.</span></div>
 </div>
 
-<hr>
 
 <!-- 14 -->
-<div class="t"><section class="ch" id="s14">
-  <div class="ch-num">14 — The Long-Term Vision</div>
-  <h2>A one-stop platform<br>for AI upskilling.</h2>
+<section class="chapter" id="s14"><div class="t">
+  <div class="chapter-no"><b>14</b>&nbsp;&nbsp;The Long-Term Vision</div>
+  <h2 class="title">A one-stop platform<br>for AI upskilling.</h2>
   <p>The assessment was never meant to be the whole product — it was the cheapest way to prove people wanted the thing behind it. What that thing became is a single place to answer one recurring question: <em>am I still safe, and what do I do about it?</em></p>
   <p>Answering it properly takes three things, and only the first is a test.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="icon-grid icon-grid--3">
@@ -1757,17 +1621,16 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 <div class="ic"><span class="il">Long-Term Vision — Three Jobs</span><span class="id">Measure, close, and keep watching. The assessment is only the first of the three.</span></div>
 </div>
 
-<hr>
 
 <!-- 15 -->
-<div class="t"><section class="ch" id="s15">
-  <div class="ch-num">15 — Business Constraints</div>
-  <h2>Optimizing cost<br>without losing quality.</h2>
+<section class="chapter" id="s15"><div class="t">
+  <div class="chapter-no"><b>15</b>&nbsp;&nbsp;Business Constraints</div>
+  <h2 class="title">Optimizing cost<br>without losing quality.</h2>
   <p>Every report is generated, not retrieved. That's what makes the output specific enough to be worth paying for — and it's also the reason this product has a cost problem that a course library doesn't: <strong>each result burns tokens before it earns a rupee.</strong></p>
   <p>At a ₹10 one-time price, the margin on a single report is thin by design. Costs stack up across the Claude API, Azure infrastructure, MongoDB, setup, marketing — but the only one that grows with every user is <strong>tokens per result</strong>. Getting that number down was the difference between a product that scales and a demo that gets expensive as it succeeds.</p>
   <h3>Solution — route by difficulty, not by default</h3>
   <p>Not every step of a report needs the strongest model. We split the work: <strong>Gemini</strong> handles selected workloads, <strong>Claude</strong> is reserved for the advanced analysis where the reasoning quality is what the user is actually paying for.</p>
-</section></div>
+</div></section>
 
 <div class="w">
 <div class="arch">
@@ -1806,9 +1669,9 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
 </div></div>
 
 <!-- 16 -->
-<div class="t"><section class="ch" id="s16">
-  <div class="ch-num">16 — Impact &amp; Learnings</div>
-  <h2>Six lessons, in the order<br>they cost the most.</h2>
+<section class="chapter" id="s16"><div class="t">
+  <div class="chapter-no"><b>16</b>&nbsp;&nbsp;Impact &amp; Learnings</div>
+  <h2 class="title">Six lessons, in the order<br>they cost the most.</h2>
   <p>We set out to build an assessment. What we ended up defending, version after version, was the twenty seconds after the score appears — which is why that one screen was rewritten three times while the questions behind it barely changed.</p>
   <p>The quiz was never the product. That, and five other things I'd carry into the next one.</p>
 
@@ -1836,33 +1699,39 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
     <div class="lt">Retention has to be designed, not hoped for.</div>
     <p>A one-time score has no natural reason to be revisited. The return visit had to be built — from things that keep changing on their own — or it doesn't happen.</p>
   </div>
-</section></div>
+</div></section>
 
-<hr>
 
 <!-- 17 -->
-<div class="t"><section class="ch" id="s17">
-  <div class="ch-num">17 — Conclusion</div>
-  <h2>Clarity is the product,<br>not the content.</h2>
+<section class="chapter" id="s17"><div class="t">
+  <div class="chapter-no"><b>17</b>&nbsp;&nbsp;Conclusion</div>
+  <h2 class="title">Clarity is the product,<br>not the content.</h2>
   <p>Shiftlyn started as a five-minute AI readiness check and became something harder to describe: a place to find out what AI means for your particular job, and what to do about it this month.</p>
   <p>The single most useful thing the MVP taught us is that nobody is short of learning material. Our users already had more courses than they could finish. What they didn't have was clarity — where they stand today, what's genuinely at risk, and which one action moves them forward next. Content was never the scarce resource. Judgement was.</p>
   <div class="pq"><p>Great products don't just provide information. They help people make better decisions.</p></div>
   <p>It's still in progress — pricing, retention and depth for experienced users are all open. But the problem is the right one. In a market where careers are being rewritten faster than people can react, helping someone decide what to do next is worth more than handing them another library.</p>
-</section></div>
+</div></section>
 
-<footer>
-  <div class="fi">
-    <div>
-      <div class="fb">AI Upskilling<span>.</span></div>
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink4);margin-top:5px;letter-spacing:.04em">Idea → MVP → Product</div>
-    </div>
-    <div class="fn">
-      A product design case study by Shanawaz
-    </div>
+    <footer>
+      <div class="fi">
+        <div>
+          <div class="fb">AI Upskilling<span>.</span></div>
+          <div class="f-sub">Idea &rarr; MVP &rarr; Product</div>
+        </div>
+        <div class="fn">A product design case study by Shanawaz</div>
+      </div>
+      <div style="margin-top:var(--s5)">
+        <a class="cs-btn" href="https://www.shiftlyn.com" target="_blank" rel="noopener noreferrer">
+          Check out the app &mdash; Shiftlyn
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </footer>
+
   </div>
-</footer>
+  </main>
 
-<a class="float-cta" href="https://www.shiftlyn.com" target="_blank" rel="noopener"><span class="dot"></span><span>Check out the app<br><strong>Shiftlyn →</strong></span></a>
+</div>
 
 <script>
 /* Version tabs — standard tablist behaviour: click or arrow-key between
@@ -1896,94 +1765,7 @@ html.js-motion :is(.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-i
   });
   select(0);
 })();
-
-/* Progressive stage nav — a stage tab is revealed once its part divider passes
-   under the bar, and stays revealed. The most recent one is active; the rest
-   remain pinned beside it. The fill shows how much of the case study is read. */
-(function(){
-  var nav=document.getElementById('snav');
-  if(!nav) return;
-  var tabs=Array.prototype.slice.call(nav.querySelectorAll('.snav-tab'));
-  var fill=nav.querySelector('.snav-fill');
-  var track=nav.querySelector('.snav-track');
-  var num=nav.querySelector('.snav-pct b');
-  var footer=document.querySelector('footer');
-  var parts=tabs.map(function(t){return document.querySelector(t.getAttribute('href'));});
-  if(parts.some(function(p){return !p;})||!footer) return;
-
-  var tops=[],footTop=0,lastPct=-1,queued=false;
-  function measure(){
-    var sy=window.pageYOffset||document.documentElement.scrollTop;
-    tops=parts.map(function(p){return p.getBoundingClientRect().top+sy;});
-    footTop=footer.getBoundingClientRect().top+sy;
-  }
-  function update(){
-    queued=false;
-    var sy=window.pageYOffset||document.documentElement.scrollTop;
-    var barH=nav.offsetHeight;
-    // One offset drives everything: it matches where an anchor jump lands a
-    // target (.part scroll-margin-top), so clicking a stage tab marks that
-    // stage active, keeps the bar up, and reads 0% at the very start.
-    var off=Math.max(80,barH+12)+1;
-    var line=sy+off;
-    var start=tops[0]-off;
-
-    var current=-1;
-    for(var i=0;i<tops.length;i++){ if(line>=tops[i]) current=i; }
-    nav.classList.toggle('show',current>=0);
-    for(var j=0;j<tabs.length;j++){
-      var reached=j<=current;
-      tabs[j].classList.toggle('rev',reached);
-      tabs[j].classList.toggle('active',j===current);
-      tabs[j].setAttribute('aria-hidden',reached?'false':'true');
-      tabs[j].tabIndex=reached?0:-1;
-      if(j===current){tabs[j].setAttribute('aria-current','step');}
-      else{tabs[j].removeAttribute('aria-current');}
-    }
-
-    // 100% lands as the last chapter finishes, not at the very page bottom
-    var end=footTop-window.innerHeight*0.9;
-    var p=end>start?(sy-start)/(end-start):1;
-    p=Math.max(0,Math.min(1,p));
-    var pct=Math.round(p*100);
-    if(pct!==lastPct){
-      lastPct=pct;
-      fill.style.width=pct+'%';
-      if(num){num.textContent=pct+'%';}
-      track.setAttribute('aria-valuenow',pct);
-    }
-  }
-  function onScroll(){ if(!queued){queued=true;requestAnimationFrame(update);} }
-
-  measure();update();
-  window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',function(){measure();onScroll();});
-  window.addEventListener('load',function(){measure();update();});
-  // late layout shifts (images, webfonts) move the part offsets
-  if('ResizeObserver' in window){
-    var ro=new ResizeObserver(function(){measure();onScroll();});
-    ro.observe(document.body);
-  }
-})();
-
-(function(){
-  if(!document.documentElement.classList.contains('js-motion')) return;
-  var sel='.hdr .badge,.hdr h1,.hdr .lead,.hdr .meta,.cover,.toc,.part-inner,.ch-num,.ch h2,.ch h3,.pq,.sr,.lrn,.frame,.stat-2,.flow,.funnel,.vfunnel,.vtabs-bar,.bench,.cmp,.fw-list,.icon-grid,.levels,.arch,.flowchart,.tbl-wrap,footer .fi';
-  var els=Array.prototype.slice.call(document.querySelectorAll(sel));
-  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in');});return;}
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
-    });
-  },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
-  // Gently stagger whatever is already in view on load; everything else reveals on scroll.
-  var vh=window.innerHeight||document.documentElement.clientHeight, n=0;
-  els.forEach(function(el){
-    if(el.getBoundingClientRect().top < vh){ el.style.transitionDelay=(n*0.06)+'s'; n++; }
-    io.observe(el);
-  });
-})();
 </script>
-
+<script src="/cs/system.js" defer></script>
 </body>
 </html>

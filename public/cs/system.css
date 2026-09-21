@@ -1,0 +1,744 @@
+/* ===================================================================
+   PORTFOLIO CASE-STUDY DESIGN SYSTEM
+   -------------------------------------------------------------------
+   One system, four projects. Everything structural lives here:
+   the shell, the rail, the type scale, the grid, the spacing rhythm,
+   figures, and the shared content components.
+
+   A case study contributes exactly two things of its own:
+     1. --accent  (its brand colour, used sparingly)
+     2. its project-specific components and imagery
+
+   The base is deliberately colourless -- warm paper, black ink,
+   hairline rules. Colour only ever appears as the project accent,
+   so the work stays the loudest thing on the page.
+   =================================================================== */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* --- PROJECT ACCENT ------------------------------------------------
+     Overridden by each case study. The default is ink, so a page that
+     forgets to set one degrades to the monochrome base rather than
+     to a stray colour. --------------------------------------------- */
+  --accent:      #0a0a0a;
+  --accent-soft: rgba(10,10,10,.06);
+  --accent-line: rgba(10,10,10,.22);
+
+  /* --- NEUTRAL BASE (shared by every case study) ------------------ */
+  --paper:  #f7f6f2;
+  --paper2: #efeee8;
+  --paper3: #e7e6de;
+  --ink:    #0a0a0a;
+  --ink2:   #33322e;
+  --ink3:   #6d6b64;
+  --ink4:   #96948c;
+  --rule:   rgba(10,10,10,.15);
+  --rule2:  rgba(10,10,10,.08);
+  --rule3:  rgba(10,10,10,.30);
+
+  /* Legacy token names still referenced by project-specific component
+     CSS. Aliasing rather than find-replacing keeps each case study's
+     bespoke components intact while pulling them onto one palette. */
+  --bg:       var(--paper);
+  --bg2:      var(--paper2);
+  --bg3:      var(--paper3);
+  --bg-soft:  var(--paper2);
+  --gbg:      var(--paper2);
+  --ink-soft: var(--ink2);
+  --ink-faint:var(--ink3);
+  --line:     var(--rule2);
+  --line2:    var(--rule);
+
+  /* Semantic status colours for data components. Muted to sit inside
+     an editorial page rather than compete with the accent. */
+  --pos:   #2f6a4f;
+  --neg:   #a4332a;
+  --warn:  #8a6320;
+  --green: var(--pos);
+  --amber: var(--warn);
+
+  /* --- TYPE -------------------------------------------------------
+     One grotesque, no webfont, so every page paints on first frame.
+     --serif/--display are aliased to it so pages that still ask for a
+     display face get the system face instead of a second voice. */
+  --sans:   'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --serif:  var(--sans);
+  --display:var(--sans);
+  --mono:   ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* --- GRID -------------------------------------------------------
+     --measure is the reading column and never grows; --wide is the
+     canvas figures and data components may use. */
+  --measure:   672px;
+  --wide:      960px;
+  --read:      var(--measure);
+  --rail:      256px;
+  --shell-max: 1296px;
+  --pad:       clamp(20px,5vw,40px);
+
+  /* --- SPACING ----------------------------------------------------
+     One 8pt-derived scale drives every margin on every page. Both
+     naming conventions resolve to the same values. */
+  --s1:8px;  --s2:12px; --s3:16px; --s4:24px;
+  --s5:32px; --s6:48px; --s7:64px; --s8:88px; --s9:120px;
+  --sp-1:8px;  --sp-2:12px; --sp-3:16px; --sp-4:24px;
+  --sp-5:32px; --sp-6:48px; --sp-7:64px; --sp-8:88px; --sp-9:120px;
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--paper)}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:16.5px;
+  line-height:1.72;
+  text-align:left;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+::selection{background:var(--accent);color:var(--paper)}
+
+:where(a):focus-visible,
+:where(button,summary):focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;
+}
+
+/* ===================================================================
+   READING PROGRESS
+   The one piece of persistent chrome that carries the accent, so the
+   project colour is present on every screen without being decorative.
+   =================================================================== */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:90;pointer-events:none}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .08s linear}
+
+/* ===================================================================
+   SHELL -- persistent rail + article, capped and centred as one unit
+   =================================================================== */
+.shell{display:flex;align-items:flex-start;max-width:var(--shell-max);margin:0 auto}
+
+/* ---------- LEFT RAIL (shared portfolio component) ---------- */
+.rail{
+  width:var(--rail);flex-shrink:0;position:sticky;top:0;height:100vh;
+  overflow-y:auto;overscroll-behavior:contain;
+  padding:var(--s8) var(--s6) var(--s6) var(--pad);
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.rail::-webkit-scrollbar{display:none}
+/* A hairline that fades out at both ends, so the rail is separated by
+   light rather than by a hard border running the full viewport. */
+.rail::after{
+  content:'';position:absolute;top:0;right:0;width:1px;height:100%;
+  background:linear-gradient(to bottom,
+    rgba(10,10,10,0) 0,
+    rgba(10,10,10,.15) 10%,
+    rgba(10,10,10,.15) 70%,
+    rgba(10,10,10,0) 100%);
+}
+
+.rail-back{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink3);text-decoration:none;margin-bottom:var(--s7);
+  transition:color .15s;
+}
+.rail-back:hover{color:var(--ink)}
+.rail-back svg{width:14px;height:14px;flex-shrink:0}
+
+.rail-project{
+  font-size:15px;font-weight:700;line-height:1.3;letter-spacing:-0.012em;
+  color:var(--ink);margin-bottom:var(--s1);
+}
+/* the rule under the project name is the rail's accent slot */
+.rail-project::after{
+  content:'';display:block;width:22px;height:2px;background:var(--accent);margin-top:11px;
+}
+.rail-kicker{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink4);margin:var(--s5) 0 var(--s3);
+}
+.rail nav{margin-bottom:var(--s6)}
+.rail-group + .rail-group{margin-top:var(--s4)}
+.rail-group-title{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  line-height:1.45;color:var(--ink4);margin:0 0 var(--s1) 18px;
+}
+.rail ul{list-style:none;display:flex;flex-direction:column;gap:2px}
+.rail a.raillink{
+  position:relative;display:grid;grid-template-columns:22px 1fr;gap:8px;
+  font-size:13px;font-weight:500;line-height:1.45;letter-spacing:-0.002em;
+  color:var(--ink3);text-decoration:none;padding:7px 0 7px 18px;
+  transition:color .15s;
+}
+.rail a.raillink .n{
+  font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--ink4);
+  padding-top:2px;transition:color .15s;
+}
+.rail a.raillink:hover{color:var(--ink)}
+.rail a.raillink:hover .n{color:var(--ink3)}
+/* Active state: the accent, plus a dot in the margin. Small enough to
+   read as a marker rather than as a highlight. */
+.rail a.raillink.active{color:var(--accent);font-weight:700}
+.rail a.raillink.active .n{color:var(--accent)}
+.rail a.raillink.active::before{
+  content:'';position:absolute;left:0;top:14px;
+  width:5px;height:5px;border-radius:50%;background:var(--accent);
+}
+.rail-foot{
+  font-size:11px;line-height:1.6;color:var(--ink4);letter-spacing:.005em;
+  padding-top:var(--s3);border-top:1px solid var(--rule2);
+}
+
+/* mobile chrome is declared in the responsive block below */
+.mobbar{display:none}
+.mobnav{display:none}
+
+/* ===================================================================
+   ARTICLE COLUMN
+   =================================================================== */
+.article{flex:1;min-width:0;padding:var(--s8) var(--pad) var(--s9) clamp(28px,4vw,56px)}
+.article-in{max-width:var(--wide)}
+/* .col is the reading measure; text never runs wider than this even
+   though figures and data components may use the full --wide canvas. */
+.col{max-width:var(--measure)}
+
+/* ===================================================================
+   MASTHEAD / TITLE BLOCK
+   =================================================================== */
+.dateline,.kicker{
+  display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline;
+  font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink);padding-bottom:12px;border-bottom:1px solid var(--ink);
+  max-width:var(--wide);margin:0;
+}
+.dateline .dot,.dateline .sep,.kicker .dot,.kicker .sep{color:var(--ink4)}
+/* the leading marker is the one place the accent appears in the masthead */
+.kicker > i:first-child{
+  width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;
+  align-self:center;
+}
+
+h1{
+  font-family:var(--sans);
+  font-size:clamp(33px,4.8vw,52px);font-weight:700;line-height:1.07;
+  letter-spacing:-0.025em;color:var(--ink);
+  margin:var(--s5) 0 var(--s4);max-width:22ch;
+}
+.standfirst,.lead{
+  font-family:var(--sans);
+  font-size:clamp(17px,1.7vw,19px);font-weight:400;line-height:1.62;
+  color:var(--ink2);letter-spacing:-0.006em;max-width:56ch;margin:0;
+}
+.disclosure,.nda-line{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:13.5px;line-height:1.6;color:var(--ink3);
+  max-width:56ch;margin:var(--s4) 0 0;
+}
+.nda-line svg{width:15px;height:15px;flex-shrink:0;margin-top:3px;color:var(--ink4)}
+
+/* ---------- label / value strip ---------- */
+.meta,.facts{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4) var(--s5);
+  margin:var(--s6) 0 0;padding-top:var(--s4);border-top:1px solid var(--rule);
+  max-width:var(--wide);
+}
+.meta > div > b,.facts .fact > b{
+  display:block;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:6px;
+}
+.meta > div > span,.facts .fact > span{
+  display:block;font-size:15px;font-weight:700;line-height:1.45;letter-spacing:-0.008em;color:var(--ink);
+}
+.meta .span{grid-column:1/-1}
+.meta .span span{font-weight:400;font-size:14.5px;line-height:1.75;color:var(--ink2)}
+
+/* ===================================================================
+   SECTION STRUCTURE
+   Every case study is a run of numbered chapters separated by a full
+   rule. This is the single strongest cue that the pages are one system.
+   =================================================================== */
+.chapter{
+  margin-top:var(--s9);padding-top:var(--s5);
+  border-top:1px solid var(--ink);scroll-margin-top:var(--s4);
+}
+.chapter-no{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:var(--s3);
+}
+/* the chapter number is an accent slot -- small, repeated, unmistakable */
+.chapter-no b,.chapter-no .n{color:var(--accent);font-weight:700}
+
+h2,h2.title{
+  font-family:var(--sans);
+  font-size:clamp(23px,2.6vw,30px);font-weight:700;line-height:1.16;
+  letter-spacing:-0.019em;color:var(--ink);margin:0 0 var(--s4);max-width:24ch;
+}
+/* A title that should hold on one line rather than break at the 24ch
+   measure. It still wraps once the column is genuinely too narrow --
+   nothing here forces a line that would overflow. */
+h2.title.is-wide{max-width:none;text-wrap:balance}
+h3,h4.subhead2{
+  font-family:var(--sans);
+  font-size:17px;font-weight:700;line-height:1.4;letter-spacing:-0.012em;
+  color:var(--ink);margin:var(--s7) 0 var(--s3);max-width:34ch;
+}
+h3 .n{color:var(--ink4);margin-right:9px;font-weight:700}
+h4,h4.subhead{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink4);margin:var(--s6) 0 var(--s3);
+}
+p{margin:0 0 var(--s4);max-width:var(--measure);color:var(--ink2);letter-spacing:-0.006em}
+p:last-child{margin-bottom:0}
+strong,b{font-weight:700;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--ink)}
+
+/* an inline link inside running text picks up the accent on hover only,
+   so body copy stays black until the reader reaches for it */
+.article-in p a,.article-in li a,.article-in figcaption a{
+  color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule3);
+  transition:color .15s,border-color .15s;
+}
+.article-in p a:hover,.article-in li a:hover,.article-in figcaption a:hover{
+  color:var(--accent);border-bottom-color:var(--accent);
+}
+
+/* ---------- pull statement ----------
+   No bar, no rules, no box: size, weight and the italic carry it, and
+   the line lengths are left to text-wrap to balance. */
+.pull,blockquote{margin:var(--s6) 0;max-width:var(--measure)}
+.pull p,blockquote p{
+  font-family:var(--display);
+  font-size:clamp(20px,2.2vw,26px);font-weight:500;font-style:italic;
+  line-height:1.5;letter-spacing:-0.002em;color:var(--ink);
+  margin:0;text-wrap:balance;
+}
+
+/* ---------- attribution label ---------- */
+.by{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 var(--s2);
+}
+.by::before{content:'\2014\00a0\00a0'}
+
+/* ===================================================================
+   SHARED CONTENT COMPONENTS
+   =================================================================== */
+
+/* ---------- numbered notes ---------- */
+.notes{list-style:none;counter-reset:n;margin:var(--s4) 0 var(--s5);max-width:var(--measure)}
+.notes li{
+  counter-increment:n;display:grid;grid-template-columns:30px 1fr;gap:var(--s3);
+  padding:14px 0;border-top:1px solid var(--rule2);
+}
+.notes li:first-child{border-top:1px solid var(--rule)}
+.notes li:last-child{border-bottom:1px solid var(--rule)}
+.notes li::before{
+  content:counter(n,decimal-leading-zero);
+  font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--accent);padding-top:4px;
+}
+.notes b{font-weight:700;color:var(--ink)}
+.notes span{display:block;color:var(--ink2)}
+
+/* ---------- specification table ---------- */
+.spec{margin:var(--s4) 0 var(--s5);max-width:var(--measure);border-top:1px solid var(--rule)}
+.spec div{
+  display:grid;grid-template-columns:150px 1fr;gap:var(--s3);
+  padding:11px 0;border-bottom:1px solid var(--rule2);
+}
+.spec dt{font-size:15px;font-weight:700;letter-spacing:-0.008em;color:var(--ink)}
+.spec dd{font-size:15px;color:var(--ink2);letter-spacing:-0.006em}
+.spec.lbl dt{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink4);padding-top:4px;
+}
+.spec.lbl div{grid-template-columns:112px 1fr}
+.spec.lbl dd{line-height:1.6}
+.spec.lbl .own dt{color:var(--accent)}
+.spec.lbl .own dd{color:var(--ink);font-weight:700}
+
+/* ---------- plain list ---------- */
+.plain,ul.article-list,ol.article-list{list-style:none;margin:var(--s4) 0 var(--s5);max-width:var(--measure)}
+.plain li,ul.article-list li,ol.article-list li{
+  position:relative;padding-left:20px;margin-bottom:12px;color:var(--ink2);
+}
+.plain li:last-child,ul.article-list li:last-child,ol.article-list li:last-child{margin-bottom:0}
+.plain li::before,ul.article-list li::before{
+  content:'';position:absolute;left:0;top:12px;width:9px;height:1px;background:var(--accent);
+}
+ol.article-list{counter-reset:ol}
+ol.article-list li{counter-increment:ol;padding-left:26px}
+ol.article-list li::before{
+  content:counter(ol,decimal-leading-zero);position:absolute;left:0;top:0;width:auto;height:auto;
+  background:none;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.06em;
+}
+.plain li strong{color:var(--ink)}
+
+/* ---------- inline terms ---------- */
+.terms{
+  margin:var(--s3) 0 var(--s5);max-width:var(--measure);
+  font-size:15px;line-height:1.9;color:var(--ink2);letter-spacing:-0.006em;
+}
+.terms span{white-space:nowrap}
+.terms span::after{content:'\00b7';color:var(--ink4);margin:0 4px 0 9px}
+.terms span:last-child::after{content:''}
+
+/* ---------- chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:var(--s3) 0 var(--s5);max-width:var(--measure)}
+.chip{
+  font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--ink2);
+  padding:5px 11px;border:1px solid var(--rule);border-radius:2px;background:transparent;
+}
+
+/* ---------- questions ---------- */
+.asks{margin:var(--s4) 0 var(--s5);max-width:var(--measure);border-top:1px solid var(--rule)}
+.asks p{
+  margin:0;padding:11px 0;border-bottom:1px solid var(--rule2);
+  font-size:17px;font-weight:700;letter-spacing:-0.012em;color:var(--ink);max-width:none;
+}
+.asks p::before{content:'\2192\00a0\00a0';color:var(--accent)}
+
+/* ---------- sequence ---------- */
+.seq{
+  margin:var(--s4) 0 var(--s5);max-width:var(--measure);
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  line-height:2;color:var(--ink);
+}
+.seq i{color:var(--ink4);font-style:normal}
+.seq u{text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:1px}
+
+/* ---------- before / after ---------- */
+.shifts{margin:var(--s5) 0;max-width:var(--measure);border-top:1px solid var(--ink)}
+.shifts > div{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);
+  padding:13px 0;border-bottom:1px solid var(--rule2);
+}
+.shifts .was b{font-size:15px;font-weight:700;color:var(--ink4);letter-spacing:-0.006em}
+.shifts .now b{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-0.008em}
+.shifts-head{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink4);padding-bottom:9px;
+}
+
+/* ---------- key numbers ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4) var(--s5);
+  margin:var(--s4) 0 var(--s5);padding-top:var(--s4);border-top:1px solid var(--ink);
+  max-width:var(--wide);
+}
+.stats > div{border-top:1px solid var(--rule2);padding-top:12px}
+.stats b{
+  display:block;font-size:clamp(24px,2.6vw,30px);font-weight:700;line-height:1.05;
+  letter-spacing:-0.024em;color:var(--accent);margin-bottom:6px;
+}
+.stats span{display:block;font-size:13.5px;line-height:1.5;color:var(--ink3);letter-spacing:-0.004em}
+
+/* ---------- two-sided comparison ---------- */
+.ba{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);
+  margin:var(--s4) 0 var(--s5);max-width:var(--measure);
+  padding-top:var(--s4);border-top:1px solid var(--ink);
+}
+.ba h5{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:var(--s3);
+}
+.ba .after h5{color:var(--accent)}
+.ba ul{list-style:none}
+.ba li{
+  font-size:15px;line-height:1.5;color:var(--ink3);letter-spacing:-0.006em;
+  padding:8px 0;border-bottom:1px solid var(--rule2);
+}
+.ba .after li{color:var(--ink);font-weight:700}
+.ba .after li:first-child{border-top:0}
+
+/* ---------- emphasised band ---------- */
+.band{
+  margin:0 0 var(--s5);max-width:var(--measure);
+  display:grid;grid-template-columns:112px 1fr;gap:var(--s3);
+  padding-top:12px;border-top:2px solid var(--accent);
+}
+.band dt{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);padding-top:3px;
+}
+.band dd{font-size:15px;line-height:1.6;color:var(--ink);font-weight:700;letter-spacing:-0.006em}
+.band dd em{display:block;font-style:normal;font-weight:400;color:var(--ink3);font-size:14px;margin-top:3px}
+
+/* ---------- inline note ---------- */
+.inline-note{
+  margin:var(--s5) 0;max-width:var(--measure);
+  padding:var(--s3) 0 var(--s3) var(--s4);
+  border-left:2px solid var(--accent);
+}
+.inline-note p{font-size:15px;line-height:1.65;color:var(--ink2);margin:0}
+
+/* ===================================================================
+   IMAGE TREATMENT -- one rule for every screenshot on every page
+   =================================================================== */
+figure,.hero-shot,.showcase{margin:var(--s6) 0;max-width:var(--wide)}
+figure.full,figure.bleed{max-width:var(--wide)}
+figure.col,figure.narrow{max-width:var(--measure)}
+figure img,.hero-shot img,.showcase img{
+  display:block;width:100%;height:auto;
+  border:1px solid var(--rule);background:var(--paper2);
+}
+figcaption{
+  margin-top:11px;font-size:12.5px;line-height:1.6;color:var(--ink3);
+  max-width:64ch;letter-spacing:-0.002em;
+}
+figcaption b{
+  font-weight:700;color:var(--accent);letter-spacing:.09em;text-transform:uppercase;font-size:10px;
+}
+
+/* placeholder slot for a figure that has no asset yet */
+.slot{
+  border:1px solid var(--rule);background:var(--paper2);
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;
+  padding:var(--s5);text-align:center;
+}
+.slot.tall{aspect-ratio:4/3}
+.slot.wide{aspect-ratio:2/1}
+.slot p{margin:0;max-width:46ch;font-size:13.5px;line-height:1.6;color:var(--ink3)}
+.slot b{
+  display:block;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px;
+}
+
+/* ---------- scrolling full-page screenshot ----------
+   A whole page is taller than any figure slot, and shrinking it to fit
+   destroys the thing worth showing. So the screenshot keeps its width
+   and the reader scrolls the frame instead. Two of them side by side is
+   the honest way to show a before and after at full length. */
+.scrollshots{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);
+  margin:var(--s6) 0;max-width:var(--wide);
+}
+/* when the pair sits inside a captioned figure, the figure owns the margin */
+.scrollfig .scrollshots{margin:0}
+.scrollfig > figcaption{margin-top:var(--s3)}
+.scrollshot{margin:0;max-width:none}
+.scrollshot-hd{
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
+  padding-bottom:9px;margin-bottom:0;border-bottom:1px solid var(--ink);
+}
+.scrollshot-hd b{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);
+}
+.scrollshot.is-after .scrollshot-hd b{color:var(--accent)}
+.scrollshot-hd span{font-size:12.5px;color:var(--ink3);letter-spacing:-0.002em;text-align:right}
+
+.scrollshot-frame{
+  position:relative;
+  height:min(62vh,560px);
+  overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+  border:1px solid var(--rule);border-top:0;
+  background:var(--paper2);
+  /* a quiet scrollbar, so the frame reads as paper and not as a widget */
+  scrollbar-width:thin;scrollbar-color:var(--rule3) transparent;
+}
+.scrollshot-frame::-webkit-scrollbar{width:8px}
+.scrollshot-frame::-webkit-scrollbar-track{background:transparent}
+.scrollshot-frame::-webkit-scrollbar-thumb{background:var(--rule);border-radius:0}
+.scrollshot-frame:hover::-webkit-scrollbar-thumb{background:var(--rule3)}
+.scrollshot-frame:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.scrollshot-frame img{display:block;width:100%;height:auto;border:0}
+
+/* the hint sits over the foot of the frame and retires once you scroll */
+.scrollshot-hint{
+  position:sticky;bottom:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 0 10px;margin-top:-40px;
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink3);pointer-events:none;
+  background:linear-gradient(to top,var(--paper2) 45%,rgba(239,238,232,0));
+  transition:opacity .25s ease;
+}
+.scrollshot-frame.is-scrolled .scrollshot-hint{opacity:0}
+.scrollshot-hint svg{width:12px;height:12px}
+
+@media(max-width:860px){
+  .scrollshots{grid-template-columns:1fr;gap:var(--s6)}
+  .scrollshot-frame{height:min(56vh,460px)}
+}
+
+/* a live-product marker, used where a case study shows shipped work */
+.hero-live,.badge-live{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+}
+.hero-live i,.badge-live i{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+/* ===================================================================
+   COLOPHON / FOOTER
+   =================================================================== */
+.colophon,.authorbox{
+  margin-top:var(--s9);padding-top:var(--s4);border-top:1px solid var(--ink);
+  display:flex;flex-wrap:wrap;gap:var(--s4) var(--s6);align-items:flex-start;
+  max-width:var(--wide);
+}
+.colophon div,.authorbox div{max-width:44ch}
+.colophon b,.authorbox b{
+  display:block;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:7px;
+}
+.colophon p,.authorbox p{font-size:14.5px;line-height:1.65;color:var(--ink2);margin:0}
+.colophon a,.authorbox a{
+  color:var(--accent);font-weight:700;text-decoration:none;border-bottom:1px solid var(--accent-line);
+}
+.colophon a:hover,.authorbox a:hover{border-bottom-color:var(--accent)}
+
+/* a single shared call-to-action button */
+.cs-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--paper);background:var(--accent);text-decoration:none;
+  padding:11px 18px;border:1px solid var(--accent);border-radius:2px;
+  transition:background .15s,color .15s;
+}
+.cs-btn:hover{background:transparent;color:var(--accent)}
+.cs-btn svg{width:14px;height:14px;flex-shrink:0}
+
+/* ===================================================================
+   MOTION -- subtle, and only ever on first reveal.
+   The hidden state is declared in CSS rather than applied by script, so
+   nothing paints and then disappears. `js-motion` is set by a one-line
+   inline script in each page's <head>, before first paint.
+   =================================================================== */
+html.js-motion .article-in :is(
+  h1,.standfirst,.lead,.meta,.facts,.disclosure,.nda-line,.chips,
+  .chapter > *,figure,.hero-shot,.showcase,.pull,blockquote,
+  .notes,.spec,.plain,.terms,.stats,.ba,.band,.shifts,.asks,.seq,
+  .inline-note,.colophon,.authorbox
+){
+  opacity:0;transform:translateY(10px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+html.js-motion .article-in :is(
+  h1,.standfirst,.lead,.meta,.facts,.disclosure,.nda-line,.chips,
+  .chapter > *,figure,.hero-shot,.showcase,.pull,blockquote,
+  .notes,.spec,.plain,.terms,.stats,.ba,.band,.shifts,.asks,.seq,
+  .inline-note,.colophon,.authorbox
+).in{
+  opacity:1;transform:none;
+}
+
+/* ===================================================================
+   RESPONSIVE
+   =================================================================== */
+@media(max-width:1180px){
+  :root{--rail:224px;--wide:820px}
+}
+
+@media(max-width:980px){
+  /* The rail becomes a sticky bar plus an on-demand section list. The
+     type scale, spacing rhythm and accent are unchanged. */
+  :root{--wide:100%}
+  .rail{display:none}
+  .shell{display:block}
+  .article{padding:var(--s6) var(--pad) var(--s8)}
+  .article-in{max-width:760px;margin:0 auto}
+
+  .mobbar{
+    display:flex;align-items:center;gap:var(--s3);
+    position:sticky;top:0;z-index:70;
+    padding:11px var(--pad);
+    background:rgba(247,246,242,.94);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  .mobbar-back{
+    display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
+    font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink);text-decoration:none;
+  }
+  .mobbar-back svg{width:13px;height:13px}
+  /* names the section you are in, so the bar earns its space */
+  .mobbar-here{
+    flex:1;min-width:0;text-align:right;
+    font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .mobbar-toggle{
+    flex-shrink:0;display:inline-flex;align-items:center;gap:7px;
+    font-family:inherit;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);background:transparent;border:0;border-left:1px solid var(--rule);
+    padding:3px 0 3px var(--s3);cursor:pointer;
+  }
+  .mobbar-toggle .bars{position:relative;width:14px;height:11px;flex-shrink:0}
+  .mobbar-toggle .bars::before,.mobbar-toggle .bars::after{
+    content:'';position:absolute;left:0;width:14px;height:1.5px;background:var(--accent);
+    transition:transform .2s ease,top .2s ease;
+  }
+  .mobbar-toggle .bars::before{top:2px}
+  .mobbar-toggle .bars::after{top:7px}
+  .mobbar-toggle[aria-expanded="true"] .bars::before{top:4.5px;transform:rotate(45deg)}
+  .mobbar-toggle[aria-expanded="true"] .bars::after{top:4.5px;transform:rotate(-45deg)}
+
+  .mobnav{
+    display:none;position:fixed;inset:0;z-index:69;
+    background:var(--paper);
+    padding:64px var(--pad) var(--s6);
+    overflow-y:auto;overscroll-behavior:contain;
+  }
+  .mobnav.open{display:block}
+  .mobnav-in{max-width:640px;margin:0 auto}
+  .mobnav-kicker{
+    font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink4);padding-bottom:12px;border-bottom:1px solid var(--ink);margin-bottom:var(--s2);
+  }
+  .mobnav-group-title{
+    font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink4);margin:var(--s4) 0 var(--s1);
+  }
+  .mobnav ul{list-style:none}
+  .mobnav a{
+    display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:baseline;
+    padding:13px 0;border-bottom:1px solid var(--rule2);
+    font-size:16px;font-weight:700;letter-spacing:-0.012em;color:var(--ink);text-decoration:none;
+  }
+  .mobnav a .n{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--ink4)}
+  .mobnav a.active{color:var(--accent)}
+  .mobnav a.active .n{color:var(--accent)}
+  .mobnav-foot{font-size:11.5px;line-height:1.6;color:var(--ink4);margin-top:var(--s5)}
+  body.nav-open{overflow:hidden}
+
+  /* sections clear the sticky bar when jumped to */
+  .chapter,[id]{scroll-margin-top:62px}
+}
+
+@media(max-width:760px){
+  body{font-size:16px}
+  h1{max-width:none}
+  .meta,.facts{grid-template-columns:1fr 1fr;gap:var(--s4)}
+  .stats{grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4)}
+  .ba{grid-template-columns:1fr;gap:var(--s4)}
+  .band{grid-template-columns:1fr;gap:3px}
+  .spec div,.spec.lbl div{grid-template-columns:1fr;gap:2px;padding:12px 0}
+  .shifts > div{grid-template-columns:1fr;gap:6px}
+  .shifts-head{display:none}
+  .shifts .now{padding-left:var(--s3);border-left:2px solid var(--accent)}
+  .notes li{grid-template-columns:24px 1fr;gap:var(--s2)}
+  .slot{aspect-ratio:4/3;padding:var(--s4)}
+  .slot.wide{aspect-ratio:3/2}
+  .chapter{margin-top:var(--s8)}
+  .colophon,.authorbox{gap:var(--s4)}
+}
+
+@media(max-width:430px){
+  .meta,.facts{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+
+@media print{
+  .rail,.mobbar,.mobnav,.progress{display:none}
+  body{background:#fff}
+  .shell{display:block}
+  .article{padding:0}
+}

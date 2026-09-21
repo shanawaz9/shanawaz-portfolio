@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visa Platform &middot; Case Study</title>
+<meta name="description" content="A UX case study. The client asked for a UI polish. The real problems were the structure, the journey and the look of the product.">
+<meta property="og:title" content="Redesigning an AI-built visa platform before launch">
+<meta property="og:description" content="The client asked me to polish the UI. It turned into a full UX redesign of an AI visa platform.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="/cs/system.css">
+<!-- The Fig. 5 board is a third-party embed deep in the page. Warming the
+     connection here means its request opens on a socket that already
+     exists, rather than paying DNS and TLS when it starts. -->
+<link rel="preconnect" href="https://embed.figma.com" crossorigin>
+<link rel="dns-prefetch" href="https://embed.figma.com">
+<style>
+/* -------------------------------------------------------------------
+   AI VISA PLATFORM (PetitionIQ.ai) — project layer.
+   The shared system supplies the layout, type, grid and components.
+   This file supplies the brand accent, plus the one component that is
+   genuinely this page's own: the FigJam-style IA flow at Fig. 3.
+   ------------------------------------------------------------------- */
+:root{
+  /* the navy carried by the product's own header and CTAs */
+  --accent:      #1b3a6b;
+  --accent-soft: rgba(27,58,107,.07);
+  --accent-line: rgba(27,58,107,.34);
+}
+
+/* ===================================================================
+   FIG. 3 — THE IA FLOW, DRAWN AS A WHITEBOARD
+   -------------------------------------------------------------------
+   A working board rather than a tidy diagram: dotted canvas, sticky
+   notes, a taped-on annotation, connectors with arrowheads.
+
+   Before and after sit side by side, because the comparison is the
+   whole point and a reader should not have to hold one in memory
+   while scrolling to the other.
+
+   The two halves are deliberately different shapes, because the shape
+   IS the finding. Before is one tall column — every section the same
+   size, in one scroll. After is a spine with branches, because
+   branching is what changed. Colour carries the second story: before
+   is one flat yellow (nothing was prioritised), after is coloured by
+   AIDA stage (everything was).
+   =================================================================== */
+:root{
+  --jam-dot:rgba(10,10,10,.11);
+  --jam-flat:#f6ecc4;                 /* the undifferentiated "before" note */
+  --jam-attention:#fde3b8;
+  --jam-interest: #d4e4fa;
+  --jam-desire:   #e3dbf8;
+  --jam-action:   #cfe3d6;
+  --jam-trust:    #f9d9e2;
+  --jam-spine:14px;                   /* x of the vertical trunk in the tree */
+}
+
+.jam{
+  background:var(--paper2);
+  background-image:radial-gradient(var(--jam-dot) 1px,transparent 1px);
+  background-size:18px 18px;
+  background-position:-1px -1px;
+  border:1px solid var(--rule);
+  padding:clamp(16px,3vw,30px);
+}
+.jam-board{
+  display:grid;
+  grid-template-columns:250px 58px minmax(0,1fr);
+  align-items:start;
+}
+
+/* Board furniture ---------------------------------------------------- */
+.jam-tag{
+  display:inline-block;font:700 10px/1 var(--sans);letter-spacing:.15em;
+  text-transform:uppercase;color:var(--paper);background:var(--ink);
+  padding:5px 8px;border-radius:3px;margin-bottom:var(--s3);
+}
+.jam-col.is-after .jam-tag{background:var(--accent)}
+.jam-move{
+  font:700 10px/1.45 var(--sans);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 11px;
+}
+
+/* BEFORE: one page, one column --------------------------------------- */
+.jam-page-card{
+  background:#fff;border:1px solid rgba(10,10,10,.2);border-radius:7px;
+  box-shadow:0 1px 2px rgba(10,10,10,.06),0 8px 18px rgba(10,10,10,.05);
+  overflow:hidden;
+}
+/* a browser-chrome bar, so the node reads as "a page" without a label */
+.jam-page-hd{
+  display:flex;align-items:center;gap:5px;
+  padding:7px 9px;border-bottom:1px solid rgba(10,10,10,.12);background:var(--paper2);
+  font:700 10px/1 var(--sans);letter-spacing:.07em;color:var(--ink3);
+}
+.jam-page-hd i{width:6px;height:6px;border-radius:50%;background:rgba(10,10,10,.17);flex:0 0 auto}
+.jam-page-hd span{margin-left:3px}
+.jam-stack{list-style:none;padding:10px;display:flex;flex-direction:column;gap:5px}
+.jam-note{
+  font-size:11.5px;line-height:1.35;letter-spacing:-0.004em;color:var(--ink);
+  background:var(--jam-flat);border:1px solid rgba(10,10,10,.15);border-radius:4px;
+  padding:6px 8px;box-shadow:0 1px 1px rgba(10,10,10,.06);
+}
+/* Hand-placed, not auto-laid-out. The rotations are tiny and uneven on
+   purpose — a board someone actually worked on. */
+.jam-stack li:nth-child(3n)   .jam-note{transform:rotate(-.5deg)}
+.jam-stack li:nth-child(4n+1) .jam-note{transform:rotate(.6deg)}
+.jam-stack li:last-child .jam-note{
+  background:transparent;border-style:dashed;color:var(--ink3);box-shadow:none;
+  font:700 10px/1.4 var(--sans);letter-spacing:.09em;text-transform:uppercase;
+}
+.jam-scrollmark{
+  display:flex;align-items:center;gap:6px;
+  padding:0 10px 10px;font:700 10px/1 var(--sans);letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink4);
+}
+.jam-scrollmark svg{width:11px;height:11px;flex:0 0 auto}
+
+/* the annotation taped under the before column */
+.jam-annot{
+  margin-top:14px;background:#fff;border:1px dashed var(--rule3);border-radius:6px;
+  padding:12px 14px;transform:rotate(-.7deg);box-shadow:0 1px 2px rgba(10,10,10,.05);
+}
+.jam-annot b{
+  display:block;font:700 10px/1 var(--sans);letter-spacing:.13em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:7px;
+}
+.jam-annot p{font-size:12px;line-height:1.55;color:var(--ink2);margin:0}
+
+/* The connector between the two halves -------------------------------- */
+.jam-link{
+  position:relative;align-self:center;justify-self:stretch;
+  height:1.5px;background:var(--accent-line);margin:0 9px;
+}
+.jam-link::after{
+  content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);
+  border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;
+  border-left:6px solid var(--accent);
+}
+
+/* AFTER: a spine with branches ---------------------------------------- */
+.jam-root{
+  display:inline-block;font:700 11px/1 var(--sans);letter-spacing:.07em;
+  color:#fff;background:var(--accent);padding:9px 15px;border-radius:5px;
+}
+.jam-tree{list-style:none;position:relative;padding-top:15px}
+/* the drop out of the root into the trunk */
+.jam-tree::before{
+  content:'';position:absolute;left:var(--jam-spine);top:0;
+  width:1.5px;height:15px;background:var(--accent-line);
+}
+/* Each branch draws its own slice of the trunk, so the line stays
+   continuous through the gaps. The last one stops at its own elbow
+   instead of running past the final card. */
+.jam-branch{position:relative;padding-left:40px;padding-bottom:9px}
+.jam-branch::before{
+  content:'';position:absolute;left:var(--jam-spine);top:0;
+  width:1.5px;height:100%;background:var(--accent-line);
+}
+.jam-branch:last-child::before{height:20px}
+.jam-branch::after{
+  content:'';position:absolute;left:var(--jam-spine);top:19px;
+  width:26px;height:1.5px;background:var(--accent-line);
+}
+.jam-row{display:flex;gap:12px;align-items:flex-start}
+.jam-dest{
+  flex:1 1 auto;width:100%;max-width:292px;
+  background:#fff;border:1px solid rgba(10,10,10,.18);border-radius:6px;
+  box-shadow:0 1px 2px rgba(10,10,10,.06);overflow:hidden;
+}
+.jam-dest h6{
+  font:700 10px/1.3 var(--sans);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink);background:var(--paper2);
+  border-bottom:1px solid rgba(10,10,10,.12);padding:7px 9px;
+}
+.jam-dest ul{list-style:none;padding:8px;display:flex;flex-direction:column;gap:5px}
+.jam-chip{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  border:1px solid rgba(10,10,10,.14);border-radius:4px;padding:5px 8px;
+  box-shadow:0 1px 1px rgba(10,10,10,.05);background:var(--jam-flat);
+}
+.jam-chip span{font-size:11.5px;line-height:1.3;color:var(--ink);letter-spacing:-0.004em}
+.jam-chip i{
+  flex:0 0 auto;font:700 9.5px/1 var(--sans);letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3);font-style:normal;
+}
+.jam-chip[data-s="attention"]{background:var(--jam-attention)}
+.jam-chip[data-s="interest"] {background:var(--jam-interest)}
+.jam-chip[data-s="desire"]   {background:var(--jam-desire)}
+.jam-chip[data-s="action"]   {background:var(--jam-action)}
+.jam-chip[data-s="trust"]    {background:var(--jam-trust)}
+
+/* The framework note, pinned beside Landing — the page whose order it
+   actually explains. A legend at the foot of the board would make the
+   reader hunt for what the colours mean; here it sits on the evidence. */
+.jam-key{
+  flex:0 0 196px;align-self:flex-start;margin-top:10px;
+  background:#fff;border:1px dashed var(--accent-line);border-radius:6px;
+  padding:11px 13px;transform:rotate(.6deg);box-shadow:0 1px 2px rgba(10,10,10,.05);
+}
+.jam-key b{
+  display:block;font:700 10px/1.35 var(--sans);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:9px;
+}
+.jam-key ol{list-style:none;display:flex;flex-direction:column;gap:5px;margin:0 0 9px}
+.jam-key li{
+  display:flex;align-items:center;gap:7px;
+  font:700 10px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);
+}
+.jam-key li::before{
+  content:'';flex:0 0 auto;width:11px;height:11px;border-radius:3px;
+  border:1px solid rgba(10,10,10,.16);
+}
+.jam-key .k-attention::before{background:var(--jam-attention)}
+.jam-key .k-interest::before {background:var(--jam-interest)}
+.jam-key .k-desire::before   {background:var(--jam-desire)}
+.jam-key .k-action::before   {background:var(--jam-action)}
+.jam-key .k-trust::before    {background:var(--jam-trust)}
+.jam-key p{
+  font-size:11px;line-height:1.5;color:var(--ink3);margin:0;
+  padding-top:8px;border-top:1px solid var(--rule2);
+}
+/* The board is coloured by a framework the reader has not met yet, so
+   the key ends by saying where it is explained rather than leaving the
+   five words to be taken on faith. */
+.jam-next{
+  display:block;font-size:11px;line-height:1.45;margin:7px 0 0;
+  color:var(--accent);font-weight:700;letter-spacing:-0.002em;
+}
+.jam-next a{color:inherit;text-decoration:none;border-bottom:1px solid var(--accent-line)}
+.jam-next a:hover{border-bottom-color:var(--accent)}
+
+/* --- responsive ------------------------------------------------------ */
+@media(max-width:1040px){
+  .jam-board{grid-template-columns:216px 44px minmax(0,1fr)}
+  .jam-dest{max-width:none}
+  .jam-key{flex-basis:170px}
+}
+@media(max-width:880px){
+  /* not enough width for two boards side by side — stack them, and turn
+     the connector to face the new direction */
+  .jam-board{grid-template-columns:minmax(0,1fr)}
+  .jam-link{
+    width:1.5px;height:34px;justify-self:center;margin:20px auto;
+  }
+  .jam-link::after{
+    right:auto;left:50%;top:auto;bottom:-1px;transform:translateX(-50%);
+    border-left:4.5px solid transparent;border-right:4.5px solid transparent;
+    border-top:6px solid var(--accent);border-bottom:0;
+  }
+  .jam-dest{max-width:340px}
+}
+@media(max-width:560px){
+  .jam{padding:15px}
+  .jam-branch{padding-left:30px}
+  .jam-branch::after{width:16px}
+  .jam-row{flex-direction:column;gap:9px}
+  .jam-dest{max-width:none}
+  .jam-key{flex-basis:auto;width:100%;margin-top:0;transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .jam-stack li .jam-note,.jam-annot,.jam-key{transform:none}
+}
+
+/* ===================================================================
+   CH. 03 — THE THREE-PART PLAN
+   -------------------------------------------------------------------
+   Built to be read in about four seconds. Three columns so the count
+   is obvious before a single word is read, and a strict three-line
+   hierarchy inside each: what stage it is, what changed, why. A reader
+   who only takes the bold line still leaves with the whole strategy.
+   =================================================================== */
+.plan{
+  list-style:none;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:var(--s5);margin:var(--s5) 0 var(--s4);max-width:var(--wide);
+}
+.plan li{border-top:2px solid var(--accent);padding-top:var(--s4)}
+.plan .n{
+  display:block;font-size:10px;font-weight:700;letter-spacing:.13em;
+  color:var(--accent);margin-bottom:var(--s2);
+}
+/* A step above h3, so the three lines carry more weight than any
+   body copy near them: with the section stripped to a heading and these
+   three cards, this is the block a reader in a hurry stops on. */
+.plan b{
+  display:block;font-size:19px;font-weight:700;line-height:1.26;
+  letter-spacing:-0.014em;color:var(--ink);margin-bottom:var(--s2);
+}
+.plan p{font-size:15px;line-height:1.6;color:var(--ink2);margin:0;letter-spacing:-0.004em}
+
+/* One heading runs to two lines and the others do not, which leaves the
+   three descriptions on different baselines. Subgrid puts the number,
+   the heading and the description on shared rows so the three columns
+   scan straight across; browsers without it keep the plain stack. */
+@supports(grid-template-rows:subgrid){
+  .plan{grid-template-rows:auto auto auto}
+  .plan li{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0}
+}
+@media(max-width:820px){
+  .plan{grid-template-columns:1fr;gap:var(--s4);max-width:var(--measure)}
+  .plan li{padding-top:var(--s3)}
+  .plan b{font-size:18px}
+}
+
+/* ===================================================================
+   CH. 04–07 — ONE SECTION, NOT FOUR
+   -------------------------------------------------------------------
+   The three parts named in Ch. 03 are built across the four chapters
+   that follow. Left as a plain chapter run they read as four unrelated
+   stops, so they open under one rule with one name — the same part
+   device the Shiftlyn case study uses for its acts — and the rail
+   wraps the same four links in one bracketed group.
+   =================================================================== */
+.part{margin:var(--s9) 0 0;padding-top:var(--s4);border-top:2px solid var(--ink);max-width:var(--wide)}
+/* Stacked, in the same order a chapter head reads: the label, then the
+   name, then the line that says what is in it. Side by side the label
+   sat as a prefix to the title rather than above the section. */
+.part-no{
+  display:block;
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:var(--s2);
+}
+.part-title{
+  font-size:clamp(26px,3.6vw,38px);font-weight:700;color:var(--ink);
+  letter-spacing:-0.025em;line-height:1.04;margin:0;max-width:20ch;
+}
+.part-desc{
+  font-size:14.5px;color:var(--ink3);line-height:1.55;
+  max-width:var(--measure);margin:var(--s3) 0 0;
+}
+/* the chapter that opens the part already has the part rule above it */
+.part + .chapter{margin-top:var(--s7);padding-top:0;border-top:0}
+
+/* ---------- the nav's own nesting ----------
+   04 is one chapter with three movements, so its three links sit inside
+   it rather than beside it: indented under the parent, one step quieter,
+   and hung off a hairline that runs the height of the group. Nothing
+   heavier -- in a 256px column a box or a fill reads as a panel. */
+.rail .subnav{
+  margin:2px 0 2px 11px;padding-left:12px;
+  border-left:1px solid var(--rule2);
+}
+.rail a.raillink.is-sub{
+  padding-top:5px;padding-bottom:5px;
+  font-size:12.5px;color:var(--ink4);
+}
+.rail a.raillink.is-sub .n{font-size:10px}
+.rail a.raillink.is-sub:hover{color:var(--ink2)}
+/* the active dot would collide with the hairline, so it moves inboard */
+.rail a.raillink.is-sub.active{color:var(--accent)}
+.rail a.raillink.is-sub.active::before{left:-17px}
+
+.mobnav .subnav{
+  margin-left:var(--s3);padding-left:var(--s3);
+  border-left:1px solid var(--rule2);
+}
+.mobnav .subnav a{font-size:14.5px;color:var(--ink2)}
+
+/* 4a's second half is a subheading rather than a chapter, so it needs
+   the scroll offset a .chapter gets for free when it is jumped to. */
+.chapter h3[id]{scroll-margin-top:var(--s6)}
+
+/* ===================================================================
+   CH. 4c — PATTERN CLIPS IN TABS
+   -------------------------------------------------------------------
+   Four screen recordings behind one frame. The section's whole argument
+   is "more information, less visual weight", so four stacked clips would
+   contradict it on the way past; one frame you switch makes the point
+   twice.
+
+   The tab row is the Material pattern: labels on a hairline, and a 2px
+   indicator under the selected one. Nothing is welded to anything -- the
+   row reads as a control, and the clip sits below it with air in between
+   rather than growing out of the tab.
+
+   The <source> elements carry data-src rather than src, so an unopened
+   tab costs zero requests; the script wires them up the first time its
+   tab is shown, and preload="none" holds the file back until play.
+   =================================================================== */
+.clips{border:0;background:none}
+
+.clips-tabs{
+  display:flex;flex-wrap:wrap;
+  border-bottom:1px solid var(--rule);
+}
+.clips-tab{
+  flex:1 1 0;min-width:0;position:relative;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  appearance:none;border:0;background:none;cursor:pointer;
+  /* ink3 reaches 4.9:1 on paper, so the unselected labels pass AA on
+     their own without having to be as dark as body copy. */
+  color:var(--ink3);
+  font:700 11px/1.35 var(--sans);letter-spacing:.09em;text-transform:uppercase;
+  padding:13px 14px;text-align:center;
+  border-radius:3px 3px 0 0;
+  transition:background .15s,color .15s;
+}
+/* Unselected: quiet label, ghosted icon. The gap between this and the
+   selected state is what carries the "you are here", so it is opened up
+   as far as AA allows rather than kept close. */
+.clips-tab svg{width:11px;height:11px;flex:0 0 auto;opacity:.3;transition:opacity .15s}
+.clips-tab-label{min-width:0}
+.clips-tab-time{
+  flex:0 0 auto;font-size:9.5px;font-weight:700;letter-spacing:.06em;
+  color:var(--ink3);font-variant-numeric:tabular-nums;
+}
+/* Hover is a neutral paper step, not the accent: the accent tint has to
+   mean "selected" and nothing else, or the two states read alike. */
+.clips-tab:hover{background:var(--paper2);color:var(--ink)}
+.clips-tab:hover svg{opacity:.7}
+.clips-tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;z-index:1}
+
+/* Selected: four signals at once, because one was not enough to see at a
+   glance across a 960px row -- the accent label, an accent tint behind
+   it, a 3px indicator sitting over the row's hairline, and the only
+   play icon on the row at full strength. */
+.clips-tab[aria-selected="true"]{
+  color:var(--accent);background:var(--accent-soft);
+}
+.clips-tab[aria-selected="true"]::after{
+  content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--accent);
+}
+.clips-tab[aria-selected="true"] svg{opacity:1}
+.clips-tab[aria-selected="true"] .clips-tab-time{color:var(--accent);opacity:.8}
+
+/* The air the tabs were missing. The clip is what the row controls, not
+   part of the row. */
+.clips-panel{margin-top:var(--s4)}
+.clips-panel[hidden]{display:none}
+.clips-panel:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.clips video{
+  display:block;width:100%;height:auto;
+  background:var(--ink);border:1px solid var(--rule);
+  aspect-ratio:1870 / 874;   /* holds the frame before the poster lands */
+}
+.clips-note{
+  font-size:13px;line-height:1.55;color:var(--ink3);
+  margin:11px 0 0;letter-spacing:-0.004em;
+}
+.clips-note a{color:var(--accent)}
+
+@media(max-width:760px){
+  /* Four labels will not sit on one row here. Two per row beats four
+     squeezed ones, and the indicator still marks the selected one
+     wherever it lands. */
+  .clips-tab{flex:1 1 50%;padding:12px 10px;font-size:10px;gap:6px}
+}
+@media(max-width:420px){
+  .clips-tab{font-size:9.5px;letter-spacing:.06em;padding:11px 8px}
+  .clips-tab svg{display:none}
+  .clips-note{font-size:12.5px}
+}
+
+/* ===================================================================
+   FIG. 2 — THE FINDINGS BESIDE WHAT THEY WERE FOUND IN
+   -------------------------------------------------------------------
+   The scroll frame is the system's own (shared with Fig. 1), so the
+   gesture means the same thing both times it appears.
+
+   The list keeps its own scroll discipline: `.notes` normally spans the
+   reading measure, and at half width its two-column rows would collapse,
+   so the number column is pinned narrower here instead.
+   =================================================================== */
+/* The screenshot is the evidence for the list beside it, so it takes the
+   larger share of the canvas and a taller frame: at an even split the
+   page inside it shrank to the point where you could see that it was
+   long without being able to read what was on it. */
+.audit{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+  gap:var(--s5);align-items:start;
+}
+.audit-shot .scrollshot-frame{height:min(80vh,760px)}
+.audit-list{max-width:none}
+.audit-list h4{margin-top:0}
+.audit-list .notes{margin:var(--s3) 0 0;max-width:none}
+.audit-list .notes li{grid-template-columns:24px 1fr;gap:var(--s2);padding:12px 0}
+@media(max-width:860px){
+  /* Below this the frame is too narrow to read the page inside it, and
+     the list rows start breaking. Stack, original first. */
+  .audit{grid-template-columns:minmax(0,1fr);gap:var(--s4)}
+  .audit-shot .scrollshot-frame{height:min(62vh,520px)}
+  .audit-list .notes{max-width:var(--measure)}
+}
+
+/* ===================================================================
+   FIG. 4 — THE FRAMEWORK BESIDE ITS WHITEBOARD
+   -------------------------------------------------------------------
+   Four words are easy to nod along to and hard to believe. Putting the
+   clean list next to the photo of where it was actually worked out
+   makes it evidence rather than a claim.
+
+   The stages are drawn as a ladder with a connector running through
+   the markers, because AIDA is an order, not a set. Trust then sits
+   under all four behind one unbroken accent rule, which is the whole
+   argument about trust made in layout instead of prose. Swatch colours
+   are the ones the Fig. 3 board already taught the reader.
+   =================================================================== */
+.aida{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:var(--s5);align-items:start;
+}
+.aida-shot img{display:block;width:100%;height:auto;border:1px solid var(--rule)}
+
+.aida-steps ol{list-style:none;margin:0;padding:0}
+.aida-steps li{position:relative;padding:0 0 17px 32px}
+.aida-steps li:last-child{padding-bottom:14px}
+/* the marker */
+.aida-steps li::before{
+  content:'';position:absolute;left:0;top:2px;width:15px;height:15px;border-radius:3px;
+  border:1px solid rgba(10,10,10,.18);
+}
+/* the thread between markers -- what makes it an order rather than a list */
+.aida-steps li::after{
+  content:'';position:absolute;left:7px;top:19px;bottom:0;width:1px;background:var(--rule);
+}
+.aida-steps li:last-child::after{display:none}
+.aida-steps li[data-s="attention"]::before{background:var(--jam-attention)}
+.aida-steps li[data-s="interest"]::before {background:var(--jam-interest)}
+.aida-steps li[data-s="desire"]::before   {background:var(--jam-desire)}
+.aida-steps li[data-s="action"]::before   {background:var(--jam-action)}
+.aida-steps b{
+  display:block;font:700 10px/1.3 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:4px;
+}
+.aida-steps span{
+  display:block;font-size:14px;line-height:1.5;color:var(--ink2);letter-spacing:-0.006em;
+}
+/* Trust spans the full width of the four it supports, under one rule. */
+.aida-trust{
+  margin-top:3px;padding:11px 0 0 32px;position:relative;
+  border-top:2px solid var(--accent);
+}
+.aida-trust::before{
+  content:'';position:absolute;left:0;top:13px;width:15px;height:15px;border-radius:3px;
+  background:var(--jam-trust);border:1px solid rgba(10,10,10,.18);
+}
+.aida-trust b{
+  display:block;font:700 10px/1.3 var(--sans);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:4px;
+}
+.aida-trust span{
+  display:block;font-size:14px;line-height:1.5;color:var(--ink2);letter-spacing:-0.006em;
+}
+@media(max-width:820px){
+  /* Side by side stops earning its keep here -- the photo gets too small
+     to read the handwriting. Stack, ladder first: it is the summary. */
+  .aida{grid-template-columns:minmax(0,1fr);gap:var(--s4);max-width:var(--measure)}
+  .aida-steps{order:-1}
+}
+
+/* ===================================================================
+   FIG. 9 — THE DESIGN/BUILD FLOW
+   -------------------------------------------------------------------
+   Same board language as Fig. 3, so the two figures read as pages from
+   one notebook: the dotted canvas, the sticky notes, the hand-placed
+   tilt. Straight down the middle, because the flow is a plain sequence
+   and any cleverer arrangement only hides that.
+   =================================================================== */
+.flow{
+  list-style:none;margin:0 auto;padding:0;
+  max-width:420px;display:flex;flex-direction:column;align-items:stretch;
+}
+.flow-note{
+  background:var(--jam-flat);border:1px solid rgba(10,10,10,.15);border-radius:5px;
+  box-shadow:0 1px 2px rgba(10,10,10,.07);
+  padding:13px 16px;text-align:center;
+  font-size:14px;line-height:1.4;letter-spacing:-0.006em;color:var(--ink);
+}
+/* hand-placed, not auto-laid-out — the same tilt the Fig. 3 notes carry */
+.flow-note:nth-child(4n+1){transform:rotate(-.4deg)}
+.flow-note:nth-child(4n+3){transform:rotate(.5deg)}
+.flow-arrow{
+  display:flex;align-items:center;justify-content:center;
+  padding:7px 0;color:var(--accent-line);
+}
+.flow-arrow svg{width:17px;height:17px;display:block}
+@media(max-width:560px){
+  .flow{max-width:none}
+  .flow-note{padding:11px 13px;font-size:13.5px}
+  .flow-arrow{padding:5px 0}
+  .flow-arrow svg{width:15px;height:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  .flow-note{transform:none}
+}
+
+/* ===================================================================
+   FIG. 10 — THE SHIPPED PAGES
+   -------------------------------------------------------------------
+   The gallery is laid out as the product's own shape: one lead image
+   for the way in, a 2x2 of the four destinations, then the closing
+   band. That is the same one-to-many-to-one the IA board drew back at
+   Fig. 3, so the claim and the evidence have the same silhouette.
+
+   Every shot keeps its own aspect ratio rather than being cropped to a
+   grid — these are pages, and a page that has been trimmed to fit a
+   tile is no longer proof of anything.
+   =================================================================== */
+.shipped{display:grid;gap:var(--s5)}
+.shipped-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+.shipped-lead,.shipped-item{margin:0;max-width:none}
+.shipped img{display:block;width:100%;height:auto;border:1px solid var(--rule)}
+/* Per-shot labels sit tighter and quieter than a figure caption: they
+   name the page, they do not narrate it. */
+.shipped figcaption{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;
+  margin-top:9px;max-width:none;
+}
+.shipped figcaption b{
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink);
+}
+.shipped figcaption span{font-size:12px;line-height:1.5;color:var(--ink3);letter-spacing:-0.002em}
+
+/* The live-site link. It is the one outbound action on the page, so it
+   gets its own rule above it rather than sitting in a caption. */
+.shipped-go{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;
+  margin:var(--s5) 0 0;padding-top:var(--s4);border-top:1px solid var(--ink);
+  max-width:none;
+}
+/* ink4 at 10px only reached 2.8:1 on paper, which fails AA outright. */
+.shipped-go-url{
+  font:700 10px/1.4 var(--sans);letter-spacing:.11em;text-transform:uppercase;color:var(--ink2);
+}
+.shipped-go .cs-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* Available to a screen reader, not on screen: lets the link say where
+   it goes and that it opens a new tab, without repeating it visually. */
+.sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+@media(max-width:700px){
+  .shipped-grid{grid-template-columns:1fr}
+  .shipped{gap:var(--s4)}
+}
+
+/* ===================================================================
+   FIG. 5 — THE INSPIRATIONS BOARD, LIVE
+   -------------------------------------------------------------------
+   Each board gets the same ruled header the before/after screenshots
+   use, so a labelled panel means the same thing everywhere on the page.
+   The board is embedded rather than screenshotted: it is dense enough
+   that a flat image only ever proved it existed, while the live board
+   can be panned and zoomed into the references themselves.
+   =================================================================== */
+.boards{display:grid;gap:var(--s6)}
+.board{margin:0;max-width:none}
+/* Both figure headers on this page ("Inspirations" and "Hero section
+   ideations") name a body of work, not a screenshot, so they are set as
+   headings rather than as the 10px uppercase labels the screenshot panels
+   use. One step under the chapter title, so they read as its parts. */
+.board-hd{
+  display:block;
+  padding-bottom:12px;margin-bottom:var(--s3);border-bottom:1px solid var(--ink);
+}
+.board-hd b{
+  display:block;
+  font-size:clamp(19px,2vw,22px);font-weight:700;line-height:1.25;
+  letter-spacing:-0.016em;text-transform:none;color:var(--ink);
+}
+.board-hd span{
+  display:block;margin-top:6px;
+  font-size:14px;line-height:1.5;color:var(--ink3);letter-spacing:-0.002em;
+}
+.board a{display:block}
+.board img{transition:border-color .15s}
+.board a:hover img{border-color:var(--accent-line)}
+.board a:focus-visible img{outline:2px solid var(--accent);outline-offset:2px}
+/* The embed fills the canvas and keeps the 16:9 the board is served at.
+   A fixed 800x450 would sit short of the 960px canvas on a desktop and
+   overflow it on a phone. */
+.board-embed{
+  position:relative;width:100%;aspect-ratio:16/9;
+  border:1px solid var(--rule);background:var(--paper2);
+}
+.board-embed iframe{display:block;width:100%;height:100%;border:0}
+@media(max-width:560px){
+  .boards{gap:var(--s5)}
+  .board-hd b{font-size:18px}
+  /* 16:9 of a phone's width is 200px of board -- too little to pan in */
+  .board-embed{aspect-ratio:4/3}
+}
+</style>
+<script>
+/* Set before first paint so revealed elements never flash in then out. */
+(function(){try{if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.className+=' js-motion';}}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+
+<!-- MOBILE CHROME -->
+<div class="mobbar">
+  <a class="mobbar-back" href="/#work">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    Portfolio
+  </a>
+  <span class="mobbar-here" data-default="AI Visa Platform"></span>
+  <button class="mobbar-toggle" type="button" aria-expanded="false" aria-controls="mobnav">
+    <span class="bars" aria-hidden="true"></span>Sections
+  </button>
+</div>
+
+<nav class="mobnav" id="mobnav" aria-label="Case study sections">
+  <div class="mobnav-in">
+    <div class="mobnav-kicker">AI Visa Platform &middot; On this page</div>
+    <ul>
+      <li><a href="#request"><span class="n">01</span><span class="lbl">The original request</span></a></li>
+      <li><a href="#audit"><span class="n">02</span><span class="lbl">The audit findings</span></a></li>
+      <li><a href="#strategy"><span class="n">03</span><span class="lbl">The UX strategy</span></a></li>
+      <li><a href="#solved"><span class="n">04</span><span class="lbl">How we solved it</span></a></li>
+    </ul>
+    <ul class="subnav" aria-label="How we solved it">
+      <li><a href="#ia"><span class="n">4a</span><span class="lbl">Information architecture &amp; conversion journey</span></a></li>
+      <li><a href="#visual"><span class="n">4b</span><span class="lbl">Visual direction</span></a></li>
+      <li><a href="#components"><span class="n">4c</span><span class="lbl">Component efficiency</span></a></li>
+    </ul>
+    <ul>
+      <li><a href="#handoff"><span class="n">05</span><span class="lbl">Design to development</span></a></li>
+      <li><a href="#result"><span class="n">06</span><span class="lbl">The final result</span></a></li>
+      <li><a href="#outcome"><span class="n">07</span><span class="lbl">What changed for the product</span></a></li>
+      <li><a href="#takeaway"><span class="n">&mdash;</span><span class="lbl">The takeaway</span></a></li>
+    </ul>
+    <div class="mobnav-foot">Product &amp; UX &middot; 2026 &middot; 6 min read</div>
+  </div>
+</nav>
+
+<div class="shell">
+
+  <!-- PERSISTENT LEFT RAIL -->
+  <aside class="rail">
+    <a class="rail-back" href="/#work">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      Back to portfolio
+    </a>
+    <div class="rail-project">AI Visa Platform</div>
+    <div class="rail-kicker">On this page</div>
+    <nav aria-label="Case study sections">
+      <ul>
+        <li><a class="raillink" href="#request"><span class="n">01</span><span class="lbl">The original request</span></a></li>
+        <li><a class="raillink" href="#audit"><span class="n">02</span><span class="lbl">The audit findings</span></a></li>
+        <li><a class="raillink" href="#strategy"><span class="n">03</span><span class="lbl">The UX strategy</span></a></li>
+        <li>
+          <a class="raillink" href="#solved"><span class="n">04</span><span class="lbl">How we solved it</span></a>
+          <ul class="subnav" aria-label="How we solved it">
+            <li><a class="raillink is-sub" href="#ia"><span class="n">4a</span><span class="lbl">Information architecture &amp; conversion journey</span></a></li>
+            <li><a class="raillink is-sub" href="#visual"><span class="n">4b</span><span class="lbl">Visual direction</span></a></li>
+            <li><a class="raillink is-sub" href="#components"><span class="n">4c</span><span class="lbl">Component efficiency</span></a></li>
+          </ul>
+        </li>
+        <li><a class="raillink" href="#handoff"><span class="n">05</span><span class="lbl">Design to development</span></a></li>
+        <li><a class="raillink" href="#result"><span class="n">06</span><span class="lbl">The final result</span></a></li>
+        <li><a class="raillink" href="#outcome"><span class="n">07</span><span class="lbl">What changed for the product</span></a></li>
+        <li><a class="raillink" href="#takeaway"><span class="n">&mdash;</span><span class="lbl">The takeaway</span></a></li>
+      </ul>
+    </nav>
+    <div class="rail-foot">Product &amp; UX &middot; 2026 &middot; 6 min read</div>
+  </aside>
+
+  <!-- ARTICLE -->
+  <main class="article">
+  <div class="article-in">
+
+    <div class="kicker">
+      <i></i><span>AI Visa Platform</span><span class="sep">&middot;</span>
+      <span>Product &amp; UX</span><span class="sep">&middot;</span>
+      <span>2026</span><span class="sep">&middot;</span>
+      <span>6 min read</span>
+    </div>
+
+    <h1>Redesigning an AI-built visa platform before launch</h1>
+    <p class="lead">The client asked for a UI polish. After the audit we agreed to fix the UX first: the structure, the user flows and the visual design.</p>
+
+    <!-- Masthead image: the shipped hero, above the fold, so the work is the
+         first thing on the page rather than the first thing after the metadata. -->
+    <figure class="full">
+      <img src="/images/visa/petitioniq-hero.webp" width="1875" height="874" loading="eager" decoding="async" fetchpriority="high"
+           alt="The shipped PetitionIQ.ai hero: a navy header carrying the PetitionIQ.ai wordmark, Individuals, Attorney, Visa categories, Resources, Articles and Contact us, with an Attorney partnership button and a gold Start free evaluation button. Below, on white, a small AI-powered immigration evaluation badge sits above a serif headline reading Immigration intelligence before the petition is written, its second half set in gold, a subhead naming EB-1A, EB-2 NIW and O-1A, two calls to action, and a line stating that PetitionIQ is not a law firm and does not provide legal advice">
+    </figure>
+
+    <div class="meta">
+      <div><b>Role</b><span>Senior UX Designer</span></div>
+      <div><b>Product</b><span>AI visa evaluation platform</span></div>
+      <div><b>Audience</b><span>Visa applicants &amp; attorneys</span></div>
+      <div><b>Platform</b><span>Desktop-first</span></div>
+      <div><b>Timeline</b><span>3 weeks design &middot; 1 week build</span></div>
+      <div><b>Business goal</b><span>Marketing &amp; lead generation</span></div>
+      <div class="span"><b>Scope</b><span>UX strategy &middot; Information architecture &middot; Interaction design &middot; Visual direction &middot; Design reviews &middot; Team coordination &middot; Design-to-development</span></div>
+    </div>
+
+  <!-- 01 -->
+  <section class="chapter" id="request">
+    <div class="chapter-no"><b>01</b></div>
+    <h2 class="title is-wide">What the client asked for</h2>
+
+    <!-- The whole page, at full length. Shrinking either of these to fit
+         would hide the one thing worth seeing: how far you have to scroll. -->
+    <figure class="full scrollfig">
+    <div class="scrollshots">
+      <figure class="scrollshot">
+        <div class="scrollshot-hd">
+          <b>Before</b>
+          <span>What the client shared with us</span>
+        </div>
+        <div class="scrollshot-frame" tabindex="0" role="group" aria-label="Full-page screenshot of the original product, scrollable">
+          <img src="/images/visa/petitioniq-before-full.webp" width="1400" height="10533" loading="lazy" decoding="async"
+               alt="The original product as a single full-page screenshot: a pale hero reading Immigration Intelligence Before the Petition Is Written beside stacked EB-1A, EB-2 NIW and O-1A cards, then a long run of evenly weighted panels, a wide case-type table, pricing, testimonials, and an unstyled question-and-answer block near the foot of the page">
+          <div class="scrollshot-hint" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+            Scroll
+          </div>
+        </div>
+      </figure>
+
+      <figure class="scrollshot is-after">
+        <div class="scrollshot-hd">
+          <b>After</b>
+          <span>The same content, after the redesign</span>
+        </div>
+        <div class="scrollshot-frame" tabindex="0" role="group" aria-label="Full-page screenshot of the redesigned product, scrollable">
+          <img src="/images/visa/petitioniq-after-full.webp" width="1400" height="14332" loading="lazy" decoding="async"
+               alt="The redesigned product as a single full-page screenshot: a navy hero reading Immigration intelligence before the petition is written, a strip of supported immigration categories, a portrait band, alternating explanation sections, a full pathway table, pricing, outcomes, and a collapsed Questions answered section above the footer">
+          <div class="scrollshot-hint" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+            Scroll
+          </div>
+        </div>
+      </figure>
+    </div>
+    <figcaption><b>Fig. 1</b> &nbsp;The page we started with and the page we shipped. Scroll either frame to see the full page.</figcaption>
+    </figure>
+
+    <div class="col">
+      <p>The founder had built the MVP with Claude and wanted a UI polish before launch. But the site collects a person&rsquo;s immigration details and passes them to an attorney. For a task like that, clear structure and trust matter more than styling.</p>
+      <p class="by">My call</p>
+      <p>So I suggested we fix the UX first. Instead of asking for a bigger scope, I walked the founder through the exact screens where users would drop off. She agreed.</p>
+    </div>
+    <blockquote><p>Our job was not to make the site look better. It was to help people understand a big decision.</p></blockquote>
+  </section>
+
+  <!-- 02 -->
+  <section class="chapter" id="audit">
+    <div class="chapter-no"><b>02</b></div>
+    <h2 class="title">The problems we found in the UX audit</h2>
+    <div class="col">
+      <p>We looked at competitor products, went through the current user flows, and had discovery calls with the founder. The problems were not visual. They were in the structure and the flows.</p>
+    </div>
+    <!-- The findings next to the thing they were found in. The same
+         scrollable original from Fig. 1 is deliberately shown again:
+         "too much scrolling" is an argument you can only really make by
+         handing the reader the scroll and letting them feel it while
+         they read the list. -->
+    <figure class="full">
+      <div class="audit">
+        <div class="audit-shot">
+          <div class="scrollshot-hd">
+            <b>HTML page the client shared</b>
+            <span>One page, top to bottom</span>
+          </div>
+          <div class="scrollshot-frame" tabindex="0" role="group" aria-label="Full-page screenshot of the original product, scrollable">
+            <img src="/images/visa/petitioniq-before-full.webp" width="1400" height="10533" loading="lazy" decoding="async"
+                 alt="The original product as a single full-page screenshot: a pale hero reading Immigration Intelligence Before the Petition Is Written beside stacked EB-1A, EB-2 NIW and O-1A cards, then a long run of evenly weighted panels, a wide case-type table, pricing, testimonials, and an unstyled question-and-answer block near the foot of the page">
+            <div class="scrollshot-hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+              Scroll
+            </div>
+          </div>
+        </div>
+
+        <div class="audit-list">
+          <h4>Six problems</h4>
+          <ol class="notes">
+            <li><span><b>Too much at once.</b> 17&ndash;19 sections, all with the same visual weight.</span></li>
+            <li><span><b>One flow for two audiences.</b> Applicants and attorneys were sent down the same path.</span></li>
+            <li><span><b>No clear order.</b> Nothing guided users to the evaluation or the consultation.</span></li>
+            <li><span><b>Generic AI look.</b> The UI had no visual identity of its own.</span></li>
+            <li><span><b>Too much scrolling.</b> The main actions were buried far down the page.</span></li>
+            <li><span><b>Trust gap.</b> The design did not feel reliable enough for a legal decision.</span></li>
+          </ol>
+        </div>
+      </div>
+      <figcaption><b>Fig. 2</b> &nbsp;The six problems we found, next to the page they came from. Scroll the frame to see how long the page was.</figcaption>
+    </figure>
+    <blockquote><p>We could not remove the content, so the question became how to group it.</p></blockquote>
+  </section>
+
+  <!-- 03 -->
+  <section class="chapter" id="strategy">
+    <div class="chapter-no"><b>03</b></div>
+    <h2 class="title">The UX strategy, in three parts</h2>
+    <ol class="plan">
+      <li>
+        <span class="n">01</span>
+        <b>Framework and information architecture</b>
+        <p>Split one long page into six, with one job per page.</p>
+      </li>
+      <li>
+        <span class="n">02</span>
+        <b>Visual characterisation</b>
+        <p>Give the product its own visual identity, so it reads better and feels reliable.</p>
+      </li>
+      <li>
+        <span class="n">03</span>
+        <b>Component efficiency</b>
+        <p>Use components that hold the same content in less space.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Chapter 04 is one chapter in three movements -- 4a, 4b, 4c -- rather
+       than three chapters of its own, so it opens under one rule with one
+       name instead of continuing the chapter run. -->
+  <div class="part" id="solved">
+    <div class="part-inner">
+      <span class="part-no">Chapter 04</span>
+      <h2 class="part-title">How we solved it</h2>
+      <p class="part-desc">The three parts of the strategy, in the order we worked on them: information architecture and the user journey, then the visual direction, then the components.</p>
+    </div>
+  </div>
+
+  <!-- 4a -->
+  <section class="chapter" id="ia">
+    <div class="chapter-no"><b>4a</b></div>
+    <h2 class="title is-wide">Information architecture and the conversion journey: one long page became six</h2>
+    <div class="col">
+      <p>The biggest change was the information architecture. Instead of one long scroll, we split the content into six pages and grouped related sections where users would look for them.</p>
+    </div>
+    <!-- The IA flow, drawn as the board it was worked out on. Real text
+         rather than an exported image, so it stays readable, selectable
+         and correct at every width. -->
+    <figure class="full">
+      <div class="jam">
+        <div class="jam-board">
+
+          <!-- BEFORE -->
+          <div class="jam-col">
+            <span class="jam-tag">Before</span>
+            <div class="jam-page-card">
+              <div class="jam-page-hd"><i></i><i></i><i></i><span>petitioniq.ai</span></div>
+              <ul class="jam-stack">
+                <li><div class="jam-note">Hero</div></li>
+                <li><div class="jam-note">Visa categories</div></li>
+                <li><div class="jam-note">Evaluation form</div></li>
+                <li><div class="jam-note">Sample report</div></li>
+                <li><div class="jam-note">Pricing</div></li>
+                <li><div class="jam-note">Attorney information</div></li>
+                <li><div class="jam-note">Resources</div></li>
+                <li><div class="jam-note">Articles</div></li>
+                <li><div class="jam-note">Founder</div></li>
+                <li><div class="jam-note">Client testimonials</div></li>
+                <li><div class="jam-note">Contact us</div></li>
+                <li><div class="jam-note">FAQ</div></li>
+                <li><div class="jam-note">and a few more</div></li>
+              </ul>
+              <div class="jam-scrollmark">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                One page &middot; one scroll
+              </div>
+            </div>
+            <div class="jam-annot">
+              <b>What we saw</b>
+              <p>Every section had the same size and weight. Applicants and attorneys shared one scroll. Nothing told users what to do first.</p>
+            </div>
+          </div>
+
+          <!-- THE MOVE -->
+          <div class="jam-link" aria-hidden="true"></div>
+
+          <!-- AFTER -->
+          <div class="jam-col is-after">
+            <span class="jam-tag">After</span>
+            <p class="jam-move">Split by audience and intent</p>
+            <div class="jam-root">petitioniq.ai</div>
+            <ul class="jam-tree">
+
+              <li class="jam-branch">
+                <div class="jam-row">
+                  <div class="jam-dest">
+                    <h6>Landing</h6>
+                    <ul>
+                      <li class="jam-chip" data-s="attention"><span>Hero</span><i>Attention</i></li>
+                      <li class="jam-chip" data-s="interest"><span>Visa categories</span><i>Interest</i></li>
+                      <li class="jam-chip" data-s="desire"><span>Sample report</span><i>Desire</i></li>
+                      <li class="jam-chip" data-s="desire"><span>Pricing</span><i>Desire</i></li>
+                      <li class="jam-chip" data-s="action"><span>Start evaluation</span><i>Action</i></li>
+                      <li class="jam-chip" data-s="trust"><span>Client testimonials</span><i>Trust</i></li>
+                      <li class="jam-chip" data-s="trust"><span>Founder</span><i>Trust</i></li>
+                    </ul>
+                  </div>
+                  <div class="jam-key">
+                    <b>Sorted by the AIDA&nbsp;+&nbsp;Trust framework</b>
+                    <ol>
+                      <li class="k-attention">Attention</li>
+                      <li class="k-interest">Interest</li>
+                      <li class="k-desire">Desire</li>
+                      <li class="k-action">Action</li>
+                      <li class="k-trust">Trust</li>
+                    </ol>
+                    <p>In that order, top to bottom. Trust runs through all four stages instead of coming last.</p>
+                    <span class="jam-next"><a href="#journey">Next: why this order &rarr;</a></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="jam-branch">
+                <div class="jam-row">
+                  <div class="jam-dest">
+                    <h6>Evaluation</h6>
+                    <ul>
+                      <li class="jam-chip" data-s="action"><span>Evaluation form</span><i>Action</i></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+
+              <li class="jam-branch">
+                <div class="jam-row">
+                  <div class="jam-dest">
+                    <h6>Attorney</h6>
+                    <ul>
+                      <li class="jam-chip" data-s="interest"><span>Attorney information</span><i>Interest</i></li>
+                      <li class="jam-chip" data-s="action"><span>Talk to an attorney</span><i>Action</i></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+
+              <li class="jam-branch">
+                <div class="jam-row">
+                  <div class="jam-dest">
+                    <h6>Resources</h6>
+                    <ul>
+                      <li class="jam-chip" data-s="interest"><span>Resources</span><i>Interest</i></li>
+                      <li class="jam-chip" data-s="trust"><span>FAQ</span><i>Trust</i></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+
+              <li class="jam-branch">
+                <div class="jam-row">
+                  <div class="jam-dest">
+                    <h6>Articles</h6>
+                    <ul>
+                      <li class="jam-chip" data-s="interest"><span>Articles</span><i>Interest</i></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+
+              <li class="jam-branch">
+                <div class="jam-row">
+                  <div class="jam-dest">
+                    <h6>Contact us</h6>
+                    <ul>
+                      <li class="jam-chip" data-s="action"><span>Contact us</span><i>Action</i></li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <figcaption><b>Fig. 3</b> &nbsp;The old single page next to the new six-page structure. Each section is placed by who it is for and which stage of the journey it belongs to.</figcaption>
+    </figure>
+
+    <!-- The journey is the other half of the same structural decision:
+         where the pages are, and the order a reader moves through them.
+         It stays inside this chapter rather than opening a new one. -->
+    <h3 id="journey">The AIDA&nbsp;+&nbsp;Trust framework, mapped to the user journey</h3>
+    <div class="col">
+      <p>The business goal was lead generation, so the site had to guide users to an evaluation or a consultation. We looked at a few frameworks and picked this one.</p>
+    </div>
+    <!-- The framework beside the whiteboard it was worked out on: the
+         clean version on the right, the messy original on the left, so
+         the four words and the real page sections read as one thing.
+         Stage colours are the ones already introduced on the Fig. 3
+         board, so a reader who saw them there recognises them here. -->
+    <figure class="full">
+      <div class="aida">
+        <div class="aida-shot">
+          <img src="/images/visa/petitioniq-aida-whiteboard.webp" width="1272" height="1203" loading="lazy" decoding="async"
+               alt="A whiteboard in blue marker listing the framework stages down the left and the page sections they map to on the right: navbar to logo, applicant journey, CTA and testimonials; hero section; interest to Built for and why this position is a problem and how it helps; desire to the applicant section, report preview, visa category merged with work behind, and pricing; trust to founder and testimonials; action to the final CTA; then resources and case studies, and the footer. Circled numbers beside each entry set the running order down the page">
+        </div>
+
+        <div class="aida-steps">
+          <ol>
+            <li data-s="attention">
+              <b>Attention</b>
+              <span>Give visitors a reason to stay.</span>
+            </li>
+            <li data-s="interest">
+              <b>Interest</b>
+              <span>Explain the problem and the product.</span>
+            </li>
+            <li data-s="desire">
+              <b>Desire</b>
+              <span>Show the value of the evaluation.</span>
+            </li>
+            <li data-s="action">
+              <b>Action</b>
+              <span>Move them toward the evaluation or a call.</span>
+            </li>
+          </ol>
+          <div class="aida-trust">
+            <b>Trust</b>
+            <span>Build confidence at every stage, not only at the end.</span>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Fig. 4</b> &nbsp;The whiteboard version: each stage mapped to the sections that would carry it, then numbered in page order.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 4b -->
+  <section class="chapter" id="visual">
+    <div class="chapter-no"><b>4b</b></div>
+    <h2 class="title">Visual direction: giving the product its own identity</h2>
+    <div class="col">
+      <p>The new structure fixed the content problem, but the UI still looked generic.</p>
+      <p>So we worked on the visual design, section by section. Not a rebrand &mdash; just a clearer identity for the product that was already there.</p>
+    </div>
+    <blockquote><p>It had to look like a product people could trust, not an AI template.</p></blockquote>
+    <!-- The board the direction actually came off, at full width: it is
+         dense, and anything narrower would make it decorative rather
+         than readable. -->
+    <figure class="full">
+      <div class="boards">
+        <figure class="board">
+          <div class="board-hd">
+            <b>Inspirations</b>
+            <span>Hero sections, image style, human story, cards</span>
+          </div>
+          <div class="board-embed">
+            <iframe src="https://embed.figma.com/board/XMkaWQI6FI1X1IsqmT9aTq/PetitionIQ-.ai?node-id=193-523&amp;embed-host=share"
+                    title="Inspirations board for PetitionIQ.ai in FigJam: hero-section references, image-style treatments, human-story layouts and card patterns"
+                    allowfullscreen></iframe>
+          </div>
+        </figure>
+      </div>
+      <figcaption><b>Fig. 5</b> &nbsp;The moodboard we used to pick the direction. Pan and zoom to see the references.</figcaption>
+    </figure>
+    <!-- Hero ideations. Four of many, so the header and the caption both
+         say so rather than presenting these as the whole exploration. -->
+    <figure class="full">
+      <div class="shipped">
+        <div class="board-hd">
+          <b>Hero section ideations</b>
+          <span>Four of the options we explored</span>
+        </div>
+        <div class="shipped-grid">
+          <figure class="shipped-item">
+            <img src="/images/visa/petitioniq-hero-idea-01.webp" width="1600" height="836" loading="lazy" decoding="async"
+                 alt="Hero option: the headline on the left over a pale ground, with a duotone portrait on the right and EB-1A, EB-2 NIW and O-1A labels floating around it">
+            <figcaption><b>Option 1</b><span>Portrait, with the three visa types around it</span></figcaption>
+          </figure>
+          <figure class="shipped-item">
+            <img src="/images/visa/petitioniq-hero-idea-02.webp" width="1600" height="976" loading="lazy" decoding="async"
+                 alt="Hero option: the same headline on the left, with a sample Immigration Profile Assessment card on the right showing a readiness score and a criteria list with gaps flagged">
+            <figcaption><b>Option 2</b><span>A sample assessment beside the headline</span></figcaption>
+          </figure>
+          <figure class="shipped-item">
+            <img src="/images/visa/petitioniq-hero-idea-03.webp" width="1600" height="778" loading="lazy" decoding="async"
+                 alt="Hero option: a dark navy hero over a photograph of a person at a desk with flags behind them, gold buttons, and a row of EB-1A, EB-2 NIW and O-1A descriptions below">
+            <figcaption><b>Option 3</b><span>Dark hero over a photograph</span></figcaption>
+          </figure>
+          <figure class="shipped-item">
+            <img src="/images/visa/petitioniq-hero-selected.webp" width="1600" height="852" loading="lazy" decoding="async"
+                 alt="The selected hero: a centred headline on white under an AI-powered immigration evaluation badge, a subhead naming the three visa types, two buttons, and a line stating PetitionIQ is not a law firm">
+            <figcaption><b>Selected</b><span>Centred headline, two clear actions</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <figcaption><b>Fig. 6</b> &nbsp;A few of the hero-section ideations. We went through many more rounds than this &mdash; these four are the ones that moved the direction forward, and the last one shipped.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 4c -->
+  <section class="chapter" id="components">
+    <div class="chapter-no"><b>4c</b></div>
+    <h2 class="title">Components that hold more content in less space</h2>
+    <div class="col">
+      <p>The content had to stay, so we needed components that could hold more of it in less space. These are the patterns we used:</p>
+    </div>
+    <p class="terms">
+      <span>Progressive disclosure</span>
+      <span>Stacked content</span>
+      <span>Secondary navigation</span>
+      <span>Information merging</span>
+      <span>Interactive components</span>
+      <span>Stronger hierarchy</span>
+      <span>Micro-interactions</span>
+    </p>
+    <blockquote><p>The goal was not to hide information. It was to make it easier to scan.</p></blockquote>
+
+    <!-- Four of those patterns, running. Tabs rather than four stacked
+         clips: the section argues for less visual weight, so showing it
+         as one frame you switch rather than four you scroll past is the
+         argument made twice.
+
+         Cost control, in two layers: an unopened tab's sources have no
+         src at all, and an opened one carries preload="none", so the only
+         bytes a visitor spends are the ~45KB poster, until they press
+         play. WebM first, MP4 behind it. -->
+    <figure class="full">
+      <div class="clips">
+        <div class="clips-tabs" role="tablist" aria-label="Component patterns">
+          <button class="clips-tab" type="button" role="tab" id="tab-stack" aria-controls="clip-stack" aria-selected="true" tabindex="0">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <span class="clips-tab-label">Stacked sections</span>
+            <span class="clips-tab-time">0:20</span>
+          </button>
+          <button class="clips-tab" type="button" role="tab" id="tab-nav" aria-controls="clip-nav" aria-selected="false" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <span class="clips-tab-label">Sticky side navigation</span>
+            <span class="clips-tab-time">0:07</span>
+          </button>
+          <button class="clips-tab" type="button" role="tab" id="tab-parallax" aria-controls="clip-parallax" aria-selected="false" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <span class="clips-tab-label">Parallax depth</span>
+            <span class="clips-tab-time">0:07</span>
+          </button>
+          <button class="clips-tab" type="button" role="tab" id="tab-people" aria-controls="clip-people" aria-selected="false" tabindex="-1">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+            <span class="clips-tab-label">People in motion</span>
+            <span class="clips-tab-time">0:08</span>
+          </button>
+        </div>
+
+        <div class="clips-panel" role="tabpanel" id="clip-stack" aria-labelledby="tab-stack" tabindex="0">
+          <video poster="/videos/visa/stacked-scroll-poster.webp" preload="none" muted loop playsinline controls
+                 width="1870" height="870" aria-label="Screen recording: sections stacking as the page scrolls">
+            <source data-src="/videos/visa/stacked-scroll.webm" type="video/webm">
+            <source data-src="/videos/visa/stacked-scroll.mp4" type="video/mp4">
+          </video>
+          <p class="clips-note">Sections stack as the user scrolls, so a long run of content takes less height.</p>
+        </div>
+
+        <div class="clips-panel" role="tabpanel" id="clip-nav" aria-labelledby="tab-nav" tabindex="0" hidden>
+          <video poster="/videos/visa/left-nav-poster.webp" preload="none" muted loop playsinline controls
+                 width="1866" height="876" aria-label="Screen recording: the left-hand navigation in use">
+            <source data-src="/videos/visa/left-nav.webm" type="video/webm">
+            <source data-src="/videos/visa/left-nav.mp4" type="video/mp4">
+          </video>
+          <p class="clips-note">Secondary navigation sits in a left rail, so users can move around a long page without scrolling back.</p>
+        </div>
+
+        <div class="clips-panel" role="tabpanel" id="clip-parallax" aria-labelledby="tab-parallax" tabindex="0" hidden>
+          <video poster="/videos/visa/parallax-scroll-poster.webp" preload="none" muted loop playsinline controls
+                 width="1870" height="876" aria-label="Screen recording: layers moving at different speeds on scroll">
+            <source data-src="/videos/visa/parallax-scroll.webm" type="video/webm">
+            <source data-src="/videos/visa/parallax-scroll.mp4" type="video/mp4">
+          </video>
+          <p class="clips-note">Layers move at different speeds to add depth without adding page height.</p>
+        </div>
+
+        <div class="clips-panel" role="tabpanel" id="clip-people" aria-labelledby="tab-people" tabindex="0" hidden>
+          <video poster="/videos/visa/people-animation-poster.webp" preload="none" muted loop playsinline controls
+                 width="1868" height="878" aria-label="Screen recording: the people imagery animating into view">
+            <source data-src="/videos/visa/people-animation.webm" type="video/webm">
+            <source data-src="/videos/visa/people-animation.mp4" type="video/mp4">
+          </video>
+          <p class="clips-note">The images of people animate in, which adds warmth without extra copy.</p>
+        </div>
+        <noscript>
+          <p class="clips-note">The tabs need JavaScript. The recordings are here:
+            <a href="/videos/visa/stacked-scroll.mp4">stacked sections</a>,
+            <a href="/videos/visa/left-nav.mp4">sticky side navigation</a>,
+            <a href="/videos/visa/parallax-scroll.mp4">parallax depth</a>,
+            <a href="/videos/visa/people-animation.mp4">people in motion</a>.
+          </p>
+        </noscript>
+      </div>
+      <figcaption><b>Fig. 7</b> &nbsp;Four of the patterns in use. Select a tab to play the recording.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 05 -->
+  <section class="chapter" id="handoff">
+    <div class="chapter-no"><b>05</b></div>
+    <h2 class="title">Design and development stayed connected</h2>
+    <div class="col">
+      <p>I connected <strong>Claude Code to the Figma MCP</strong> and kept the Figma file in auto layout, so the build could follow the design closely. The developers stayed in the file, and we fixed UX and micro-interaction issues directly in code.</p>
+      <p>The tools matter less than the habit: keeping design and development in the same loop.</p>
+    </div>
+    <!-- The same board language as Fig. 3: dotted canvas, sticky notes,
+         one arrow between each. Straight down the page, because the flow
+         is a straight sequence and anything cleverer just hides that. -->
+    <figure class="full">
+      <div class="jam">
+        <ol class="flow">
+        <li class="flow-note">Figma design</li>
+        <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
+        <li class="flow-note">Claude Code design and ideation</li>
+        <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
+        <li class="flow-note">Figma prototype</li>
+        <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
+        <li class="flow-note">Figma MCP connection</li>
+        <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
+        <li class="flow-note">Claude Code</li>
+        <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
+        <li class="flow-note">UX and UI bug fixing in Claude Code itself</li>
+        </ol>
+      </div>
+      <figcaption><b>Fig. 8</b> &nbsp;Design and build in one loop, step by step.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 06 -->
+  <section class="chapter" id="result">
+    <div class="chapter-no"><b>06</b></div>
+    <h2 class="title">The result: a much clearer product</h2>
+    <div class="col">
+      <p>The product launched recently, so I do not have usage numbers yet. But the structural changes are easy to see.</p>
+    </div>
+
+    <div class="shifts-head"><span>Before</span><span>After</span></div>
+    <div class="shifts">
+      <div>
+        <div class="was"><b>One long page</b></div>
+        <div class="now"><b>Six separate pages</b></div>
+      </div>
+      <div>
+        <div class="was"><b>17&ndash;19 sections</b></div>
+        <div class="now"><b>8&ndash;9 grouped sections</b></div>
+      </div>
+      <div>
+        <div class="was"><b>Scattered information</b></div>
+        <div class="now"><b>A clear order</b></div>
+      </div>
+      <div>
+        <div class="was"><b>Generic AI look</b></div>
+        <div class="now"><b>Its own visual identity</b></div>
+      </div>
+      <div>
+        <div class="was"><b>A request for UI polish</b></div>
+        <div class="now"><b>A full UX redesign</b></div>
+      </div>
+      <div>
+        <div class="was"><b>Figma handoff</b></div>
+        <div class="now"><b>Design and build in one loop</b></div>
+      </div>
+    </div>
+
+    <!-- Figures 10, 11 and 12 collapsed into one. Three separate figures
+         each captioned "here is some of it" made the reader assemble the
+         product themselves; one gallery in page order does that for them:
+         the way in, the four destinations, the way out. -->
+    <figure class="full">
+      <div class="shipped">
+
+        <figure class="shipped-lead">
+          <img src="/images/visa/shipped-landing.webp" width="1875" height="874" loading="lazy" decoding="async"
+               alt="The shipped landing page: a navy header carrying the PetitionIQ.ai wordmark with Individuals, Attorney, Visa categories, Resources, Articles and Contact us, an Attorney partnership button and a gold Start free evaluation button. Below, an AI-powered immigration evaluation badge sits above a serif headline reading Immigration intelligence before the petition is written, its second half in gold, a subhead naming EB-1A, EB-2 NIW and O-1A, two calls to action, and a line stating PetitionIQ is not a law firm">
+          <figcaption><b>Landing</b><span>One entry point, two actions</span></figcaption>
+        </figure>
+
+        <div class="shipped-grid">
+          <figure class="shipped-item">
+            <img src="/images/visa/shipped-evaluation.webp" width="1482" height="859" loading="lazy" decoding="async"
+                 alt="The evaluation page: a For free evaluation kicker above the headline Understand your strengths. Prepare your petition, a three-step progress indicator reading Contact, Profile and Criteria, then a Tell us about yourself form with first name, last name, email address and role fields, and Continue and Cancel buttons">
+            <figcaption><b>Evaluation</b><span>The form, broken into three steps</span></figcaption>
+          </figure>
+          <figure class="shipped-item">
+            <img src="/images/visa/shipped-resources.webp" width="1366" height="871" loading="lazy" decoding="async"
+                 alt="The resources page: a Free resources kicker above the headline From evaluation to evidence, a Download all five button, and a stack of cards tagged EB-1A, O-1A and NIW, each an evidence assessment questionnaire with a description and a Download free link">
+            <figcaption><b>Resources</b><span>Five documents, one email</span></figcaption>
+          </figure>
+          <figure class="shipped-item">
+            <img src="/images/visa/shipped-articles.webp" width="1402" height="745" loading="lazy" decoding="async"
+                 alt="The articles page: an Articles kicker above the headline From the field, then two cards each tagged EB-1A, one on the ten criteria USCIS looks for and one on choosing an employment-based path">
+            <figcaption><b>Articles</b><span>Its own page, not a footer link</span></figcaption>
+          </figure>
+          <figure class="shipped-item">
+            <img src="/images/visa/shipped-contact.webp" width="1455" height="876" loading="lazy" decoding="async"
+                 alt="The contact page: a Contact PetitionIQ heading with an email address and an attorney partnerships block on the left, and a form on the right with name, email, user type, inquiry type and message fields, a note asking people not to submit confidential case information, and Submit and Cancel buttons">
+            <figcaption><b>Contact us</b><span>Contact details and the form</span></figcaption>
+          </figure>
+        </div>
+
+        <figure class="shipped-lead">
+          <img src="/images/visa/shipped-cta.webp" width="1117" height="448" loading="lazy" decoding="async"
+               alt="The closing call-to-action band on navy: a serif headline reading Start with clarity. Whatever your role, a line explaining that whether you are evaluating your own case or helping clients prepare stronger petitions, PetitionIQ gives a structured starting point, free, in three minutes, and two buttons, Start free evaluation and Get the EB-1A checklist">
+          <figcaption><b>Closing call to action</b><span>The same two actions, repeated at the end</span></figcaption>
+        </figure>
+
+      </div>
+
+      <div class="shipped-go">
+        <a class="cs-btn" href="https://petitioniq.ai" target="_blank" rel="noopener noreferrer">
+          See it live
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          <span class="sr">at petitioniq.ai, opens in a new tab</span>
+        </a>
+        <span class="shipped-go-url">petitioniq.ai</span>
+      </div>
+
+      <figcaption><b>Fig. 9</b> &nbsp;The six pages as shipped, in the order a user sees them.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 07 -->
+  <section class="chapter" id="outcome">
+    <div class="chapter-no"><b>07</b></div>
+    <h2 class="title">What changed for the product</h2>
+    <dl class="spec">
+      <div><dt>A clearer structure</dt><dd>One long page became six separate pages.</dd></div>
+      <div><dt>A clearer journey</dt><dd>The evaluation and the consultation are now easy to find.</dd></div>
+      <div><dt>A look of its own</dt><dd>The UI went from a generic AI look to its own visual identity.</dd></div>
+      <div><dt>Closer design and build</dt><dd>The final build stayed close to what we designed.</dd></div>
+    </dl>
+  </section>
+
+  <!-- TAKEAWAY -->
+  <section class="chapter" id="takeaway">
+    <div class="chapter-no"><b>&mdash;</b></div>
+    <h2 class="title">The takeaway</h2>
+    <div class="col">
+      <p>Simplifying does not always mean removing content. Most of the time it means deciding where each piece belongs and how much attention it should get.</p>
+      <p>The request was a UI polish. The real opportunity was to fix the experience underneath.</p>
+    </div>
+    <blockquote><p>Sometimes the most useful thing a designer can do is check whether the given problem is the real problem.</p></blockquote>
+  </section>
+
+  <div class="colophon">
+    <div>
+      <b>Written by</b>
+      <p>Shanawaz, Product Designer. Happy to walk you through the parts that are not on this page, including how we used AI in the build.</p>
+    </div>
+    <div>
+      <b>Elsewhere</b>
+      <p><a href="/#work">Back to portfolio</a></p>
+    </div>
+  </div>
+
+  </div>
+  </main>
+
+</div>
+
+<script src="/cs/system.js" defer></script>
+<script>
+/* -------------------------------------------------------------------
+   Tabs for the pattern clips (Fig. 5). Page-local, because this is the
+   only case study with them — the shared system stays shared.
+
+   Unlike the rest of this page, the component does need JS: the videos
+   carry data-src so an unopened tab costs zero requests, and only the
+   script can promote one to a real src. The <noscript> beside it hands
+   over four direct links, which is the honest fallback.
+   ------------------------------------------------------------------- */
+(function () {
+  'use strict';
+  var root = document.querySelector('.clips');
+  if (!root) return;
+
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+
+  /* The sources are only wired up once their tab has actually been
+     opened. Even then preload="none" means nothing is fetched until
+     play — the poster is all the visitor has paid for. */
+  function load(panel) {
+    var v = panel.querySelector('video');
+    if (!v || v.getAttribute('data-loaded')) return;
+    var pending = panel.querySelectorAll('source[data-src]');
+    if (!pending.length) return;
+    Array.prototype.forEach.call(pending, function (s) {
+      s.src = s.getAttribute('data-src');
+      s.removeAttribute('data-src');
+    });
+    v.load();
+    v.setAttribute('data-loaded', '1');
+  }
+
+  function select(i, focus) {
+    tabs.forEach(function (tab, n) {
+      var on = n === i;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+      panels[n].hidden = !on;
+      /* A clip playing in a hidden panel is sound and CPU nobody asked
+         for, so leaving a tab stops it. */
+      var v = panels[n].querySelector('video');
+      if (v && !on && !v.paused) v.pause();
+    });
+    load(panels[i]);
+    if (focus) tabs[i].focus();
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { select(i, false); });
+    tab.addEventListener('keydown', function (e) {
+      var last = tabs.length - 1, next = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = i === last ? 0 : i + 1;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = i === 0 ? last : i - 1;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = last;
+      if (next === null) return;
+      e.preventDefault();
+      select(next, true);
+    });
+  });
+
+  select(0, false);
+})();
+</script>
+</body>
+</html>

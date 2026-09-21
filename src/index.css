@@ -1566,14 +1566,64 @@ nav{
 .about-body{padding-top:4px;}
 .about-body p{font-size:16px;color:var(--muted);line-height:1.8;font-weight:500;max-width:68ch;margin-bottom:20px;}
 .about-body p:last-of-type{margin-bottom:0;}
-.about-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px;}
-.about-tag{
-  font-size:10px;color:var(--muted);letter-spacing:0.08em;
-  border:1px solid var(--border);padding:4px 12px;border-radius:0;
-  font-family:var(--font-logo);
-  transition:border-color 0.15s,color 0.15s,box-shadow 0.1s steps(2),transform 0.1s steps(2);
+/* SKILL METERS — a quiet pixel "stat sheet". Each row is one glyph, one label
+   and a ten-cell meter where a cell is half a point, so 4.5 lights nine of ten.
+   At rest the whole thing sits in silver and reads as part of the text column;
+   accent is held back for the hovered row, so colour marks attention rather
+   than shouting all six rows at once. */
+.skills{
+  list-style:none;
+  margin-top:28px;
+  max-width:460px;
 }
-.about-tag:hover{border-color:var(--silver-2);color:var(--text);box-shadow:2px 2px 0 var(--silver);transform:translate(-1px,-1px);}
+.skill{
+  display:grid;
+  grid-template-columns:16px 1fr auto;
+  align-items:center;
+  gap:14px;
+  padding:10px 2px;
+  transition:opacity 0.2s;
+}
+.skill + .skill{border-top:1px solid var(--border);}
+/* Hovering one row dims the rest, so the panel never competes with the copy. */
+.skills:hover .skill{opacity:0.55;}
+.skills:hover .skill:hover{opacity:1;}
+.skill-glyph{width:16px;height:16px;display:block;fill:var(--silver-2);opacity:0.75;transition:fill 0.2s,opacity 0.2s;}
+.skill:hover .skill-glyph{fill:var(--accent);opacity:1;}
+.skill-name{
+  font-family:var(--font-logo);font-size:9px;line-height:1.5;
+  letter-spacing:0.09em;color:var(--muted);transition:color 0.2s;
+}
+.skill:hover .skill-name{color:var(--text);}
+.skill-rate{display:flex;align-items:center;gap:10px;}
+.skill-meter{display:flex;gap:2px;}
+/* Hard-edged cells, no bevel — lit ones are flat silver until the row is hovered. */
+.skill-cell{
+  width:7px;height:10px;
+  border:1px solid var(--border);
+  background:transparent;
+  transition:background 0.2s,border-color 0.2s;
+}
+.skill-cell.is-lit{
+  background:var(--silver-2);
+  border-color:var(--silver-2);
+  opacity:0.6;
+}
+.skill:hover .skill-cell.is-lit{background:var(--accent);border-color:var(--accent);opacity:1;}
+.skill-score{
+  font-family:var(--font-logo);font-size:9px;color:var(--muted);
+  min-width:20px;text-align:right;transition:color 0.2s;
+}
+.skill:hover .skill-score{color:var(--text);}
+@media (hover:none){
+  /* No hover on touch — give every row its resting state and full opacity. */
+  .skills:hover .skill{opacity:1;}
+}
+@media (max-width:560px){
+  .skill{grid-template-columns:14px 1fr;row-gap:8px;}
+  .skill-glyph{width:14px;height:14px;}
+  .skill-rate{grid-column:2;justify-content:space-between;}
+}
 .about-img-wrap{
   position:relative;
   width:100%;
