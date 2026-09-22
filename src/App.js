@@ -20,7 +20,7 @@ import Footer from './components/Footer';
 import Popover from './components/Popover';
 
 export default function App() {
-  // Light mode disabled for now — force dark regardless of any stored preference.
+  // Light mode disabled for now - force dark regardless of any stored preference.
   const [theme, setTheme] = useState('dark');
   const [lbOpen, setLbOpen] = useState(false);
   const [lbIndex, setLbIndex] = useState(0);
@@ -40,7 +40,7 @@ export default function App() {
     });
   }, []);
 
-  // Light mode disabled for now — pin the document to dark on mount and clear any stale preference.
+  // Light mode disabled for now - pin the document to dark on mount and clear any stale preference.
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', 'dark');
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000000');

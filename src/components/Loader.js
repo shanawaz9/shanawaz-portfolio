@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Stagger, StaggerItem, INTRO_FLOOR_MS } from './Stagger';
 
-// A short terminal "boot" — echoes the hero's .EXE windows so the intro feels
+// A short terminal "boot" - echoes the hero's .EXE windows so the intro feels
 // like part of the same world rather than a generic spinner.
 const BOOT_LINES = [
   { txt: 'initializing interface', ok: true },

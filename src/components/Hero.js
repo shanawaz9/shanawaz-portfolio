@@ -3,7 +3,7 @@ import Reveal from './Reveal';
 import { Stagger, StaggerItem, INTRO_REVEAL_DELAY } from './Stagger';
 
 const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
-const SCRAMBLE_CHARS = '◆○□△◇●■▲◈◉◎·—∙⬡✦◐◑';
+const SCRAMBLE_CHARS = '◆○□△◇●■▲◈◉◎·∙⬡✦◐◑';
 
 const RESUME_URL =
   'https://drive.google.com/file/d/17dqLMiZSPHW2qX38N2fS5N0pazbWhBv8/view?usp=sharing';

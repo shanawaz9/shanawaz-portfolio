@@ -3,7 +3,7 @@ import { useReducedMotion } from 'motion/react';
 
 /**
  * Terminal-style type-in effect. Reveals `text` one character at a time,
- * starting slow and accelerating toward a fast finish — like someone
+ * starting slow and accelerating toward a fast finish - like someone
  * warming up on a keyboard rather than a constant-speed teletype.
  *
  * Stays empty until `active` is true, so a parent can sequence several of

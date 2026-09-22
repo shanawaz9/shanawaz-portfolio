@@ -12,12 +12,12 @@
   --accent:#5a4cea;
   --accent-bright:#5a4cea;
   --accent-dim:rgba(90,76,234,0.12);
-  /* Silver / brushed-metal — the "shine". Carries hover shadows, borders, dots, cursor. */
+  /* Silver / brushed-metal - the "shine". Carries hover shadows, borders, dots, cursor. */
   --silver:#8a8f9a;
   --silver-2:#a9adb5;
   --silver-dim:rgba(138,143,154,0.14);
   --metal:linear-gradient(160deg,#ffffff 0%,#dadde2 28%,#bcc0c8 54%,#eceef1 72%,#c4c8cf 100%);
-  /* Logo plate — deliberately NOT themed. The supplied company marks are all
+  /* Logo plate - deliberately NOT themed. The supplied company marks are all
      light-on-transparent, so they need a dark ground in light mode too; fixing
      it keeps the timeline's logo row identical across both themes. */
   --logo-plate:#0d0d11;
@@ -52,13 +52,13 @@
   --max-w:1200px;
   --gutter:24px;
   --pad-x:max(var(--gutter), calc((100% - var(--max-w)) / 2 + var(--gutter)));
-  /* Size of one cell in the pixel-art cursor sprite — the cursor's whole scale.
+  /* Size of one cell in the pixel-art cursor sprite - the cursor's whole scale.
      Stepped in 0.5px increments so cells stay whole device pixels on 2x displays. */
   --cursor-px:1.5px;
   --font-head:'Funnel Display Variable','Funnel Display','Inter Variable','Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-body:'Red Hat Mono Variable','Red Hat Mono',monospace;
   --font-logo:'Silkscreen',cursive;
-  /* Bigger, readable pixel face — reserved for the wordmark; Silkscreen (above) stays for small retro labels/tags. */
+  /* Bigger, readable pixel face - reserved for the wordmark; Silkscreen (above) stays for small retro labels/tags. */
   --font-pixel:'Pixelify Sans Variable','Pixelify Sans',var(--font-logo);
 }
 
@@ -72,12 +72,12 @@
   --text:#e5e5e5;
   --muted:#888;
   --muted2:#333;
-  /* Desaturated from the light-mode #5a4cea — the saturated violet read as neon against near-black. */
+  /* Desaturated from the light-mode #5a4cea - the saturated violet read as neon against near-black. */
   --accent:#6359cf;
-  /* Brighter purple for small text on dark — meets WCAG AA (4.5:1) where the desaturated accent fails. */
+  /* Brighter purple for small text on dark - meets WCAG AA (4.5:1) where the desaturated accent fails. */
   --accent-bright:#8b7bf5;
   --accent-dim:rgba(99,89,207,0.10);
-  /* Silver / brushed-metal — the "shine". Carries hover shadows, borders, dots, cursor. */
+  /* Silver / brushed-metal - the "shine". Carries hover shadows, borders, dots, cursor. */
   --silver:#cfd3da;
   --silver-2:#8f95a0;
   --silver-dim:rgba(207,211,218,0.10);
@@ -125,7 +125,7 @@ body{
   font-optical-sizing:auto;
 }
 
-/* CRT SCANLINES — a faint, site-wide retro-tech texture. Fixed + pointer-events:none so
+/* CRT SCANLINES - a faint, site-wide retro-tech texture. Fixed + pointer-events:none so
    it never touches layout, interaction, or contrast; barely visible except on close look. */
 body::after{
   content:'';
@@ -163,7 +163,7 @@ h1,h2,h3,h4,.work-card-title,.blog-title,.t-name,
   border:0;
 }
 
-/* Skip link — visible only on keyboard focus */
+/* Skip link - visible only on keyboard focus */
 .skip-link{
   position:fixed;
   top:10px;
@@ -207,7 +207,7 @@ body::after{
       rgba(255,255,255,0.025) 4px
     );
   /* On a true-black field an `overlay` blend resolves to black, which would
-     erase the CRT texture entirely — composite the lines normally instead. */
+     erase the CRT texture entirely - composite the lines normally instead. */
   mix-blend-mode:normal;
 }
 
@@ -1207,7 +1207,7 @@ nav{
   max-width:560px;
   text-align:center;
 }
-/* subtle name highlight — a soft accent tag, not a loud callout */
+/* subtle name highlight - a soft accent tag, not a loud callout */
 .name-mark{
   position:relative;
   color:var(--text);
@@ -1339,7 +1339,7 @@ nav{
   display:flex;
   flex-direction:column;
   gap:0;
-  /* 75% of the container, but never a wider measure than reads comfortably —
+  /* 75% of the container, but never a wider measure than reads comfortably -
      the cap only engages once --max-w steps up on large displays. */
   max-width:min(75%,900px);
 }
@@ -1352,7 +1352,7 @@ nav{
 }
 .timeline-node:last-child{padding-bottom:0;}
 
-/* rail — the pixel dot; the vertical connector is one continuous line for the whole section */
+/* rail - the pixel dot; the vertical connector is one continuous line for the whole section */
 .timeline-rail{position:relative;justify-self:center;width:24px;}
 .timeline-dot{
   display:block;
@@ -1374,7 +1374,7 @@ nav{
   z-index:1;
   pointer-events:none;
 }
-/* un-printed rail — a thin dashed rule, like the guide line in an old terminal margin */
+/* un-printed rail - a thin dashed rule, like the guide line in an old terminal margin */
 .timeline-line-track{
   position:absolute;inset:0;
   background:repeating-linear-gradient(
@@ -1383,7 +1383,7 @@ nav{
     transparent 3px,transparent 7px
   );
 }
-/* printed portion — solid glowing accent, drawn top-down in coarse steps for a "line printer" feel */
+/* printed portion - solid glowing accent, drawn top-down in coarse steps for a "line printer" feel */
 .timeline-line-fill{
   position:absolute;inset:0;
   transform-origin:top center;
@@ -1401,16 +1401,16 @@ nav{
   animation:caretBlink 0.85s steps(1) infinite;
 }
 
-/* content — borderless, lightweight */
+/* content - borderless, lightweight */
 .timeline-card{position:relative;}
 
-/* Logo plate — replaces the company name. Every mark supplied is light-on-
+/* Logo plate - replaces the company name. Every mark supplied is light-on-
    transparent (TCS white, 10kdesigners purple + white, AAPMOR white wordmark
    with a colour gradient symbol), so the plate stays dark in BOTH themes:
    that is what lets the logos keep their own colours instead of being
    flattened, and it keeps the two themes reading identically here.
-   One fixed plate size carries wildly different aspect ratios — from TCS at
-   3:1 to the 10kdesigners wordmark at 13.5:1 — as a single set. */
+   One fixed plate size carries wildly different aspect ratios - from TCS at
+   3:1 to the 10kdesigners wordmark at 13.5:1 - as a single set. */
 .tl-logo{
   display:flex;
   align-items:center;
@@ -1566,7 +1566,7 @@ nav{
 .about-body{padding-top:4px;}
 .about-body p{font-size:16px;color:var(--muted);line-height:1.8;font-weight:500;max-width:68ch;margin-bottom:20px;}
 .about-body p:last-of-type{margin-bottom:0;}
-/* SKILL METERS — a quiet pixel "stat sheet". Each row is one glyph, one label
+/* SKILL METERS - a quiet pixel "stat sheet". Each row is one glyph, one label
    and a ten-cell meter where a cell is half a point, so 4.5 lights nine of ten.
    At rest the whole thing sits in silver and reads as part of the text column;
    accent is held back for the hovered row, so colour marks attention rather
@@ -1597,7 +1597,7 @@ nav{
 .skill:hover .skill-name{color:var(--text);}
 .skill-rate{display:flex;align-items:center;gap:10px;}
 .skill-meter{display:flex;gap:2px;}
-/* Hard-edged cells, no bevel — lit ones are flat silver until the row is hovered. */
+/* Hard-edged cells, no bevel - lit ones are flat silver until the row is hovered. */
 .skill-cell{
   width:7px;height:10px;
   border:1px solid var(--border);
@@ -1616,7 +1616,7 @@ nav{
 }
 .skill:hover .skill-score{color:var(--text);}
 @media (hover:none){
-  /* No hover on touch — give every row its resting state and full opacity. */
+  /* No hover on touch - give every row its resting state and full opacity. */
   .skills:hover .skill{opacity:1;}
 }
 @media (max-width:560px){
@@ -1790,7 +1790,7 @@ nav{
   width:100%;height:100%;object-fit:cover;display:block;
   border-radius:50%;
   /* Clip on the img itself (not a parent overflow:hidden) and force its own
-     compositing layer — otherwise Chromium can rasterize the clipped circle
+     compositing layer - otherwise Chromium can rasterize the clipped circle
      at the low resolution of the card's Framer Motion transform layer and
      never refresh it, leaving the photo permanently soft until a repaint
      (e.g. browser zoom) forces a redraw. */
@@ -1875,7 +1875,7 @@ nav{
   transition:border-color 0.35s;
 }
 
-/* terminal window panel — bookends the hero's STRATEGY.EXE / PROCESS.EXE cards
+/* terminal window panel - bookends the hero's STRATEGY.EXE / PROCESS.EXE cards
    with a CONNECT.EXE close-out, so the page opens and closes on the same motif */
 .cta-panel{
   max-width:640px;
@@ -1935,7 +1935,7 @@ nav{
   text-shadow:0 0 20px rgba(90,76,234,0.25);
 }
 .cta-heading .accent:hover{animation:glitch 1.5s steps(1) infinite;}
-/* blinking terminal caret — mirrors the hero title's, so the page's opening
+/* blinking terminal caret - mirrors the hero title's, so the page's opening
    statement and closing statement read as one continuous terminal session.
    Suppressed while the Typewriter is actively typing (it renders its own
    .type-caret at the live edge of the text instead). */
@@ -1965,7 +1965,7 @@ nav{
 .cta-email-prefix{color:var(--silver);margin-right:6px;font-family:var(--font-logo);}
 .cta-email:hover{border-color:var(--accent);letter-spacing:0.02em;}
 
-/* terminal type-in cursor — a solid block that trails whichever line is
+/* terminal type-in cursor - a solid block that trails whichever line is
    currently being typed, in place of the classic underscore caret */
 .type-caret{
   display:inline-block;
@@ -2030,7 +2030,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 }
 .footer-accent{color:var(--accent-bright);}
 
-/* INTRO LOADER — terminal boot */
+/* INTRO LOADER - terminal boot */
 .loader{
   position:fixed;
   inset:0;
@@ -2140,7 +2140,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 .reveal-cell{display:flex;min-width:0;}
 .reveal-cell>*{width:100%;}
 
-/* CURSOR — hollow pixel-art arrow / pointer: brand-accent stair-stepped
+/* CURSOR - hollow pixel-art arrow / pointer: brand-accent stair-stepped
    outline over a surface-toned body, so it reads on either theme. */
 .cursor-dot{
   pointer-events:none;
@@ -2153,7 +2153,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 .cursor-dot--ready{opacity:0.9;}
 /* Size comes from the sprite grid (--cols/--rows, set by CursorGlow) times the
    viewport-scaled cell size, so the SVG lays out at its exact pixel size and
-   still rasterizes crisply — scaling it with transform would blur the edges.
+   still rasterizes crisply - scaling it with transform would blur the edges.
    The hotspot shift scales with it, keeping the tip on the real pointer. */
 .cursor-pixel-svg{
   display:block;
@@ -2165,7 +2165,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
     calc(var(--hy) * var(--cursor-px) * -1)
   );
 }
-/* Rim only — the body stays open so the page reads through the cursor. */
+/* Rim only - the body stays open so the page reads through the cursor. */
 .cursor-pixel-svg .px-outline{fill:var(--accent-bright);}
 .cursor-pixel-svg .px-fill{fill:none;}
 /* GLITCH ANIMATION */
@@ -2209,7 +2209,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 @keyframes lineGrow{from{width:0;}to{width:24px;}}
 .section-label.visible::before{animation:lineGrow 0.6s cubic-bezier(0.16,1,0.3,1) both;}
 
-/* Footer brand name kept static — the old blinking opacity dipped it below AA contrast. */
+/* Footer brand name kept static - the old blinking opacity dipped it below AA contrast. */
 
 /* STRIP ARROWS */
 .strip-header{
@@ -2242,7 +2242,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 /* RESPONSIVE
    The layout scales through --gutter / --max-w (see :root) so every band shares
    one horizontal rhythm; the breakpoints below only adjust what those two tokens
-   can't express — column counts, stacking, and component-level sizing. */
+   can't express - column counts, stacking, and component-level sizing. */
 
 /* ---- Wide desktop tiers -------------------------------------------------- */
 /* The content measure steps up with the viewport so the nav and every section
@@ -2274,7 +2274,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .photo-strip-item{width:420px;height:290px;}
 }
 
-/* Large desktop / 2K — cap the measure so line lengths stay readable, but keep
+/* Large desktop / 2K - cap the measure so line lengths stay readable, but keep
    the bands generously inset rather than pinned to a narrow centred column. */
 @media(min-width:1920px){
   :root{--max-w:1660px;--gutter:48px;}
@@ -2294,7 +2294,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 
 /* Tablet portrait <=768px */
 @media(max-width:768px){
-  /* Roughly a native OS arrow at this size — the cursor only shows on
+  /* Roughly a native OS arrow at this size - the cursor only shows on
      fine-pointer devices, so this is a narrow desktop window, not a phone. */
   :root{--gutter:20px;--cursor-px:1px;}
   .nav-links{display:none;}
@@ -2346,7 +2346,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .photo-strip-fade-l,.photo-strip-fade-r{width:50px;}
 }
 
-/* Large phone / small tablet <=600px — blog drops to a single column before the
+/* Large phone / small tablet <=600px - blog drops to a single column before the
    two-up cards get too narrow to read. */
 @media(max-width:600px){
   .blog-grid{grid-template-columns:1fr;gap:16px;}
@@ -2376,7 +2376,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   .t-avatar{width:60px;height:60px;}
 }
 
-/* Small phone <=380px — keep the tightest layout from overflowing. */
+/* Small phone <=380px - keep the tightest layout from overflowing. */
 @media(max-width:380px){
   .hero-title{font-size:clamp(24px,10.5vw,34px);}
   .hero-cta{padding:13px 24px;font-size:11px;}

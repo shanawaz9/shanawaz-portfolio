@@ -36,7 +36,7 @@ const BLOG_POSTS = [
     alt: 'Passion',
     title: 'Passion is a myth',
     excerpt:
-      'Do something for a long time, become good at it \u2014 then you develop a passion for it.',
+      'Do something for a long time, become good at it, then you develop a passion for it.',
     delay: 'd4',
   },
   {

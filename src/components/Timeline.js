@@ -2,11 +2,11 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'motion/react';
 import Reveal from './Reveal';
 
-// Number of discrete increments the fill snaps through as it draws — a coarse
+// Number of discrete increments the fill snaps through as it draws - a coarse
 // count reads like a terminal printing line-by-line rather than a smooth wipe.
 const PRINT_STEPS = 18;
 
-/* Pixel bust standing in for self-employed work — the supplied logos are all
+/* Pixel bust standing in for self-employed work - the supplied logos are all
    company marks, so freelance gets a mark in the site's own pixel language
    rather than a borrowed brand. Inline so it inherits colour with the theme. */
 function FreelanceMark() {
@@ -19,8 +19,8 @@ function FreelanceMark() {
   );
 }
 
-/* Each source bakes in a different amount of empty margin — AAPMOR's artwork
-   fills 68% of its file's height, TCS's only 59% — so a shared size cap would
+/* Each source bakes in a different amount of empty margin - AAPMOR's artwork
+   fills 68% of its file's height, TCS's only 59% - so a shared size cap would
    render them at visibly different sizes. `cap` is that logo's own height
    limit, chosen so the *visible* artwork lands at a matching optical size. */
 const EXPERIENCES = [
@@ -87,7 +87,7 @@ export default function Timeline() {
     target: railRef,
     offset: ['start 85%', 'end 55%'],
   });
-  // Quantize into fixed steps first — the spring then eases *between* steps
+  // Quantize into fixed steps first - the spring then eases *between* steps
   // rather than continuously, so the draw visibly snaps block by block.
   const stepped = useTransform(scrollYProgress, (v) => Math.floor(v * PRINT_STEPS) / PRINT_STEPS);
   const scaleY = useSpring(stepped, { stiffness: 300, damping: 24, mass: 0.3 });

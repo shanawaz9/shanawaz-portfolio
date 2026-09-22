@@ -1,10 +1,10 @@
 import { motion, useReducedMotion } from 'motion/react';
 
-// Shared motion language — calm, premium, with gentle spring physics (minimal overshoot).
+// Shared motion language - calm, premium, with gentle spring physics (minimal overshoot).
 export const SPRING = { type: 'spring', stiffness: 120, damping: 20, mass: 0.9 };
 export const EASE_OUT = [0.22, 1, 0.36, 1];
 
-// Intro timing — keeps the loader (MS Paint boot) and the hero entrance in sync.
+// Intro timing - keeps the loader (MS Paint boot) and the hero entrance in sync.
 // The loader runs a 1→100 count for ~4.5s; the hero text starts rising just before
 // the curtain lifts, so the reveal feels continuous.
 export const INTRO_FLOOR_MS = 4500;
@@ -54,7 +54,7 @@ export function Stagger({
   );
 }
 
-/** A single staggered child — inherits its timing from the parent <Stagger>. */
+/** A single staggered child - inherits its timing from the parent <Stagger>. */
 export function StaggerItem({ as = 'div', children, ...rest }) {
   const reduce = useReducedMotion();
   if (reduce) {

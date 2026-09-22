@@ -9,7 +9,7 @@ const WORKS = [
     alt: 'The Liberty Dental Plan homepage on a desktop monitor, captioned "Explore the live platform"',
     year: '2025–2026',
     tag: 'Confidential work',
-    title: 'Liberty Dental Plan — Restructuring a Legacy Healthcare Platform',
+    title: 'Liberty Dental Plan: Restructuring a Legacy Healthcare Platform',
     delay: 'd1',
   },
   {
@@ -18,16 +18,16 @@ const WORKS = [
     alt: 'The redesigned PetitionIQ.ai landing page on a desktop monitor, its serif headline reading "Immigration intelligence before the petition is written"',
     year: '2026',
     tag: 'Case study',
-    title: 'AI Visa Platform — From AI-Generated MVP to Trusted Product',
+    title: 'AI Visa Platform: From AI-Generated MVP to Trusted Product',
     delay: 'd2',
   },
   {
     href: '/johnson-and-johnson',
     img: '/images/jnj-grc-ai.svg',
-    alt: 'Johnson & Johnson — enterprise GRC platform with a conversational AI assistant',
+    alt: 'Johnson & Johnson: enterprise GRC platform with a conversational AI assistant',
     year: '2024–2026',
     tag: 'Confidential work',
-    title: 'Johnson & Johnson — Conversational AI & GRC Platform',
+    title: 'Johnson & Johnson: Conversational AI & GRC Platform',
     delay: 'd3',
   },
   {
@@ -36,7 +36,7 @@ const WORKS = [
     alt: 'Shiftlyn',
     year: '2025',
     tag: 'Case study',
-    title: 'Shiftlyn — AI Risk Assessment, Humanized',
+    title: 'Shiftlyn: AI Risk Assessment, Humanized',
     delay: 'd4',
     flush: true,
   },
@@ -46,9 +46,9 @@ const WORKS = [
     alt: 'Khoj',
     year: '2025',
     tag: 'Case study',
-    title: 'Khoj — Landing Page Built to Convert',
+    title: 'Khoj: Landing Page Built to Convert',
     delay: 'd5',
-    // Hidden for now — flip this off to bring it back.
+    // Hidden for now - flip this off to bring it back.
     hidden: true,
   },
   {
@@ -57,9 +57,9 @@ const WORKS = [
     alt: 'Ethno Furniture e-commerce UI screens',
     year: '2023',
     tag: 'Case study',
-    title: 'Ethno — Indian Craft Commerce, Reimagined',
+    title: 'Ethno: Indian Craft Commerce, Reimagined',
     delay: 'd5',
-    // Kept in the list but not shown for now — flip this off to bring it back.
+    // Kept in the list but not shown for now - flip this off to bring it back.
     hidden: true,
   },
 ];
@@ -107,7 +107,7 @@ function WorkCard({ work }) {
     );
   }
 
-  // The WIP card is a non-interactive, intentionally-dimmed placeholder — hide it from
+  // The WIP card is a non-interactive, intentionally-dimmed placeholder - hide it from
   // assistive tech (its faded text is decorative teaser only, exempt from contrast as inactive).
   return <div className={cardClass} aria-hidden={work.wip ? 'true' : undefined}>{content}</div>;
 }

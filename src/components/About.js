@@ -3,11 +3,11 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import Reveal from './Reveal';
 import { Stagger, StaggerItem, SPRING } from './Stagger';
 
-/* Pixel glyphs, authored the same way as the cursor sprites — '#' filled,
-   '.' empty, rows of equal length — so the whole site speaks one pixel
+/* Pixel glyphs, authored the same way as the cursor sprites - '#' filled,
+   '.' empty, rows of equal length - so the whole site speaks one pixel
    language. Each grid is 9x9 so the icons optically match in the row. */
 const GLYPHS = {
-  // Lightbulb — product thinking.
+  // Lightbulb - product thinking.
   bulb: [
     '...###...',
     '..#...#..',
@@ -19,7 +19,7 @@ const GLYPHS = {
     '...###...',
     '....#....',
   ],
-  // Terminal window with a prompt — front-end coding.
+  // Terminal window with a prompt - front-end coding.
   terminal: [
     '#########',
     '#.#.#...#',
@@ -31,7 +31,7 @@ const GLYPHS = {
     '#.......#',
     '#########',
   ],
-  // Two figures side by side — collaboration.
+  // Two figures side by side - collaboration.
   people: [
     '.........',
     '.##...##.',
@@ -43,7 +43,7 @@ const GLYPHS = {
     '####.####',
     '.........',
   ],
-  // Pencil on the diagonal — design thinking.
+  // Pencil on the diagonal - design thinking.
   pencil: [
     '......###',
     '.....####',
@@ -55,7 +55,7 @@ const GLYPHS = {
     '##.......',
     '#........',
   ],
-  // Magnifying glass — user research.
+  // Magnifying glass - user research.
   magnifier: [
     '.####....',
     '#....#...',
@@ -67,7 +67,7 @@ const GLYPHS = {
     '.....##..',
     '......##.',
   ],
-  // Bullseye — user-centered design.
+  // Bullseye - user-centered design.
   target: [
     '..#####..',
     '.#.....#.',
@@ -128,7 +128,7 @@ export default function About() {
     target: imgRef,
     offset: ['start end', 'end start'],
   });
-  // Gentle parallax — the image block drifts a touch against the text as you scroll.
+  // Gentle parallax - the image block drifts a touch against the text as you scroll.
   const imgY = useTransform(scrollYProgress, [0, 1], [36, -36]);
 
   return (
@@ -142,7 +142,7 @@ export default function About() {
             scalable, system-driven interfaces.
           </p>
           <p>
-            Engineering roots &mdash; so I think in systems, work close to the build,
+            Engineering roots, so I think in systems, work close to the build,
             and I&rsquo;m currently exploring how AI speeds up the UX workflow.
           </p>
           <Stagger as="ul" className="skills" stagger={0.07} amount={0.3}>

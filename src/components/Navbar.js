@@ -3,7 +3,7 @@ import React, { useState, useCallback } from 'react';
 const RESUME_URL =
   'https://drive.google.com/file/d/17dqLMiZSPHW2qX38N2fS5N0pazbWhBv8/view?usp=sharing';
 
-// Light mode disabled for now — flip to true to bring the dark/light toggle back.
+// Light mode disabled for now - flip to true to bring the dark/light toggle back.
 const ENABLE_THEME_TOGGLE = false;
 
 export default function Navbar({ theme, onToggleTheme }) {

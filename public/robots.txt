@@ -2,7 +2,7 @@
 User-agent: *
 Disallow:
 
-# Confidential (NDA) client case studies — reachable by direct link only,
+# Confidential (NDA) client case studies - reachable by direct link only,
 # kept out of search results so they don't surface on a client-name query.
 # The pages also carry <meta name="robots" content="noindex, nofollow, noimageindex">,
 # which is what actually removes them from the index.
