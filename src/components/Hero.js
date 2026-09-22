@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Reveal from './Reveal';
 import { Stagger, StaggerItem, INTRO_REVEAL_DELAY } from './Stagger';
+import { PLAY_INTRO } from '../introState';
 
 const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
 const SCRAMBLE_CHARS = '◆○□△◇●■▲◈◉◎·∙⬡✦◐◑';
@@ -315,11 +316,14 @@ export default function Hero() {
     }
   };
 
+  // The hero waits for the boot curtain only when the curtain is actually there.
+  const revealDelay = PLAY_INTRO ? INTRO_REVEAL_DELAY : 0.05;
+
   return (
     <div className="hero">
       <div className="hero-bg" aria-hidden="true"></div>
       <div className="hero-inner">
-        <Stagger className="hero-text" onLoad stagger={0.12} delay={INTRO_REVEAL_DELAY}>
+        <Stagger className="hero-text" onLoad stagger={0.12} delay={revealDelay}>
           <StaggerItem as="p" className="hero-eyebrow">Product Designer &middot; Hyderabad, India</StaggerItem>
           <StaggerItem as="h1" className="hero-title">
             Designing with
@@ -344,7 +348,7 @@ export default function Hero() {
             </button>
           </StaggerItem>
         </Stagger>
-        <Reveal as="div" className="hero-floating-layer" y={0} delay={INTRO_REVEAL_DELAY + 0.4} amount={0}>
+        <Reveal as="div" className="hero-floating-layer" y={0} delay={revealDelay + 0.4} amount={0}>
           {FLOATING_WINDOWS.map((windowCard) => {
             const current = windowState[windowCard.id];
 

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { Stagger, StaggerItem, INTRO_FLOOR_MS } from './Stagger';
+import { markIntroPlayed } from '../introState';
 
 // A short terminal "boot" - echoes the hero's .EXE windows so the intro feels
 // like part of the same world rather than a generic spinner.
@@ -19,6 +20,7 @@ export default function Loader() {
 
   // Lock scroll + schedule the curtain lift.
   useEffect(() => {
+    markIntroPlayed();
     document.body.style.overflow = 'hidden';
     const floor = setTimeout(() => setDone(true), reduce ? 280 : INTRO_FLOOR_MS);
     return () => clearTimeout(floor);

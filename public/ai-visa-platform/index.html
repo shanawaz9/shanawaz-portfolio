@@ -9,6 +9,7 @@
 <meta property="og:description" content="The client asked me to polish the UI. It turned into a full UX redesign of an AI visa platform.">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="/cs/system.css">
+<link rel="stylesheet" href="/cs/navbar.css">
 <!-- The Fig. 5 board is a third-party embed deep in the page. Warming the
      connection here means its request opens on a socket that already
      exists, rather than paying DNS and TLS when it starts. -->
@@ -692,6 +693,28 @@
 </head>
 <body>
 
+<!-- SITE NAVBAR (shared portfolio chrome, white mode) -->
+<nav class="site-nav" aria-label="Site">
+  <a class="nav-logo" href="/">Shanawaz</a>
+  <ul class="nav-links">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="https://drive.google.com/file/d/17dqLMiZSPHW2qX38N2fS5N0pazbWhBv8/view?usp=sharing" target="_blank" rel="noreferrer" class="resume-btn">Resume &#8599;</a></li>
+  </ul>
+  <div class="nav-right-mobile">
+    <button class="nav-hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="site-mobile-menu" id="site-mobile-menu">
+  <a href="/#work">Work</a>
+  <a href="/#about">About</a>
+  <a href="https://drive.google.com/file/d/17dqLMiZSPHW2qX38N2fS5N0pazbWhBv8/view?usp=sharing" target="_blank" rel="noreferrer">Resume &#8599;</a>
+</div>
+
+
 <div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
 <!-- MOBILE CHROME -->
@@ -739,7 +762,6 @@
       Back to portfolio
     </a>
     <div class="rail-project">AI Visa Platform</div>
-    <div class="rail-kicker">On this page</div>
     <nav aria-label="Case study sections">
       <ul>
         <li><a class="raillink" href="#request"><span class="n">01</span><span class="lbl">The original request</span></a></li>
@@ -1446,6 +1468,7 @@
 
 </div>
 
+<script src="/cs/navbar.js" defer></script>
 <script src="/cs/system.js" defer></script>
 <script>
 /* -------------------------------------------------------------------

@@ -122,7 +122,7 @@ body{
 .rail{
   width:var(--rail);flex-shrink:0;position:sticky;top:0;height:100vh;
   overflow-y:auto;overscroll-behavior:contain;
-  padding:var(--s8) var(--s6) var(--s6) var(--pad);
+  padding:var(--s5) var(--s6) var(--s6) var(--pad);
   scrollbar-width:none;-ms-overflow-style:none;
 }
 .rail::-webkit-scrollbar{display:none}
@@ -137,14 +137,17 @@ body{
     rgba(10,10,10,0) 100%);
 }
 
+/* Quiet, single-line escape hatch. The site navbar above already carries the
+   way home, so this stays a small marker and gives its old space to the
+   section list, which is what the rail is actually for. */
 .rail-back{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--ink3);text-decoration:none;margin-bottom:var(--s7);
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink4);text-decoration:none;margin-bottom:var(--s4);
   transition:color .15s;
 }
 .rail-back:hover{color:var(--ink)}
-.rail-back svg{width:14px;height:14px;flex-shrink:0}
+.rail-back svg{width:11px;height:11px;flex-shrink:0}
 
 .rail-project{
   font-size:15px;font-weight:700;line-height:1.3;letter-spacing:-0.012em;
@@ -154,11 +157,10 @@ body{
 .rail-project::after{
   content:'';display:block;width:22px;height:2px;background:var(--accent);margin-top:11px;
 }
-.rail-kicker{
-  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink4);margin:var(--s5) 0 var(--s3);
-}
-.rail nav{margin-bottom:var(--s6)}
+/* The section list follows the project name directly: the accent rule under
+   the name already says where the rail's contents begin, so a separate
+   "On this page" label only spent vertical space the list wanted. */
+.rail nav{margin-top:var(--s4);margin-bottom:var(--s6)}
 .rail-group + .rail-group{margin-top:var(--s4)}
 .rail-group-title{
   font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;

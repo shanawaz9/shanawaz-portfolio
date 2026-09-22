@@ -7,6 +7,7 @@
 <meta name="robots" content="noindex, nofollow, noimageindex">
 <meta name="description" content="Two confidential product design engagements: a conversational AI layer inside an enterprise GRC platform, and a UX overhaul of a legacy healthcare and e-commerce system.">
 <link rel="stylesheet" href="/cs/system.css">
+<link rel="stylesheet" href="/cs/navbar.css">
 <style>
 /* -------------------------------------------------------------------
    CONFIDENTIAL PROJECTS - project layer.
@@ -118,6 +119,28 @@ p.dim{color:var(--ink3);font-size:15.5px}
 </head>
 <body data-reveal=".proj-head,.visit,.baf">
 
+<!-- SITE NAVBAR (shared portfolio chrome, white mode) -->
+<nav class="site-nav" aria-label="Site">
+  <a class="nav-logo" href="/">Shanawaz</a>
+  <ul class="nav-links">
+    <li><a href="/#work">Work</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="https://drive.google.com/file/d/17dqLMiZSPHW2qX38N2fS5N0pazbWhBv8/view?usp=sharing" target="_blank" rel="noreferrer" class="resume-btn">Resume &#8599;</a></li>
+  </ul>
+  <div class="nav-right-mobile">
+    <button class="nav-hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="site-mobile-menu" id="site-mobile-menu">
+  <a href="/#work">Work</a>
+  <a href="/#about">About</a>
+  <a href="https://drive.google.com/file/d/17dqLMiZSPHW2qX38N2fS5N0pazbWhBv8/view?usp=sharing" target="_blank" rel="noreferrer">Resume &#8599;</a>
+</div>
+
+
 <div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
 <!-- MOBILE CHROME -->
@@ -169,7 +192,6 @@ p.dim{color:var(--ink3);font-size:15.5px}
       Back to portfolio
     </a>
     <div class="rail-project">Confidential projects</div>
-    <div class="rail-kicker">On this page</div>
     <nav aria-label="Case study sections">
       <div class="rail-group" id="railgroup-1">
         <div class="rail-group-title">01: GRC &amp; AI</div>
@@ -441,6 +463,7 @@ p.dim{color:var(--ink3);font-size:15.5px}
 
 </div>
 
+<script src="/cs/navbar.js" defer></script>
 <script src="/cs/system.js" defer></script>
 </body>
 </html>

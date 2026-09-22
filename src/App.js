@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/react';
 import './index.css';
 import PHOTOS from './photos';
 import Loader from './components/Loader';
+import { PLAY_INTRO } from './introState';
 import CursorGlow from './components/CursorGlow';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -84,7 +85,7 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <Loader />
+      {PLAY_INTRO && <Loader />}
       <CursorGlow />
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
       <main id="main" tabIndex={-1}>

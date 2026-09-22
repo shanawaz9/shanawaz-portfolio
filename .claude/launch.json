@@ -2,6 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "react-3000",
+      "url": "http://localhost:3000",
+      "port": 3000
+    },
+    {
       "name": "react-dev",
       "runtimeExecutable": "cmd",
       "runtimeArgs": ["/c", "npm install && npm start"],
