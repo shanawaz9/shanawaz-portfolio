@@ -322,7 +322,11 @@ a{color:var(--ink)}
   font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
   color:var(--accent);margin:0 0 var(--s2);
 }
-.by::before{content:'\2014\00a0\00a0'}
+/* drawn, not typed: the marker keeps the dash's shape without the character */
+.by::before{
+  content:'';display:inline-block;width:14px;height:2px;background:currentColor;
+  vertical-align:middle;margin:0 9px 2px 0;
+}
 
 /* ===================================================================
    SHARED CONTENT COMPONENTS
@@ -418,11 +422,20 @@ ol.article-list li::before{
 }
 .shifts .was b{font-size:15px;font-weight:700;color:var(--ink4);letter-spacing:-0.006em}
 .shifts .now b{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-0.008em}
+/* Same measure and same track sizes as the rows below it, or the two
+   column labels stop sitting over their own columns. The pair takes its
+   space above the labels, so they read as a header on the table rather
+   than as a line of the paragraph before it. */
 .shifts-head{
   display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);
+  max-width:var(--measure);margin-top:var(--s5);
   font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink4);padding-bottom:9px;
 }
+.shifts-head + .shifts{margin-top:0}
+/* the two sides need daylight between them, not just a grid gap */
+.shifts .now{padding-left:var(--s4)}
+.shifts-head span:last-child{padding-left:var(--s4)}
 
 /* ---------- key numbers ---------- */
 .stats{
@@ -481,6 +494,10 @@ ol.article-list li::before{
    IMAGE TREATMENT -- one rule for every screenshot on every page
    =================================================================== */
 figure,.hero-shot,.showcase{margin:var(--s6) 0;max-width:var(--wide)}
+/* a heading that introduces the figure directly below it, rather than a new
+   run of prose: it keeps the figure's top margin so the pair reads as one unit */
+.fig-head{margin-bottom:var(--s3)}
+.fig-head + figure,.fig-head + .hero-shot,.fig-head + .showcase{margin-top:0}
 figure.full,figure.bleed{max-width:var(--wide)}
 figure.col,figure.narrow{max-width:var(--measure)}
 figure img,.hero-shot img,.showcase img{
@@ -720,7 +737,9 @@ html.js-motion .article-in :is(
   .band{grid-template-columns:1fr;gap:3px}
   .spec div,.spec.lbl div{grid-template-columns:1fr;gap:2px;padding:12px 0}
   .shifts > div{grid-template-columns:1fr;gap:6px}
+  /* the labels are gone here, so the table takes its own space back */
   .shifts-head{display:none}
+  .shifts-head + .shifts{margin-top:var(--s5)}
   .shifts .now{padding-left:var(--s3);border-left:2px solid var(--accent)}
   .notes li{grid-template-columns:24px 1fr;gap:var(--s2)}
   .slot{aspect-ratio:4/3;padding:var(--s4)}

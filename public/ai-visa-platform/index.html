@@ -685,6 +685,43 @@
   /* 16:9 of a phone's width is 200px of board -- too little to pan in */
   .board-embed{aspect-ratio:4/3}
 }
+/* ---------- who each page is for ----------
+   The board's whole argument is that one scroll served two audiences, so
+   every destination states which of the two it belongs to, and the second
+   audience's page is marked in the accent. */
+.jam-dest h6{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.jam-aud{
+  font:700 9px/1 var(--sans);font-style:normal;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink3);background:#fff;border:1px solid rgba(10,10,10,.16);border-radius:999px;
+  padding:3px 7px;white-space:nowrap;flex-shrink:0;
+}
+.jam-aud.is-second{color:var(--accent);border-color:var(--accent-line);background:var(--accent-soft)}
+.jam-aside{
+  flex:0 0 196px;align-self:flex-start;margin:10px 0 0;
+  font-size:11px;line-height:1.5;color:var(--ink3);
+  border-left:1px solid var(--accent-line);padding-left:11px;
+}
+@media(max-width:1100px){.jam-aside{flex-basis:170px}}
+@media(max-width:560px){
+  .jam-aside{flex-basis:auto;border-left:0;border-top:1px solid var(--accent-line);padding:9px 0 0;margin-top:0}
+}
+
+/* ---------- masthead title ----------
+   Written to break in two: the claim, then what it actually means. The
+   break is explicit so it never lands mid-phrase, and the size steps down
+   from the system h1 so the second, longer line still holds one line on a
+   laptop instead of ragging into three. */
+.masthead-title{
+  font-size:clamp(23px,2.72vw,34px);
+  line-height:1.16;
+  letter-spacing:-0.022em;
+  max-width:none;
+}
+@media(max-width:760px){
+  /* no width left to hold the second line whole; the break stays at the
+     colon and the rest wraps on its own */
+  .masthead-title{font-size:clamp(22px,5.4vw,27px);line-height:1.22}
+}
 </style>
 <script>
 /* Set before first paint so revealed elements never flash in then out. */
@@ -746,7 +783,6 @@
     <ul>
       <li><a href="#handoff"><span class="n">05</span><span class="lbl">Design to development</span></a></li>
       <li><a href="#result"><span class="n">06</span><span class="lbl">The final result</span></a></li>
-      <li><a href="#outcome"><span class="n">07</span><span class="lbl">What changed for the product</span></a></li>
       <li><a href="#takeaway"><span class="n">&middot;</span><span class="lbl">The takeaway</span></a></li>
     </ul>
     <div class="mobnav-foot">Product &amp; UX &middot; 2026 &middot; 6 min read</div>
@@ -777,7 +813,6 @@
         </li>
         <li><a class="raillink" href="#handoff"><span class="n">05</span><span class="lbl">Design to development</span></a></li>
         <li><a class="raillink" href="#result"><span class="n">06</span><span class="lbl">The final result</span></a></li>
-        <li><a class="raillink" href="#outcome"><span class="n">07</span><span class="lbl">What changed for the product</span></a></li>
         <li><a class="raillink" href="#takeaway"><span class="n">&middot;</span><span class="lbl">The takeaway</span></a></li>
       </ul>
     </nav>
@@ -795,8 +830,8 @@
       <span>6 min read</span>
     </div>
 
-    <h1>Redesigning an AI-built visa platform before launch</h1>
-    <p class="lead">The client asked for a UI polish. After the audit we agreed to fix the UX first: the structure, the user flows and the visual design.</p>
+    <h1 class="masthead-title">From AI-Designed to Human-Refined:<br>Redesigning Visa Evaluation for better user experience</h1>
+    <p class="lead">An AI-built visa evaluation product, rebuilt before launch: one long page became six, each with a single job.</p>
 
     <!-- Masthead image: the shipped hero, above the fold, so the work is the
          first thing on the page rather than the first thing after the metadata. -->
@@ -820,8 +855,16 @@
     <div class="chapter-no"><b>01</b></div>
     <h2 class="title is-wide">What the client asked for</h2>
 
+    <!-- The brief comes before the evidence: the reader needs to know what was
+         asked for, and what the product actually does, to read the two frames
+         below as a problem rather than as a style change. -->
+    <div class="col">
+      <p>The founder had built the MVP with Claude and wanted a UI polish before launch. But the site collects a person&rsquo;s immigration details and passes them to an attorney. For a task like that, clear structure and trust matter more than styling.</p>
+    </div>
+
     <!-- The whole page, at full length. Shrinking either of these to fit
          would hide the one thing worth seeing: how far you have to scroll. -->
+    <h3 class="fig-head">A glimpse of the product, before and after</h3>
     <figure class="full scrollfig">
     <div class="scrollshots">
       <figure class="scrollshot">
@@ -858,11 +901,10 @@
     </figure>
 
     <div class="col">
-      <p>The founder had built the MVP with Claude and wanted a UI polish before launch. But the site collects a person&rsquo;s immigration details and passes them to an attorney. For a task like that, clear structure and trust matter more than styling.</p>
       <p class="by">My call</p>
       <p>So I suggested we fix the UX first. Instead of asking for a bigger scope, I walked the founder through the exact screens where users would drop off. She agreed.</p>
     </div>
-    <blockquote><p>Our job was not to make the site look better. It was to help people understand a big decision.</p></blockquote>
+    <blockquote><p>We agreed to fix the experience first, and the interface after.</p></blockquote>
   </section>
 
   <!-- 02 -->
@@ -870,7 +912,7 @@
     <div class="chapter-no"><b>02</b></div>
     <h2 class="title">The problems we found in the UX audit</h2>
     <div class="col">
-      <p>We looked at competitor products, went through the current user flows, and had discovery calls with the founder. The problems were not visual. They were in the structure and the flows.</p>
+      <p>We went through the current user flows and had discovery calls with the founder. The problems were not visual. They were in the structure and the flows.</p>
     </div>
     <!-- The findings next to the thing they were found in. The same
          scrollable original from Fig. 1 is deliberately shown again:
@@ -908,7 +950,11 @@
       </div>
       <figcaption><b>Fig. 2</b> &nbsp;The six problems we found, next to the page they came from. Scroll the frame to see how long the page was.</figcaption>
     </figure>
-    <blockquote><p>We could not remove the content, so the question became how to group it.</p></blockquote>
+    <div class="col">
+      <p class="by">The constraint</p>
+      <p>The founder was clear that every section had to stay: the categories, the sample report, the resources, the articles, the FAQ. Nothing was up for removal, so the question was never what to cut. It was where each piece belonged and how much attention it should get.</p>
+    </div>
+    <blockquote><p>Nothing could be removed, so everything had to be placed.</p></blockquote>
   </section>
 
   <!-- 03 -->
@@ -918,7 +964,7 @@
     <ol class="plan">
       <li>
         <span class="n">01</span>
-        <b>Framework and information architecture</b>
+        <b>Conversion journey and information architecture</b>
         <p>Split one long page into six, with one job per page.</p>
       </li>
       <li>
@@ -948,7 +994,7 @@
   <!-- 4a -->
   <section class="chapter" id="ia">
     <div class="chapter-no"><b>4a</b></div>
-    <h2 class="title is-wide">Information architecture and the conversion journey: one long page became six</h2>
+    <h2 class="title is-wide">Information architecture and the conversion journey</h2>
     <div class="col">
       <p>The biggest change was the information architecture. Instead of one long scroll, we split the content into six pages and grouped related sections where users would look for them.</p>
     </div>
@@ -1003,7 +1049,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Landing</h6>
+                    <h6>Landing<i class="jam-aud">Applicants</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="attention"><span>Hero</span><i>Attention</i></li>
                       <li class="jam-chip" data-s="interest"><span>Visa categories</span><i>Interest</i></li>
@@ -1032,7 +1078,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Evaluation</h6>
+                    <h6>Evaluation<i class="jam-aud">Applicants</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="action"><span>Evaluation form</span><i>Action</i></li>
                     </ul>
@@ -1043,19 +1089,20 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Attorney</h6>
+                    <h6>Attorney<i class="jam-aud is-second">Attorneys</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="interest"><span>Attorney information</span><i>Interest</i></li>
                       <li class="jam-chip" data-s="action"><span>Talk to an attorney</span><i>Action</i></li>
                     </ul>
                   </div>
+                  <p class="jam-aside">The second audience gets its own page. Attorneys no longer have to scroll through an applicant's journey to find what they came for.</p>
                 </div>
               </li>
 
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Resources</h6>
+                    <h6>Resources<i class="jam-aud">Both</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="interest"><span>Resources</span><i>Interest</i></li>
                       <li class="jam-chip" data-s="trust"><span>FAQ</span><i>Trust</i></li>
@@ -1067,7 +1114,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Articles</h6>
+                    <h6>Articles<i class="jam-aud">Both</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="interest"><span>Articles</span><i>Interest</i></li>
                     </ul>
@@ -1078,7 +1125,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Contact us</h6>
+                    <h6>Contact us<i class="jam-aud">Both</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="action"><span>Contact us</span><i>Action</i></li>
                     </ul>
@@ -1099,7 +1146,7 @@
          It stays inside this chapter rather than opening a new one. -->
     <h3 id="journey">The AIDA&nbsp;+&nbsp;Trust framework, mapped to the user journey</h3>
     <div class="col">
-      <p>The business goal was lead generation, so the site had to guide users to an evaluation or a consultation. We looked at a few frameworks and picked this one.</p>
+      <p>The business goal was marketing and lead generation, so the site had to guide users to an evaluation or a consultation. We looked at a few frameworks and picked this one.</p>
     </div>
     <!-- The framework beside the whiteboard it was worked out on: the
          clean version on the right, the messy original on the left, so
@@ -1210,18 +1257,9 @@
     <div class="chapter-no"><b>4c</b></div>
     <h2 class="title">Components that hold more content in less space</h2>
     <div class="col">
-      <p>The content had to stay, so we needed components that could hold more of it in less space. These are the patterns we used:</p>
+      <p>Nothing was coming off the page, so the same sections had to take up less of it. These are four of the patterns that did the work.</p>
     </div>
-    <p class="terms">
-      <span>Progressive disclosure</span>
-      <span>Stacked content</span>
-      <span>Secondary navigation</span>
-      <span>Information merging</span>
-      <span>Interactive components</span>
-      <span>Stronger hierarchy</span>
-      <span>Micro-interactions</span>
-    </p>
-    <blockquote><p>The goal was not to hide information. It was to make it easier to scan.</p></blockquote>
+    <blockquote><p>Every section is still there. The reader decides how much of it to open.</p></blockquote>
 
     <!-- Four of those patterns, running. Tabs rather than four stacked
          clips: the section argues for less visual weight, so showing it
@@ -1237,22 +1275,22 @@
         <div class="clips-tabs" role="tablist" aria-label="Component patterns">
           <button class="clips-tab" type="button" role="tab" id="tab-stack" aria-controls="clip-stack" aria-selected="true" tabindex="0">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-            <span class="clips-tab-label">Stacked sections</span>
+            <span class="clips-tab-label">Stacked card</span>
             <span class="clips-tab-time">0:20</span>
           </button>
           <button class="clips-tab" type="button" role="tab" id="tab-nav" aria-controls="clip-nav" aria-selected="false" tabindex="-1">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-            <span class="clips-tab-label">Sticky side navigation</span>
+            <span class="clips-tab-label">Side card nav</span>
             <span class="clips-tab-time">0:07</span>
           </button>
           <button class="clips-tab" type="button" role="tab" id="tab-parallax" aria-controls="clip-parallax" aria-selected="false" tabindex="-1">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-            <span class="clips-tab-label">Parallax depth</span>
+            <span class="clips-tab-label">Parallax scroll</span>
             <span class="clips-tab-time">0:07</span>
           </button>
           <button class="clips-tab" type="button" role="tab" id="tab-people" aria-controls="clip-people" aria-selected="false" tabindex="-1">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-            <span class="clips-tab-label">People in motion</span>
+            <span class="clips-tab-label">Interactive micro-interactions</span>
             <span class="clips-tab-time">0:08</span>
           </button>
         </div>
@@ -1308,7 +1346,7 @@
   <!-- 05 -->
   <section class="chapter" id="handoff">
     <div class="chapter-no"><b>05</b></div>
-    <h2 class="title">Design and development stayed connected</h2>
+    <h2 class="title">An AI-assisted workflow from design to development</h2>
     <div class="col">
       <p>I connected <strong>Claude Code to the Figma MCP</strong> and kept the Figma file in auto layout, so the build could follow the design closely. The developers stayed in the file, and we fixed UX and micro-interaction issues directly in code.</p>
       <p>The tools matter less than the habit: keeping design and development in the same loop.</p>
@@ -1319,9 +1357,7 @@
     <figure class="full">
       <div class="jam">
         <ol class="flow">
-        <li class="flow-note">Figma design</li>
-        <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
-        <li class="flow-note">Claude Code design and ideation</li>
+        <li class="flow-note">Ideation: Figma and AI tools</li>
         <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
         <li class="flow-note">Figma prototype</li>
         <li class="flow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="m19 13-7 7-7-7"/></svg></li>
@@ -1341,7 +1377,7 @@
     <div class="chapter-no"><b>06</b></div>
     <h2 class="title">The result: a much clearer product</h2>
     <div class="col">
-      <p>The product launched recently, so I do not have usage numbers yet. But the structural changes are easy to see.</p>
+      <p>The product went live recently, so there are no usage numbers to share yet. What can be compared for now is the structure, before and after.</p>
     </div>
 
     <div class="shifts-head"><span>Before</span><span>After</span></div>
@@ -1427,18 +1463,6 @@
 
       <figcaption><b>Fig. 9</b> &nbsp;The six pages as shipped, in the order a user sees them.</figcaption>
     </figure>
-  </section>
-
-  <!-- 07 -->
-  <section class="chapter" id="outcome">
-    <div class="chapter-no"><b>07</b></div>
-    <h2 class="title">What changed for the product</h2>
-    <dl class="spec">
-      <div><dt>A clearer structure</dt><dd>One long page became six separate pages.</dd></div>
-      <div><dt>A clearer journey</dt><dd>The evaluation and the consultation are now easy to find.</dd></div>
-      <div><dt>A look of its own</dt><dd>The UI went from a generic AI look to its own visual identity.</dd></div>
-      <div><dt>Closer design and build</dt><dd>The final build stayed close to what we designed.</dd></div>
-    </dl>
   </section>
 
   <!-- TAKEAWAY -->
