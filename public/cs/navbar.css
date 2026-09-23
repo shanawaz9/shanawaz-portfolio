@@ -37,7 +37,9 @@
 .site-mobile-menu{
   /* portfolio LIGHT MODE tokens */
   --nav-h:64px;
+  /* the bar takes the page's own paper, so the top edge never shows a seam */
   --nav-bg:rgba(248,247,244,0.96);
+  --nav-bg:color-mix(in srgb, var(--paper, #f8f7f4) 96%, transparent);
   --nav-text:#161512;
   --nav-muted:#3f3b35;
   --nav-border:#cfc9bf;

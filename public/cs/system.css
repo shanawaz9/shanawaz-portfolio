@@ -9,9 +9,9 @@
      1. --accent  (its brand colour, used sparingly)
      2. its project-specific components and imagery
 
-   The base is deliberately colourless -- warm paper, black ink,
-   hairline rules. Colour only ever appears as the project accent,
-   so the work stays the loudest thing on the page.
+   The base is deliberately colourless -- a soft violet-grey paper,
+   black ink, hairline rules. Colour only ever appears as the project
+   accent, so the work stays the loudest thing on the page.
    =================================================================== */
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -26,9 +26,12 @@
   --accent-line: rgba(10,10,10,.22);
 
   /* --- NEUTRAL BASE (shared by every case study) ------------------ */
-  --paper:  #f7f6f2;
-  --paper2: #efeee8;
-  --paper3: #e7e6de;
+  /* Trying pure white. The two steps below it are neutral greys, since a
+     tinted surface on a white page reads as a mistake rather than a layer.
+     Mist, the previous choice: #f6f5fa / #eceaf3 / #e2dfec. */
+  --paper:  #ffffff;
+  --paper2: #f4f4f6;
+  --paper3: #eaeaee;
   --ink:    #0a0a0a;
   --ink2:   #33322e;
   --ink3:   #6d6b64;
@@ -280,6 +283,7 @@ h2,h2.title{
    measure. It still wraps once the column is genuinely too narrow --
    nothing here forces a line that would overflow. */
 h2.title.is-wide{max-width:none;text-wrap:balance}
+h3.is-wide{max-width:none;text-wrap:balance}
 h3,h4.subhead2{
   font-family:var(--sans);
   font-size:17px;font-weight:700;line-height:1.4;letter-spacing:-0.012em;
@@ -496,7 +500,7 @@ ol.article-list li::before{
 figure,.hero-shot,.showcase{margin:var(--s6) 0;max-width:var(--wide)}
 /* a heading that introduces the figure directly below it, rather than a new
    run of prose: it keeps the figure's top margin so the pair reads as one unit */
-.fig-head{margin-bottom:var(--s3)}
+.fig-head{margin-bottom:var(--s3);max-width:none}
 .fig-head + figure,.fig-head + .hero-shot,.fig-head + .showcase{margin-top:0}
 figure.full,figure.bleed{max-width:var(--wide)}
 figure.col,figure.narrow{max-width:var(--measure)}
@@ -535,6 +539,9 @@ figcaption b{
   display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);
   margin:var(--s6) 0;max-width:var(--wide);
 }
+/* one page on its own rather than a before/after pair: the same frame,
+   held to the reading measure so a single screenshot does not sprawl */
+.scrollshots.is-single{grid-template-columns:minmax(0,1fr);max-width:var(--measure)}
 /* when the pair sits inside a captioned figure, the figure owns the margin */
 .scrollfig .scrollshots{margin:0}
 .scrollfig > figcaption{margin-top:var(--s3)}
@@ -572,7 +579,7 @@ figcaption b{
   padding:9px 0 10px;margin-top:-40px;
   font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink3);pointer-events:none;
-  background:linear-gradient(to top,var(--paper2) 45%,rgba(239,238,232,0));
+  background:linear-gradient(to top,var(--paper2) 45%,color-mix(in srgb, var(--paper2), transparent));
   transition:opacity .25s ease;
 }
 .scrollshot-frame.is-scrolled .scrollshot-hint{opacity:0}
@@ -604,6 +611,9 @@ figcaption b{
   color:var(--ink4);margin-bottom:7px;
 }
 .colophon p,.authorbox p{font-size:14.5px;line-height:1.65;color:var(--ink2);margin:0}
+/* a column with no label still starts its text on the same line as the ones
+   that have one, so the footer reads as one row rather than a stagger */
+.colophon div.nolabel,.authorbox div.nolabel{padding-top:24px}
 .colophon a,.authorbox a{
   color:var(--accent);font-weight:700;text-decoration:none;border-bottom:1px solid var(--accent-line);
 }
@@ -664,7 +674,8 @@ html.js-motion .article-in :is(
     display:flex;align-items:center;gap:var(--s3);
     position:sticky;top:0;z-index:70;
     padding:11px var(--pad);
-    background:rgba(247,246,242,.94);
+    background:var(--paper);
+    background:color-mix(in srgb, var(--paper) 94%, transparent);
     -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--rule);
   }
