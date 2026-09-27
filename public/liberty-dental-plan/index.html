@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Liberty Dental Plan &middot; Case Study</title>
 <meta name="robots" content="noindex, nofollow, noimageindex">
-<meta name="description" content="A confidential UX case study: restructuring a legacy healthcare platform through research, information architecture, responsive navigation and a production design system.">
+<meta name="description" content="A confidential product design case study: reshaping a decade-old healthcare platform for members, providers and brokers, from domain research and product structure to a responsive design system in production.">
+<link rel="preload" href="/cs/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/cs/fonts/general-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/cs/system.css">
 <link rel="stylesheet" href="/cs/navbar.css">
 <style>
@@ -194,15 +196,13 @@ p.bench-note{font-size:13px;line-height:1.6;color:var(--ink3);margin:0 0 var(--s
 .a11y b{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px;letter-spacing:-0.002em}
 .a11y span{font-size:14px;line-height:1.55;color:var(--ink2);letter-spacing:-0.002em}
 
-.finds{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin:var(--s5) 0;max-width:var(--measure)}
-.find{border-top:2px solid var(--rule);padding-top:var(--s3)}
-.find b{display:block;font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:-0.008em;margin-bottom:6px}
-.find p{font-size:14px;line-height:1.6;color:var(--ink2);margin:0 0 11px;letter-spacing:-0.002em}
-.find i{
+/* the defined problems: the system's numbered notes, each carrying the
+   design implication it led to */
+.notes .impl-l{
   display:block;font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--accent);font-style:normal;margin-bottom:4px;
+  color:var(--accent);font-style:normal;margin:9px 0 3px;
 }
-.find span{display:block;font-size:14px;line-height:1.55;color:var(--ink);font-weight:500;letter-spacing:-0.002em}
+.notes .impl{color:var(--ink);font-weight:500}
 
 .cons{display:grid;gap:var(--s5);margin:var(--s5) 0;max-width:var(--measure)}
 .con{border-left:2px solid var(--rule);padding-left:var(--s4)}
@@ -235,10 +235,9 @@ p.bench-note{font-size:13px;line-height:1.6;color:var(--ink3);margin:0 0 var(--s
 
 @media(max-width:820px){
   .opts{grid-template-columns:1fr;gap:var(--s5)}
-  .a11y,.finds,.measures{grid-template-columns:1fr}
+  .a11y,.measures{grid-template-columns:1fr}
   .model{grid-template-columns:1fr;gap:var(--s4)}
   .con-r{grid-template-columns:1fr;gap:3px}
-  .finds{gap:var(--s5)}
 }
 
 /* ---------- figures ----------
@@ -472,15 +471,15 @@ figcaption strong{color:var(--ink2);font-weight:700}
   <div class="mobnav-in">
     <div class="mobnav-kicker">Liberty Dental Plan &middot; On this page</div>
     <ul>
-      <li><a href="#ch-challenge"><span class="n">01</span><span class="lbl">The Challenge</span></a></li>
-      <li><a href="#ch-discovery"><span class="n">02</span><span class="lbl">Discovery &amp; Research</span></a></li>
-      <li><a href="#ch-structure"><span class="n">03</span><span class="lbl">Finding the Structure</span></a></li>
-      <li><a href="#ch-ia"><span class="n">04</span><span class="lbl">Information Architecture</span></a></li>
-      <li><a href="#ch-constraints"><span class="n">05</span><span class="lbl">The Real Design Challenge</span></a></li>
-      <li><a href="#ch-nav"><span class="n">06</span><span class="lbl">Navigation &amp; Responsive</span></a></li>
-      <li><a href="#ch-visual"><span class="n">07</span><span class="lbl">Visual Design</span></a></li>
-      <li><a href="#ch-outcome"><span class="n">08</span><span class="lbl">What Shipped</span></a></li>
-      <li><a href="#ch-reflection"><span class="n">&middot;</span><span class="lbl">Reflection</span></a></li>
+      <li><a href="#ch-challenge"><span class="n">01</span><span class="lbl">The Problem</span></a></li>
+      <li><a href="#ch-discovery"><span class="n">02</span><span class="lbl">Understanding the Context</span></a></li>
+      <li><a href="#ch-problems"><span class="n">03</span><span class="lbl">Defining the Problems</span></a></li>
+      <li><a href="#ch-structure"><span class="n">04</span><span class="lbl">Restructuring the Product</span></a></li>
+      <li><a href="#ch-nav"><span class="n">05</span><span class="lbl">One Structure, Every Screen</span></a></li>
+      <li><a href="#ch-visual"><span class="n">06</span><span class="lbl">Bringing It Together</span></a></li>
+      <li><a href="#ch-constraints"><span class="n">07</span><span class="lbl">Getting It Built</span></a></li>
+      <li><a href="#ch-outcome"><span class="n">08</span><span class="lbl">Outcome</span></a></li>
+      <li><a href="#ch-reflection"><span class="n">&middot;</span><span class="lbl">Learnings</span></a></li>
     </ul>
     <div class="mobnav-foot">Confidential. Details abstracted under NDA.</div>
   </div>
@@ -497,15 +496,15 @@ figcaption strong{color:var(--ink2);font-weight:700}
     <div class="rail-project">Liberty Dental Plan</div>
     <nav aria-label="Case study sections">
       <ul>
-        <li><a class="raillink" href="#ch-challenge"><span class="n">01</span><span class="lbl">The Challenge</span></a></li>
-        <li><a class="raillink" href="#ch-discovery"><span class="n">02</span><span class="lbl">Discovery &amp; Research</span></a></li>
-        <li><a class="raillink" href="#ch-structure"><span class="n">03</span><span class="lbl">Finding the Structure</span></a></li>
-        <li><a class="raillink" href="#ch-ia"><span class="n">04</span><span class="lbl">Information Architecture</span></a></li>
-        <li><a class="raillink" href="#ch-constraints"><span class="n">05</span><span class="lbl">The Real Design Challenge</span></a></li>
-        <li><a class="raillink" href="#ch-nav"><span class="n">06</span><span class="lbl">Navigation &amp; Responsive</span></a></li>
-        <li><a class="raillink" href="#ch-visual"><span class="n">07</span><span class="lbl">Visual Design</span></a></li>
-        <li><a class="raillink" href="#ch-outcome"><span class="n">08</span><span class="lbl">What Shipped</span></a></li>
-        <li><a class="raillink" href="#ch-reflection"><span class="n">&middot;</span><span class="lbl">Reflection</span></a></li>
+        <li><a class="raillink" href="#ch-challenge"><span class="n">01</span><span class="lbl">The Problem</span></a></li>
+        <li><a class="raillink" href="#ch-discovery"><span class="n">02</span><span class="lbl">Understanding the Context</span></a></li>
+        <li><a class="raillink" href="#ch-problems"><span class="n">03</span><span class="lbl">Defining the Problems</span></a></li>
+        <li><a class="raillink" href="#ch-structure"><span class="n">04</span><span class="lbl">Restructuring the Product</span></a></li>
+        <li><a class="raillink" href="#ch-nav"><span class="n">05</span><span class="lbl">One Structure, Every Screen</span></a></li>
+        <li><a class="raillink" href="#ch-visual"><span class="n">06</span><span class="lbl">Bringing It Together</span></a></li>
+        <li><a class="raillink" href="#ch-constraints"><span class="n">07</span><span class="lbl">Getting It Built</span></a></li>
+        <li><a class="raillink" href="#ch-outcome"><span class="n">08</span><span class="lbl">Outcome</span></a></li>
+        <li><a class="raillink" href="#ch-reflection"><span class="n">&middot;</span><span class="lbl">Learnings</span></a></li>
       </ul>
     </nav>
     <div class="rail-foot">Confidential. Details abstracted under NDA.</div>
@@ -514,9 +513,11 @@ figcaption strong{color:var(--ink2);font-weight:700}
   <!-- ARTICLE -->
   <main class="article">
   <div class="article-in">
-    <div class="kicker"><i></i>Liberty Dental Plan <span class="sep">·</span> Senior UX Designer &amp; Offshore Design Lead <span class="sep">·</span> 8 min read</div>
-    <h1>Rebuilding the UX foundation of a decade-old healthcare platform</h1>
-    <p class="lead">Years of added content and requirements had left Liberty Dental Plan hard to navigate for members, providers and brokers. I owned the architecture, the navigation and the design direction, through to production.</p>
+    <header class="masthead">
+    <div class="kicker"><i></i>Liberty Dental Plan <span class="sep">·</span> Senior Product Designer &amp; Offshore Design Lead <span class="sep">·</span> 8 min read</div>
+    <h1>Reshaping a decade-old healthcare platform for three very different users</h1>
+    <p class="lead">One product for members, providers and brokers, grown one addition at a time over ten years. I led the offshore design team from research and product structure through to production.</p>
+    </header>
 
     <div class="hero-shot">
       <img src="/images/ldp/live-homepage-hero.jpg" width="1600" height="753" loading="eager" decoding="async"
@@ -526,7 +527,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
           <span class="hero-live"><i></i>Live</span>
           <div class="hero-bar-lines">
             <b>The shipped product</b>
-            <span>Persona-based navigation, in production</span>
+            <span>Restructured around members, providers and brokers</span>
           </div>
         </div>
         <a class="hero-cta-btn" href="https://www.libertydentalplan.com" target="_blank" rel="noopener noreferrer">
@@ -538,7 +539,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
 
 
     <div class="facts">
-      <div class="fact"><b>My role</b><span>Senior UX Designer &amp; Offshore Design Lead</span></div>
+      <div class="fact"><b>My role</b><span>Senior Product Designer &amp; Offshore Design Lead</span></div>
       <div class="fact"><b>Platforms</b><span>Desktop &amp; mobile responsive</span></div>
       <div class="fact"><b>Timeline</b><span>2025–2026</span></div>
     </div>
@@ -548,20 +549,28 @@ figcaption strong{color:var(--ink2);font-weight:700}
       Delivered under NDA. Internal screens and exact metrics are intentionally left out.
     </p>
 
+    <h4 class="subhead">In short</h4>
+    <dl class="spec lbl">
+      <div><dt>Problem</dt><dd>One structure was trying to serve members, providers and brokers. Content sat in more than one menu, a decade of additions had nowhere to go, and the menus broke on mobile.</dd></div>
+      <div><dt>Constraints</dt><dd>An insurance product where copy needed client approval, a Bootstrap-based build, a brand color that changed mid-project, and a tight timeline.</dd></div>
+      <div><dt>My role</dt><dd>Led the offshore design team. Owned the product structure, the navigation model and the design direction, and ran design reviews through to production.</dd></div>
+      <div class="own"><dt>Outcome</dt><dd>A persona-based platform, responsive across desktop and mobile, live in production.</dd></div>
+    </dl>
+
     <h4 class="subhead">What I owned</h4>
     <div class="chips">
-      <span class="chip">UX direction</span>
+      <span class="chip">Product structure</span>
       <span class="chip">Information architecture</span>
-      <span class="chip">Navigation exploration</span>
+      <span class="chip">Navigation model</span>
       <span class="chip">User flows</span>
       <span class="chip">Responsive experience</span>
-      <span class="chip">Visual design direction</span>
+      <span class="chip">Visual system</span>
       <span class="chip">Design reviews</span>
       <span class="chip">Stakeholder alignment</span>
-      <span class="chip">Developer handoff</span>
+      <span class="chip">Developer collaboration</span>
     </div>
 
-      <h4 class="subhead2">The change, in one screen</h4>
+      <h4 class="subhead2">Before and after</h4>
     <figure class="shots bleed">
       <div class="baf">
         <a class="baf-item is-old" href="/images/ldp/before-home.jpg" target="_blank" rel="noopener noreferrer">
@@ -573,14 +582,14 @@ figcaption strong{color:var(--ink2);font-weight:700}
           <span class="baf-frame"><img src="/images/ldp/live-homepage-hero.jpg" width="1600" height="753" loading="lazy" decoding="async" alt="The shipped homepage: a thin language and log-in strip above one navy navigation row with the three personas, search and Find a dentist, over a full-bleed photograph of three generations of a family"></span>
         </a>
       </div>
-      <figcaption>The same screen, before and after. Both shown at the fold, where the decisions are densest.</figcaption>
+      <figcaption>The homepage before and after the redesign, both cropped at the fold.</figcaption>
     </figure>
 
     <section class="chapter" id="ch-challenge">
-      <div class="chapter-no"><b>01</b>&nbsp;&nbsp;The Challenge</div>
+      <div class="chapter-no"><b>01</b>&nbsp;&nbsp;The Problem</div>
       <h2 class="title">The product had grown faster than its structure</h2>
-      <p>A decade of additions had piled up. <span class="mark m2">Navigation was scattered across the product</span>, and one screen could offer three different routes to the same plan.</p>
-      <p>It served <strong>members, providers and brokers</strong>, three audiences with little in common, through one generic structure. The client also wanted the whole thing responsive.</p>
+      <p>Liberty Dental Plan serves <strong>members, providers and brokers</strong>, three audiences with little in common. All three came in through one generic structure that mixed audiences with products.</p>
+      <p>A decade of additions had piled up on top of it. <span class="mark m2">Navigation was scattered across the product</span>, and one screen could offer three different routes to the same plan. The client also wanted the whole platform responsive, and the legacy menus did not survive a small screen.</p>
     <figure class="shots bleed">
       <p class="fig-head">Old screens</p>
       <a href="/images/ldp/existing-01-home.jpg" target="_blank" rel="noopener noreferrer">
@@ -599,11 +608,17 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
       <figcaption>The existing application. Navigation scattered across competing menus: a top-level <strong>Programs</strong> dropdown, a second dropdown nested inside a plan card, and a twelve-item <strong>Members</strong> menu covering most of the page, all reachable from the same screen.</figcaption>
     </figure>
+      <dl class="spec lbl">
+        <div><dt>What was wrong</dt><dd>Information was hard to find, the same content lived in several places, and there was no clear home for anything new.</dd></div>
+        <div><dt>Who it hit</dt><dd>Members, providers and brokers. Three groups with different goals, sharing one way in.</dd></div>
+        <div><dt>Why it was hard</dt><dd>A US dental insurance domain none of us knew, copy that needed approval, a Bootstrap-based build, and a brand that changed partway through.</dd></div>
+        <div class="own"><dt>What I had to solve</dt><dd>A structure that gives each audience a clear path, works on a phone, and can take new content without falling apart again.</dd></div>
+      </dl>
       <div class="insight"><p>The interface did not just look dated. The structure no longer matched how people actually used the product.</p></div>
     </section>
 
     <section class="chapter" id="ch-discovery">
-      <div class="chapter-no"><b>02</b>&nbsp;&nbsp;Discovery &amp; Research</div>
+      <div class="chapter-no"><b>02</b>&nbsp;&nbsp;Understanding the Context</div>
       <h2 class="title">None of us had worked in US dental insurance before</h2>
       <p>So I put the team on the domain before anyone opened a design file. Getting the plan types wrong would have produced a confident structure built on the wrong model.</p>
       <p>Discovery ran on one shared FigJam board, with the team in it at the same time: gatherings, research, competitive analysis, personas, journeys. Working in one place kept the process intact when the timeline tightened.</p>
@@ -613,14 +628,14 @@ figcaption strong{color:var(--ink2);font-weight:700}
            alt="The shared FigJam board, with sections for initial gatherings, the existing flow chart, user journeys, personas, competitive analysis and a survey, and several collaborator cursors active across them at once">
       <figcaption>One board for the whole discovery. The clustered avatars are the four of us working in it at the same time.</figcaption>
     </figure>
-      <p>We conducted:</p>
+      <p>What each piece of research was for:</p>
       <ul class="article-list">
-        <li><span class="mark">US healthcare market research</span></li>
-        <li>Competitive analysis <span class="li-note"><b>(6)</b> Delta Dental, DentaQuest, UnitedHealthcare, Aetna, Cigna, MCNA Dental</span></li>
-        <li>Existing product analysis</li>
-        <li>Client workshops and requirement gathering</li>
-        <li>Personas for the three audiences</li>
-        <li>User journey and task flow mapping</li>
+        <li><span class="mark">US healthcare market research</span> <span class="li-note">How plans, members, providers and brokers relate, so the structure started from the right model.</span></li>
+        <li>Competitive analysis <span class="li-note"><b>(6)</b> Delta Dental, DentaQuest, UnitedHealthcare, Aetna, Cigna, MCNA Dental. Which patterns the market repeats, and where LDP could be simpler.</span></li>
+        <li>Existing product analysis <span class="li-note">Where the same content lived in more than one menu, and why no single route felt like the right one.</span></li>
+        <li>Client workshops and requirement gathering <span class="li-note">What the business needed surfaced, and the limits we would be working within.</span></li>
+        <li>Personas for the three audiences <span class="li-note">Members, providers and brokers look for information differently. One shared structure would always be wrong for someone.</span></li>
+        <li>User journey and task flow mapping <span class="li-note">How each audience moves through the product. This fed the priority order we later set in the card sort.</span></li>
       </ul>
 
       <h4 class="subhead2">What the rest of the market was already doing</h4>
@@ -659,40 +674,53 @@ figcaption strong{color:var(--ink2);font-weight:700}
           </tbody>
         </table>
       </div>
+      <p class="takeaway"><b>What this meant for LDP</b>The market was not setting a high bar for navigation or mobile. Getting both right was the clearest way to stand apart.</p>
+    </section>
 
-      <h4 class="subhead2">What the research changed</h4>
-      <div class="finds">
-        <div class="find">
-          <b>Scattered navigation</b>
-          <p>The same content sat in more than one menu, so no single route could be made the right one.</p>
-          <i>Design implication</i>
-          <span>Rework the information architecture before redesigning any screen.</span>
-        </div>
-        <div class="find">
-          <b>Three audiences, one structure</b>
-          <p>Members, providers and brokers all entered through the same navigation, which mixed audiences with products.</p>
-          <i>Design implication</i>
-          <span>Split the structure by audience rather than by content type.</span>
-        </div>
-        <div class="find">
-          <b>Mobile as an afterthought</b>
-          <p>Across competitors, mobile quality varied widely, and the legacy menus did not survive a small screen.</p>
-          <i>Design implication</i>
-          <span>Design the responsive pattern deliberately instead of adapting the desktop one.</span>
-        </div>
-      </div>
+    <section class="chapter" id="ch-problems">
+      <div class="chapter-no"><b>03</b>&nbsp;&nbsp;Defining the Problems</div>
+      <h2 class="title">Four problems worth solving</h2>
+      <p>Research turned a redesign brief into four specific problems. Each one changed what we would design first.</p>
+      <ol class="notes">
+        <li><div>
+          <b>Different users, one way in</b>
+          <span>Members, providers and brokers all entered through the same navigation, which mixed audiences with products.</span>
+          <i class="impl-l">What it meant</i>
+          <span class="impl">Split the structure by audience rather than by content type.</span>
+        </div></li>
+        <li><div>
+          <b>Information was hard to find</b>
+          <span>The same content sat in more than one menu, so no single route could be made the right one.</span>
+          <i class="impl-l">What it meant</i>
+          <span class="impl">Rework the information architecture before redesigning any screen.</span>
+        </div></li>
+        <li><div>
+          <b>The structure could not grow</b>
+          <span>A decade of additions had piled up with no structure to hold them. Adding more the same way would repeat the problem.</span>
+          <i class="impl-l">What it meant</i>
+          <span class="impl">Give every type of content a clear home, and build shared patterns new pages can reuse.</span>
+        </div></li>
+        <li><div>
+          <b>Mobile was an afterthought</b>
+          <span>The legacy menus did not survive a small screen, and mobile quality varied widely across competitors too.</span>
+          <i class="impl-l">What it meant</i>
+          <span class="impl">Design the responsive pattern deliberately instead of adapting the desktop one, with accessibility built in.</span>
+        </div></li>
+      </ol>
 
-      <h4 class="subhead2">The real problem</h4>
-      <div class="inline-note">From a design lead perspective, the first challenge was clear: <strong><span class="mark m3">how do we structure the information and navigation</span> around three different personas without making the product fragmented?</strong></div>
-      <div class="insight"><p>Navigation was not a menu problem. It was an information architecture problem.</p></div>
+      <h4 class="subhead2">The question I had to answer</h4>
+      <div class="inline-note"><strong><span class="mark m3">How do we structure the information and navigation</span> around three different personas without making the product fragmented?</strong></div>
+      <div class="insight"><p>Navigation was not a menu problem. It was a product structure problem.</p></div>
     </section>
 
     <section class="chapter" id="ch-structure">
-      <div class="chapter-no"><b>03</b>&nbsp;&nbsp;Finding the Structure</div>
-      <h2 class="title">We could not redesign the navigation until we knew what belonged together</h2>
+      <div class="chapter-no"><b>04</b>&nbsp;&nbsp;Restructuring the Product</div>
+      <h2 class="title">Restructuring the product around how people actually use it</h2>
+      <p>We could not redesign the navigation until we knew what belonged together, and for whom. So the first design work was structural, not visual.</p>
+      <h4 class="subhead2">Validating what belongs together</h4>
       <div class="tag is-mine">My decision</div>
       <p>I ran <span class="mark">card sorting</span> inside the UX team, every page and tool on its own card, placed by <strong>what the client wanted surfaced</strong> against <strong>how the three personas actually look for information</strong>.</p>
-      <p>Where those disagreed we argued the card out, then took a position to the client rather than a question. That set the priority order: what earns primary navigation, what sits a level down, what had never earned its place.</p>
+      <p>Where those disagreed we argued the card out, then took a position to the client rather than a question. That set the priority order: what earns primary navigation, what sits a level down, and what had never earned its place.</p>
       <div class="inline-note">We ran it <strong><span class="mark m2">physically rather than in a digital tool</span></strong>. Paper on a table meant everyone reached in and moved something, so disagreements surfaced in an afternoon instead of as comments on a board a week later.</div>
     <figure class="shots">
       <p class="fig-head">Card sorting &middot; Research artifacts &middot; Final IA</p>
@@ -707,12 +735,9 @@ figcaption strong{color:var(--ink2);font-weight:700}
         </div>
       </div>
     </figure>
-    </section>
 
-    <section class="chapter" id="ch-ia">
-      <div class="chapter-no"><b>04</b>&nbsp;&nbsp;Information Architecture</div>
-      <h2 class="title">Three directions for the structure</h2>
-      <p>The card sort gave us content groupings, but not a navigation model. With three audiences to serve, <strong>members, providers and brokers</strong>, I put three directions to the client at the same wireframe fidelity.</p>
+      <h4 class="subhead2">Choosing a structural model</h4>
+      <p>The card sort gave us content groupings, but not a model for the product. With three audiences to serve, <strong>members, providers and brokers</strong>, I put three directions to the client at the same wireframe fidelity.</p>
       <div class="opts">
         <div class="opt">
           <div class="opt-n">Direction A</div>
@@ -736,8 +761,13 @@ figcaption strong{color:var(--ink2);font-weight:700}
           <span class="opt-v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Selected</span>
         </div>
       </div>
-      <h4 class="subhead2">Why persona-based?</h4>
-      <p>It matched the platform's three distinct audiences and followed <strong>recognition over recall</strong>: people could start from their own context instead of learning Liberty's internal content structure.</p>
+      <dl class="spec lbl">
+        <div><dt>Problem</dt><dd>Three audiences with different goals, one body of content.</dd></div>
+        <div><dt>Options</dt><dd>Category-based, search-based or persona-based.</dd></div>
+        <div class="own"><dt>Decision</dt><dd>Persona-based, with content categories sitting under each audience.</dd></div>
+        <div><dt>Why</dt><dd>It matched the platform's three distinct audiences and followed <strong>recognition over recall</strong>: people start from their own context instead of learning Liberty's internal content structure. It also gives new content an obvious home, under the audience it serves.</dd></div>
+        <div><dt>Trade-off</dt><dd>A more complex IA underneath, which the sitemap had to carry.</dd></div>
+      </dl>
       <p><span class="mark m3">The client agreed to move forward with this direction.</span></p>
     <figure class="shots">
       <div class="variant">
@@ -760,7 +790,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
       <figcaption>The three approaches, wireframed at the same fidelity so the comparison was about structure rather than polish.</figcaption>
     </figure>
-      <p>I then translated the architecture into a full sitemap, page by page.</p>
+      <p>I then translated the architecture into a full sitemap, page by page. It became the reference for every screen that followed.</p>
     <figure class="shots">
       <div class="nda">
         <img src="/images/ldp/sitemap-nda.jpg" width="1200" height="1092" loading="lazy" decoding="async"
@@ -772,51 +802,16 @@ figcaption strong{color:var(--ink2);font-weight:700}
           </span>
         </div>
       </div>
-      <figcaption>Sitemap</figcaption>
+      <figcaption>The sitemap: each audience branches into its own sections and pages, with shared areas like About, Compliance and Support alongside.</figcaption>
     </figure>
-    </section>
-
-    <section class="chapter" id="ch-constraints">
-      <div class="chapter-no"><b>05</b>&nbsp;&nbsp;The Real Design Challenge</div>
-      <h2 class="title">Keeping UX moving while everything around it changed</h2>
-      <p>The hard part was not the interface. It was holding the structure steady while requirements, copy, the brand color and the delivery date all moved underneath it.</p>
-      <blockquote><p>Can we just start development with the wireframes and add the visual design later?</p></blockquote>
-    <figure class="shots meme">
-      <img src="/images/ldp/pressure-two-buttons.jpg" width="600" height="897" loading="lazy" decoding="async"
-           alt="The two-buttons meme: a sweating man hesitating over two red buttons, unable to pick between them">
-      <figcaption>Ship sooner, or keep the process. The pressure was real and the two options were framed as exclusive.</figcaption>
-    </figure>
-      <div class="cons">
-        <div class="con is-mine">
-          <h5>Development wanted to start early</h5>
-          <div class="con-r"><b>Constraint</b><span>Project managers and developers wanted to begin building while the UX work was still moving.</span></div>
-          <div class="con-r"><b>Risk</b><span>Wireframes were being read as finished design. Building against unstable UX would have bought a few weeks and cost rework.</span></div>
-          <div class="con-r mine"><b>My response</b><span>As offshore design lead I held the sequence, and made the case for it to the people pushing against it.</span></div>
-          <div class="con-r"><b>Result</b><span>The process stayed intact: wireframes, approval, responsive, visual design, handoff.</span></div>
-        </div>
-        <div class="con">
-          <h5>Copy had to be settled before design</h5>
-          <div class="con-r"><b>Constraint</b><span>Because this is an insurance product, the client wanted copy approved ahead of the design.</span></div>
-          <div class="con-r"><b>Risk</b><span>In practice the two ran in parallel, and every copy change moved the wireframes again.</span></div>
-          <div class="con-r mine"><b>My response</b><span>I kept wireframes and visual direction progressing alongside the copy rather than waiting on it.</span></div>
-          <div class="con-r"><b>Result</b><span>Copy became part of the design process instead of a gate in front of it.</span></div>
-        </div>
-        <div class="con">
-          <h5>The build was tied to Bootstrap</h5>
-          <div class="con-r"><b>Constraint</b><span>Implementation was based on Bootstrap components, which set limits on what the UI could do.</span></div>
-          <div class="con-r"><b>Risk</b><span>Designing past the component set would have produced screens the team could not build as drawn.</span></div>
-          <div class="con-r mine"><b>My response</b><span>I worked with the developers to customize components only where usability needed it.</span></div>
-          <div class="con-r"><b>Result</b><span>Responsive behavior was built alongside the core experience rather than bolted on after.</span></div>
-        </div>
-      </div>
-      <div class="insight"><p>Instead of removing UX steps to meet the timeline, <span class="mark">we negotiated the process</span>.</p></div>
     </section>
 
     <section class="chapter" id="ch-nav">
-      <div class="chapter-no"><b>06</b>&nbsp;&nbsp;Navigation &amp; Responsive</div>
-      <h2 class="title">Three navigation directions. One final pattern.</h2>
+      <div class="chapter-no"><b>05</b>&nbsp;&nbsp;One Structure, Every Screen</div>
+      <h2 class="title">Making the same structure work on a phone</h2>
+      <p>Navigation was where the new structure met the user, so it had to carry the persona model on every screen size.</p>
       <div class="inline-note">The desktop structure ran from the landing page, into a persona-based flow, then local navigation, then three subcategories.</div>
-      <p>Translating that into mobile was the hardest single problem on the project.</p>
+      <p>Translating that into mobile was the hardest single problem on the project. The aim was the same structure on a small screen, not a reduced version of it.</p>
       <div class="tag is-mine">My decision</div>
       <p>Rather than defending the first direction, I used the rejections to understand how the client was thinking, and carried that into the next pass.</p>
     <figure class="shots">
@@ -849,6 +844,12 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
       <figcaption>Three mobile passes. The first two were rejected; the drill-down, which keeps one level visible at a time and a back arrow to the last, was approved.</figcaption>
     </figure>
+      <dl class="spec lbl">
+        <div><dt>Problem</dt><dd>Three levels of navigation had to fit on a phone without losing the way back.</dd></div>
+        <div><dt>Options</dt><dd>A dropdown menu, an accordion menu, and a drill-down menu.</dd></div>
+        <div class="own"><dt>Decision</dt><dd>The drill-down menu.</dd></div>
+        <div><dt>Why</dt><dd>It shows one level at a time with a back arrow to the last, so mobile follows the same persona, local nav, subcategory path as desktop.</dd></div>
+      </dl>
 
       <h4 class="subhead2">How the pattern translates</h4>
       <div class="model">
@@ -884,9 +885,9 @@ figcaption strong{color:var(--ink2);font-weight:700}
     </section>
 
     <section class="chapter" id="ch-visual">
-      <div class="chapter-no"><b>07</b>&nbsp;&nbsp;Visual Design</div>
+      <div class="chapter-no"><b>06</b>&nbsp;&nbsp;Bringing It Together</div>
       <h2 class="title">Three homepages before one system</h2>
-      <p>With the wireframes approved, we moved into visual design. Before settling anything, we built the same homepage three times so the client could compare like with like rather than react to adjectives.</p>
+      <p>With the structure and wireframes approved, we moved into visual design. Before settling anything, we built the same homepage three times so the client could compare like with like rather than react to adjectives.</p>
     <figure class="shots">
       <div class="trio bleed">
         <a class="trio-item" href="/images/ldp/vis-01-flat.jpg" target="_blank" rel="noopener noreferrer">
@@ -912,8 +913,16 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <div class="tag">Design trade-off</div>
       <p>The top of the page is deliberately marketing-led: few surfaces, large imagery, short copy. The density is saved for the screens where members do the work.</p>
 
+      <h4 class="subhead2">A system, not just a new look</h4>
+      <p>The visual work mattered less as a style and more as the thing that would keep a large product consistent once we stepped away.</p>
+      <ul class="article-list">
+        <li><strong>Consistency.</strong> One type scale and one set of color roles across every page and breakpoint.</li>
+        <li><strong>Room to grow.</strong> A new page starts from decisions already made, not from a blank file.</li>
+        <li><strong>Easier to build.</strong> Components stayed close to the Bootstrap set the build used, customized only where usability needed it.</li>
+      </ul>
+
       <h4 class="subhead2">Typography</h4>
-      <p>We had to balance <span class="mark">SEO requirements</span>, readability, and visual hierarchy.</p>
+      <p>We had to balance <span class="mark">SEO requirements</span>, readability, and visual hierarchy. One scale covers every breakpoint, so the hierarchy holds from desktop to phone.</p>
     <figure class="shots">
       <a href="/images/ldp/typography-system.jpg" target="_blank" rel="noopener noreferrer">
         <img src="/images/ldp/typography-system.jpg" width="1400" height="1091" loading="lazy" decoding="async" alt="The typography system: Avenir Next LT Pro across three weights, with a type scale from H1 to button text giving desktop, tablet and mobile sizes, line heights and usage for each style">
@@ -940,18 +949,65 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
     </section>
 
+    <section class="chapter" id="ch-constraints">
+      <div class="chapter-no"><b>07</b>&nbsp;&nbsp;Getting It Built</div>
+      <h2 class="title">Keeping the design moving while everything around it changed</h2>
+      <p>The hard part was not the interface. It was holding the structure steady while requirements, copy, the brand color and the delivery date all moved underneath it, and doing that with the people building it, not around them.</p>
+      <blockquote><p>Can we just start development with the wireframes and add the visual design later?</p></blockquote>
+    <figure class="shots meme">
+      <img src="/images/ldp/pressure-two-buttons.jpg" width="600" height="897" loading="lazy" decoding="async"
+           alt="The two-buttons meme: a sweating man hesitating over two red buttons, unable to pick between them">
+      <figcaption>Ship sooner, or keep the process. The pressure was real and the two options were framed as exclusive.</figcaption>
+    </figure>
+      <div class="cons">
+        <div class="con is-mine">
+          <h5>Development wanted to start early</h5>
+          <div class="con-r"><b>Constraint</b><span>Project managers and developers wanted to begin building while the design was still moving.</span></div>
+          <div class="con-r"><b>Risk</b><span>Wireframes were being read as finished design. Building against an unsettled design would have bought a few weeks and cost rework.</span></div>
+          <div class="con-r mine"><b>My response</b><span>As offshore design lead I held the sequence, and made the case for it to the people pushing against it.</span></div>
+          <div class="con-r"><b>Result</b><span>The process stayed intact: wireframes, approval, responsive, visual design, handoff.</span></div>
+        </div>
+        <div class="con">
+          <h5>Copy had to be settled before design</h5>
+          <div class="con-r"><b>Constraint</b><span>Because this is an insurance product, the client wanted copy approved ahead of the design.</span></div>
+          <div class="con-r"><b>Risk</b><span>In practice the two ran in parallel, and every copy change moved the wireframes again.</span></div>
+          <div class="con-r mine"><b>My response</b><span>I kept wireframes and visual direction progressing alongside the copy rather than waiting on it.</span></div>
+          <div class="con-r"><b>Result</b><span>Copy became part of the design process instead of a gate in front of it.</span></div>
+        </div>
+        <div class="con">
+          <h5>The build was tied to Bootstrap</h5>
+          <div class="con-r"><b>Constraint</b><span>Implementation was based on Bootstrap components, which set limits on what the UI could do.</span></div>
+          <div class="con-r"><b>Risk</b><span>Designing past the component set would have produced screens the team could not build as drawn.</span></div>
+          <div class="con-r mine"><b>My response</b><span>I worked with the developers to customize components only where usability needed it.</span></div>
+          <div class="con-r"><b>Result</b><span>Responsive behavior was built alongside the core experience rather than bolted on after.</span></div>
+        </div>
+      </div>
+      <div class="insight"><p>Instead of cutting design steps to meet the timeline, <span class="mark">we negotiated the process</span>.</p></div>
+
+      <h4 class="subhead2">Working with the developers</h4>
+      <div class="tag is-mine">My role</div>
+      <p>Visual approval was not the end. <span class="mark m2">We worked closely with developers during handoff</span> to make sure what got built matched what was designed.</p>
+      <div class="flow">
+        <div class="flow-step"><span class="flow-b">Design</span><p>Wireframes and visual design, approved stage by stage.</p></div>
+        <div class="flow-step is-mine"><span class="flow-b">Handoff</span><p>Walked the developers through the intent, not just the files.</p></div>
+        <div class="flow-step"><span class="flow-b">Component discussions</span><p>Bootstrap components customized together where usability needed it.</p></div>
+        <div class="flow-step is-mine"><span class="flow-b">Implementation review</span><p>Design reviews against the build, with usability testing running alongside.</p></div>
+        <div class="flow-step"><span class="flow-b">Iteration</span><p>Design reviews continued during production rather than ending at handoff.</p></div>
+      </div>
+    </section>
+
     <section class="chapter" id="ch-outcome">
-      <div class="chapter-no"><b>08</b>&nbsp;&nbsp;What Shipped</div>
-      <h2 class="title">Persona-based navigation, live in production</h2>
-      <p>It took several rounds of exploration, rejection and client feedback to get here.</p>
+      <div class="chapter-no"><b>08</b>&nbsp;&nbsp;Outcome</div>
+      <h2 class="title">A restructured platform, live in production</h2>
+      <p>It took several rounds of exploration, rejection and client feedback to get here. The result is one product organized around the people who use it, instead of around a decade of additions.</p>
       <h4 class="subhead">What shipped</h4>
       <ul class="ship">
-        <li><strong>Persona-based navigation</strong>, approved and running in production</li>
-        <li><strong>Responsive navigation</strong> across desktop and mobile, with the drill-down menu on small screens</li>
+        <li>A product structure built around <strong>members, providers and brokers</strong>, approved and running in production</li>
         <li>A restructured <strong>information architecture</strong> and a full page-by-page sitemap</li>
+        <li><strong>Responsive navigation</strong> across desktop and mobile, with the drill-down menu on small screens</li>
         <li>A <strong>type scale and color system</strong> with every token tied to a named role</li>
         <li>More efficient <strong>progress bars, forms and contextual information</strong> on long pages</li>
-        <li><strong>UX reviews continued through production</strong>, not stopped at handoff</li>
+        <li><strong>Design reviews continued through production</strong>, not stopped at handoff</li>
       </ul>
     <div class="showcase">
       <div class="sc-cols">
@@ -995,17 +1051,6 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
     </div>
 
-      <h4 class="subhead2">Working with the developers</h4>
-      <div class="tag is-mine">My role</div>
-      <p>Visual approval was not the end. <span class="mark m2">We worked closely with developers during handoff</span> to make sure what got built matched what was designed.</p>
-      <div class="flow">
-        <div class="flow-step"><span class="flow-b">Design</span><p>Wireframes and visual design, approved stage by stage.</p></div>
-        <div class="flow-step is-mine"><span class="flow-b">Handoff</span><p>Walked the developers through the intent, not just the files.</p></div>
-        <div class="flow-step"><span class="flow-b">Component discussions</span><p>Bootstrap components customized together where usability needed it.</p></div>
-        <div class="flow-step is-mine"><span class="flow-b">Implementation review</span><p>Design reviews against the build, with usability testing running alongside.</p></div>
-        <div class="flow-step"><span class="flow-b">Iteration</span><p>UX reviews continued during production rather than ending at handoff.</p></div>
-      </div>
-
       <h4 class="subhead2">How we would measure success</h4>
       <p>The engagement did not give us access to post-launch analytics. If it had, these are the measures I would have held the design to.</p>
       <div class="measures">
@@ -1020,11 +1065,12 @@ figcaption strong{color:var(--ink2);font-weight:700}
     </section>
 
     <section class="chapter" id="ch-reflection">
-      <div class="chapter-no"><b>&middot;</b>&nbsp;&nbsp;Reflection</div>
+      <div class="chapter-no"><b>&middot;</b>&nbsp;&nbsp;Learnings</div>
       <h2 class="title">What I took from it</h2>
       <p>Settle the structure early, and say the reasoning out loud. Most of the arguments on this project were winnable only because the card sort had already answered them.</p>
+      <p>Constraints are part of the brief. Copy approvals, Bootstrap and a moving brand color shaped the product as much as the research did. Treating them as inputs, not interruptions, kept the work moving.</p>
       <div class="inline-note">The balance that ran through all of it: <strong>user needs, business requirements, technical constraints and deadlines.</strong></div>
-      <p>As Senior UX Designer and Offshore Design Lead, it pushed my leadership, stakeholder management and design-management as much as my craft.</p>
+      <p>As Senior Product Designer and Offshore Design Lead, it pushed my leadership, stakeholder management and design management as much as my craft.</p>
       <blockquote><p>A roller coaster, but a useful one.</p></blockquote>
     </section>
 

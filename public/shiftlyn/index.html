@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shiftlyn &middot; Case Study</title>
 <meta name="description" content="A product design case study: taking Shiftlyn, an AI readiness and upskilling product, from idea to MVP to product.">
+<link rel="preload" href="/cs/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/cs/fonts/general-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/cs/system.css">
 <link rel="stylesheet" href="/cs/navbar.css">
 <style>
@@ -34,20 +36,21 @@
 .w{max-width:var(--wide);margin:0;padding:0}
 
 /* ---------- part divider ----------
-   Groups the seventeen chapters into a four-part arc. Heavier rule than
-   a chapter, so the reader feels the act change. */
-.part{margin:var(--s9) 0 0;padding-top:var(--s4);border-top:2px solid var(--ink)}
+   Groups the seventeen chapters into a four-part arc. Each act opens on a
+   band of the project colour, an echo of the cover, so the reader feels
+   the act change. */
+.part{margin:var(--s9) 0 0;padding:var(--s6) clamp(24px,3vw,40px);background:var(--accent);color:#fff}
 .part-inner{display:flex;align-items:baseline;gap:var(--s4);flex-wrap:wrap}
 .part-no{
   font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent);flex-shrink:0;
+  color:#fff;flex-shrink:0;
 }
 .part-title{
-  font-size:clamp(26px,3.6vw,38px);font-weight:700;color:var(--ink);
-  letter-spacing:-0.025em;line-height:1;flex-shrink:0;margin:0;max-width:none;
+  font-family:var(--head);font-size:clamp(34px,4.6vw,60px);font-weight:800;color:#fff;
+  letter-spacing:-0.035em;line-height:1;flex-shrink:0;margin:0;max-width:none;
 }
 .part-desc{
-  font-size:14.5px;color:var(--ink3);line-height:1.5;max-width:340px;
+  font-size:14.5px;color:#fff;line-height:1.5;max-width:340px;
   margin:0 0 0 auto;text-align:right;
 }
 /* the chapter that opens a part already has the part rule above it */
@@ -636,6 +639,7 @@ html.js-motion :is(
   <main class="article">
   <div class="article-in">
 
+    <header class="masthead">
     <div class="kicker">
       <i></i><span>Shiftlyn</span><span class="sep">&middot;</span>
       <span>Product Design Case Study</span><span class="sep">&middot;</span>
@@ -645,13 +649,7 @@ html.js-motion :is(
 
     <h1>Building an AI Upskilling Platform</h1>
     <p class="lead">From idea to MVP to product: <strong>Shiftlyn</strong> helps people understand their AI readiness and find the right path to upskill.</p>
-
-    <div class="meta">
-      <div><b>Role</b><span>UX Designer &amp; Product Strategist</span></div>
-      <div><b>Stage</b><span>Idea &rarr; MVP &rarr; Product</span></div>
-      <div><b>Status</b><span>In progress</span></div>
-      <div><b>Read time</b><span>~14 min</span></div>
-    </div>
+    </header>
 
     <!-- COVER -->
     <div class="w">
@@ -665,6 +663,14 @@ html.js-motion :is(
       </div>
     </div>
     </div>
+
+    <div class="meta">
+      <div><b>Role</b><span>UX Designer &amp; Product Strategist</span></div>
+      <div><b>Stage</b><span>Idea &rarr; MVP &rarr; Product</span></div>
+      <div><b>Status</b><span>In progress</span></div>
+      <div><b>Read time</b><span>~14 min</span></div>
+    </div>
+
 <!-- PART 01 -->
 <div class="w"><div class="part" id="p1">
   <div class="part-inner">

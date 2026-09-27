@@ -8,6 +8,8 @@
 <meta property="og:title" content="Redesigning an AI-built visa platform before launch">
 <meta property="og:description" content="The client asked me to polish the UI. It turned into a full UX redesign of an AI visa platform.">
 <meta property="og:type" content="article">
+<link rel="preload" href="/cs/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/cs/fonts/general-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/cs/system.css">
 <link rel="stylesheet" href="/cs/navbar.css">
 <!-- The Fig. 6 board is a third-party embed deep in the page. Warming the
@@ -400,6 +402,28 @@
    =================================================================== */
 .clips{border:0;background:none}
 
+/* Fig. 1 reuses the same tabs: before and after, one page at a time,
+   across the full figure width and taller than a paired frame could be. */
+.glimpse .scrollshots{grid-template-columns:minmax(0,1fr);max-width:none}
+.glimpse .clips-panel{margin-top:0}
+.glimpse .clips-tab{flex-direction:column;gap:3px;padding:12px 14px}
+.glimpse-sub{
+  font-size:12px;font-weight:400;letter-spacing:-0.002em;text-transform:none;
+  color:var(--ink3);
+}
+.glimpse .clips-tab[aria-selected="true"] .glimpse-sub{color:var(--ink2)}
+.glimpse .scrollshot-frame{height:min(88vh,980px);border-top:0}
+@media(max-width:860px){
+  .glimpse .scrollshot-frame{height:min(78vh,680px)}
+}
+/* the live After page: the iframe scrolls itself, so the frame does not */
+.live-frame{overflow:hidden;background:#fff}
+.live-frame iframe{display:block;width:100%;height:100%;border:0;transform-origin:0 0}
+.glimpse figcaption a{color:var(--accent)}
+@media(max-width:560px){
+  .glimpse-sub{display:none}
+}
+
 .clips-tabs{
   display:flex;flex-wrap:wrap;
   border-bottom:1px solid var(--rule);
@@ -749,18 +773,16 @@
 /* ---------- masthead title ----------
    Written to break in two: the claim, then what it actually means. The
    break is explicit so it never lands mid-phrase, and the size steps down
-   from the system h1 so the second, longer line still holds one line on a
-   laptop instead of ragging into three. */
-.masthead-title{
-  font-size:clamp(23px,2.72vw,34px);
-  line-height:1.16;
-  letter-spacing:-0.022em;
-  max-width:none;
+   from the cover's title size because this one is two sentences long. */
+.masthead h1.masthead-title{
+  font-size:clamp(30px,3.6vw,48px);
+  line-height:1.04;
+  max-width:26ch;
 }
 @media(max-width:760px){
   /* no width left to hold the second line whole; the break stays at the
      colon and the rest wraps on its own */
-  .masthead-title{font-size:clamp(22px,5.4vw,27px);line-height:1.22}
+  .masthead h1.masthead-title{font-size:clamp(26px,6.4vw,32px);line-height:1.1}
 }
 </style>
 <script>
@@ -863,6 +885,7 @@
   <main class="article">
   <div class="article-in">
 
+    <header class="masthead">
     <div class="kicker">
       <i></i><span>AI Visa Platform</span><span class="sep">&middot;</span>
       <span>Product &amp; UX</span><span class="sep">&middot;</span>
@@ -872,6 +895,7 @@
 
     <h1 class="masthead-title">From AI-Designed to Human-Refined:<br>Redesigning Visa Evaluation for better user experience</h1>
     <p class="lead">An AI-built MVP for visa applicants and attorneys, redesigned in the three weeks before launch.</p>
+    </header>
 
     <!-- Masthead image: the shipped hero, above the fold, so the work is the
          first thing on the page rather than the first thing after the metadata. -->
@@ -903,15 +927,22 @@
     </div>
 
     <!-- The whole page, at full length. Shrinking either of these to fit
-         would hide the one thing worth seeing: how far you have to scroll. -->
+         would hide the one thing worth seeing: how far you have to scroll.
+         One page at a time, at full width, behind a Before / After tab. -->
     <h3 class="fig-head">A glimpse of the product, before and after</h3>
-    <figure class="full scrollfig">
+    <figure class="full scrollfig glimpse">
+    <div class="clips-tabs" role="tablist" aria-label="Before and after">
+      <button class="clips-tab" type="button" role="tab" id="tab-before" aria-controls="glimpse-before" aria-selected="true" tabindex="0">
+        <span class="clips-tab-label">Before</span>
+        <span class="glimpse-sub">What the client shared with us</span>
+      </button>
+      <button class="clips-tab" type="button" role="tab" id="tab-after" aria-controls="glimpse-after" aria-selected="false" tabindex="-1">
+        <span class="clips-tab-label">After</span>
+        <span class="glimpse-sub">The same content, after the redesign</span>
+      </button>
+    </div>
     <div class="scrollshots">
-      <figure class="scrollshot">
-        <div class="scrollshot-hd">
-          <b>Before</b>
-          <span>What the client shared with us</span>
-        </div>
+      <figure class="scrollshot clips-panel" role="tabpanel" id="glimpse-before" aria-labelledby="tab-before">
         <div class="scrollshot-frame" tabindex="0" role="group" aria-label="Full-page screenshot of the original product, scrollable">
           <img src="/images/visa/petitioniq-before-full.webp" width="1400" height="10533" loading="lazy" decoding="async"
                alt="The original product as a single full-page screenshot: a pale hero reading Immigration Intelligence Before the Petition Is Written beside stacked EB-1A, EB-2 NIW and O-1A cards, then a long run of evenly weighted panels, a wide case-type table, pricing, testimonials, and an unstyled question-and-answer block near the foot of the page">
@@ -922,22 +953,18 @@
         </div>
       </figure>
 
-      <figure class="scrollshot is-after">
-        <div class="scrollshot-hd">
-          <b>After</b>
-          <span>The same content, after the redesign</span>
-        </div>
-        <div class="scrollshot-frame" tabindex="0" role="group" aria-label="Full-page screenshot of the redesigned product, scrollable">
-          <img src="/images/visa/petitioniq-after-full.webp" width="1400" height="14332" loading="lazy" decoding="async"
-               alt="The redesigned product as a single full-page screenshot: a navy hero reading Immigration intelligence before the petition is written, a strip of supported immigration categories, a portrait band, alternating explanation sections, a full pathway table, pricing, outcomes, and a collapsed Questions answered section above the footer">
-          <div class="scrollshot-hint" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
-            Scroll
-          </div>
+      <figure class="scrollshot is-after clips-panel" role="tabpanel" id="glimpse-after" aria-labelledby="tab-after">
+        <!-- The live redesign rather than a screenshot of it. It renders at a
+             desktop width and is scaled down to the frame by the tab script,
+             so it reads like the page, not like a squeezed tablet layout. -->
+        <div class="scrollshot-frame live-frame">
+          <iframe src="https://petitioniq-staging.up.railway.app/" loading="lazy"
+                  title="The redesigned PetitionIQ.ai site, live and scrollable"
+                  referrerpolicy="no-referrer"></iframe>
         </div>
       </figure>
     </div>
-    <figcaption><b>Fig. 1</b> &nbsp;The page we started with and the page we shipped. Scroll either frame to see the full page.</figcaption>
+    <figcaption><b>Fig. 1</b> &nbsp;The page we started with and the page we shipped. The After tab is the live site: scroll and click through it, or <a href="https://petitioniq-staging.up.railway.app/" target="_blank" rel="noopener noreferrer">open it in a new tab</a>.</figcaption>
     </figure>
 
     <div class="col">
@@ -1588,10 +1615,10 @@
    script can promote one to a real src. The <noscript> beside it hands
    over four direct links, which is the honest fallback.
    ------------------------------------------------------------------- */
-(function () {
+/* The same tabs also drive the before/after pages in Fig. 1, which have
+   no video, so load() simply finds nothing to wire up there. */
+Array.prototype.forEach.call(document.querySelectorAll('.clips, .glimpse'), function (root) {
   'use strict';
-  var root = document.querySelector('.clips');
-  if (!root) return;
 
   var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
   var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
@@ -1642,6 +1669,35 @@
   });
 
   select(0, false);
+});
+
+/* The live After page in Fig. 1 renders at a 1440px desktop width and is
+   scaled down to whatever the frame is. Below 760px there is no point
+   shrinking a desktop page that far, so it shows the site's own mobile
+   layout at natural size instead. */
+(function () {
+  'use strict';
+  var frame = document.querySelector('.live-frame');
+  if (!frame || !window.ResizeObserver) return;
+  var iframe = frame.querySelector('iframe');
+  var DESKTOP = 1440;
+
+  function fit() {
+    var w = frame.clientWidth, h = frame.clientHeight;
+    if (!w) return;   /* tab hidden: nothing to measure yet */
+    if (w < 760) {
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.transform = '';
+      return;
+    }
+    var s = w / DESKTOP;
+    iframe.style.width = DESKTOP + 'px';
+    iframe.style.height = (h / s) + 'px';
+    iframe.style.transform = 'scale(' + s + ')';
+  }
+
+  new ResizeObserver(fit).observe(frame);
 })();
 </script>
 </body>
