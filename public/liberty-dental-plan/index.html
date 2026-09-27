@@ -293,7 +293,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
 /* three directions side by side - three specimens pinned up, not a panel
    of cards. The frames are identical so only the design differs. */
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5);margin:var(--s5) 0 var(--s3)}
-.trio-item,.baf-item{display:block;text-decoration:none}
+.trio-item{display:block;text-decoration:none}
 .trio-lbl{
   display:flex;align-items:baseline;gap:8px;
   font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
@@ -302,28 +302,13 @@ figcaption strong{color:var(--ink2);font-weight:700}
 .trio-lbl b{color:var(--ink4);font-weight:700;letter-spacing:0}
 .trio-note{font-size:13.5px;line-height:1.6;color:var(--ink2);margin:0 0 var(--s3);letter-spacing:-0.002em}
 
-/* before / after: identical frames, so the only thing changing is the
-   thing being compared */
-.baf{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);margin:var(--s5) 0 var(--s3)}
-.baf .baf-frame{aspect-ratio:17/8}
-.baf-lbl{
-  display:flex;align-items:baseline;gap:9px;
-  font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-0.008em;margin-bottom:10px;
-}
-.baf-lbl b{
-  flex-shrink:0;font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-  padding:3px 8px;border:1px solid var(--accent);color:var(--accent);
-}
-.baf-item.is-old .baf-lbl{color:var(--ink3)}
-.baf-item.is-old .baf-lbl b{border-color:var(--rule);color:var(--ink4)}
-.trio-frame,.baf-frame{
+.trio-frame{
   display:block;overflow:hidden;border:1px solid var(--rule);background:var(--paper2);
   aspect-ratio:5/8;
 }
-.trio-frame img,.baf-frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+.trio-frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
 
 @media(max-width:1100px){
-  .baf{grid-template-columns:1fr;gap:var(--s5)}
   .trio{grid-template-columns:1fr;gap:var(--s6);width:100%}
   .trio-frame{aspect-ratio:4/5}
 }
@@ -575,20 +560,6 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <span class="chip">Developer collaboration</span>
     </div>
 
-      <h4 class="subhead2">Before and after</h4>
-    <figure class="shots bleed">
-      <div class="baf">
-        <a class="baf-item is-old" href="/images/ldp/before-home.jpg" target="_blank" rel="noopener noreferrer">
-          <div class="baf-lbl"><b>Before</b>The legacy homepage</div>
-          <span class="baf-frame"><img src="/images/ldp/before-home.jpg" width="1008" height="474" loading="lazy" decoding="async" alt="The legacy homepage: a utility strip, a purple brand bar, a navigation row mixing audiences with products, a promotional banner, and plan tiles over the hero photograph"></span>
-        </a>
-        <a class="baf-item" href="/images/ldp/live-homepage-hero.jpg" target="_blank" rel="noopener noreferrer">
-          <div class="baf-lbl"><b>After</b>The shipped product</div>
-          <span class="baf-frame"><img src="/images/ldp/live-homepage-hero.jpg" width="1600" height="753" loading="lazy" decoding="async" alt="The shipped homepage: a thin language and log-in strip above one navy navigation row with the three personas, search and Find a dentist, over a full-bleed photograph of three generations of a family"></span>
-        </a>
-      </div>
-      <figcaption>The homepage before and after the redesign, both cropped at the fold.</figcaption>
-    </figure>
 
     <section class="chapter" id="ch-challenge">
       <div class="chapter-no"><b>01</b>&nbsp;&nbsp;The Problem</div>

@@ -55,18 +55,6 @@ const GLYPHS = {
     '##.......',
     '#........',
   ],
-  // Magnifying glass - user research.
-  magnifier: [
-    '.####....',
-    '#....#...',
-    '#....#...',
-    '#....#...',
-    '#....#...',
-    '.####....',
-    '....##...',
-    '.....##..',
-    '......##.',
-  ],
   // Bullseye - user-centered design.
   target: [
     '..#####..',
@@ -88,7 +76,6 @@ const SKILLS = [
   { label: 'Design Thinking', glyph: 'pencil', score: 4.5 },
   { label: 'User-Centered Design', glyph: 'target', score: 4.5 },
   { label: 'Product Thinking', glyph: 'bulb', score: 4.5 },
-  { label: 'User Research', glyph: 'magnifier', score: 4 },
   { label: 'Collaboration', glyph: 'people', score: 5 },
   { label: 'Front-End Coding', glyph: 'terminal', score: 4 },
 ];
@@ -138,12 +125,26 @@ export default function About() {
       <div className="about-inner">
         <Reveal as="div" className="about-body" x={-28} y={0} delay={0.05}>
           <p>
-            Product Designer with 5+ years turning messy problems into clear,
-            scalable, system-driven interfaces.
+            I&rsquo;m <span className="name-mark">Shanawaz</span>, a{' '}
+            <strong className="about-hl">Product Designer with 5+ years of experience</strong>.
+            I&rsquo;ve been into design and creative work since college, always
+            curious about making things, experimenting with ideas, and turning
+            them into something real.
           </p>
           <p>
-            Engineering roots, so I think in systems, work close to the build,
-            and I&rsquo;m currently exploring how AI speeds up the UX workflow.
+            Over time, that curiosity grew into a{' '}
+            <strong className="about-hl">product mindset</strong>. I like
+            thinking in systems and being involved{' '}
+            <strong className="about-hl">from the first idea to production</strong>.
+            With a technical background and experience with code, I enjoy{' '}
+            <strong className="about-hl">working closely with engineering</strong>{' '}
+            and understanding what happens beyond Figma.
+          </p>
+          <p>
+            I put <strong className="about-hl">collaboration at the center</strong>{' '}
+            of how I work. I like sharing ideas, challenging each other, and
+            figuring things out together. At the core, I&rsquo;m still{' '}
+            <strong className="about-hl">a creative guy who loves building things</strong>.
           </p>
           <Stagger as="ul" className="skills" stagger={0.07} amount={0.3}>
             {SKILLS.map((skill) => (
