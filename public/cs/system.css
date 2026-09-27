@@ -79,13 +79,28 @@
   --line:     var(--rule2);
   --line2:    var(--rule);
 
-  /* Semantic status colours for data components. Muted to sit inside
-     an editorial page rather than compete with the accent. */
-  --pos:   #2f6a4f;
-  --neg:   #a4332a;
-  --warn:  #8a6320;
-  --green: var(--pos);
-  --amber: var(--warn);
+  /* Semantic status colours: the same on every case study, whatever the
+     project accent, so "shipped" never reads red on one page and navy on
+     another. Each has a text shade (AA on white and on its own soft
+     tint), a soft tint for backgrounds, and a line for borders. */
+  --success:      #2f6a4f;
+  --success-soft: #eaf4ee;
+  --success-line: #bfdccb;
+  --error:        #a4332a;
+  --error-soft:   #fbeeec;
+  --error-line:   #efc6c1;
+  --pending:      #8a6320;
+  --pending-soft: #fbf4e4;
+  --pending-line: #ebd6a8;
+  --info:         #2d5a8c;
+  --info-soft:    #ecf2f9;
+  --info-line:    #c2d4e9;
+  /* older names, kept so existing components pick up the palette */
+  --pos:   var(--success);
+  --neg:   var(--error);
+  --warn:  var(--pending);
+  --green: var(--success);
+  --amber: var(--pending);
 
   /* --- TYPE -------------------------------------------------------
      Two voices. --head (Manrope) sets every heading, the pull quote and
@@ -213,13 +228,14 @@ body{
 }
 .rail a.raillink:hover{color:var(--ink)}
 .rail a.raillink:hover .n{color:var(--ink3)}
-/* Active state: the accent, plus a dot in the margin. Small enough to
-   read as a marker rather than as a highlight. */
+/* Active state: the accent, a soft tint, and a 2px bar that runs the full
+   height of the row on its left edge. The bar belongs to the row, so it
+   reads as "you are here" instead of a stray mark beside the number. */
 .rail a.raillink.active{color:var(--accent);font-weight:700;background:var(--accent-soft)}
 .rail a.raillink.active .n{color:var(--accent)}
 .rail a.raillink.active::before{
-  content:'';position:absolute;left:0;top:14px;
-  width:5px;height:5px;border-radius:50%;background:var(--accent);
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:var(--accent);
 }
 .rail-foot{
   font-size:11px;line-height:1.6;color:var(--ink4);letter-spacing:.005em;
@@ -257,9 +273,9 @@ body{
 
 h1{
   font-family:var(--head);
-  font-size:clamp(33px,4.8vw,52px);font-weight:800;line-height:1.04;
+  font-size:clamp(32px,3.8vw,52px);font-weight:800;line-height:1.04;
   letter-spacing:-0.035em;color:var(--ink);
-  margin:var(--s5) 0 var(--s4);max-width:30ch;text-wrap:balance;
+  margin:var(--s5) 0 var(--s4);max-width:28ch;text-wrap:balance;
 }
 .standfirst,.lead{
   font-family:var(--sans);
@@ -281,8 +297,22 @@ h1{
    marks its cover .is-flat, which closes the panel normally instead.
    Accents are chosen to hold white text at AA or better.
    =================================================================== */
+/* The panel is the accent with a little depth: a film of grain, a faint
+   glow of a lighter shade in the top-right corner, and a slow fall to a
+   slightly darker shade towards the bottom. The text side stays at the
+   accent or darker, so white type keeps the contrast it had on flat
+   colour. The grain is one small SVG tile, blended so it reads as
+   texture in the colour rather than as grey specks on top of it. */
 .masthead{
-  background:var(--accent);color:#fff;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E");
+  background-color:var(--accent);
+  background-image:
+    var(--grain),
+    radial-gradient(ellipse 75% 95% at 100% 0%, color-mix(in srgb, var(--accent), #fff 26%) 0%, transparent 74%),
+    linear-gradient(155deg, var(--accent) 15%, color-mix(in srgb, var(--accent), #000 40%) 100%);
+  background-size:180px 180px, 100% 100%, 100% 100%;
+  background-blend-mode:soft-light, normal, normal;
+  color:#fff;
   margin:calc(-1 * var(--s8)) calc(-1 * var(--pad)) 0 calc(-1 * clamp(28px,4vw,56px));
   padding:var(--s7) clamp(28px,4vw,56px) 132px;
 }
@@ -291,9 +321,9 @@ h1{
 .masthead .kicker .sep,.masthead .kicker .dot,
 .masthead .dateline .sep,.masthead .dateline .dot{color:rgba(255,255,255,.55)}
 .masthead .kicker > i:first-child{background:#fff}
-.masthead h1{
-  color:#fff;font-size:clamp(38px,5.4vw,70px);line-height:.98;max-width:24ch;
-}
+/* Same size, leading and measure as the plain h1: every case study's
+   title reads at one size, whether or not it sits on a cover. */
+.masthead h1{color:#fff}
 .masthead .lead,.masthead .standfirst{color:#fff}
 .masthead .lead strong,.masthead .standfirst strong{color:#fff}
 .masthead ::selection{background:#fff;color:var(--accent)}
@@ -670,9 +700,30 @@ figure.full,figure.bleed,.shots{background:var(--paper2);padding:clamp(16px,2.6v
 /* a live-product marker, used where a case study shows shipped work */
 .hero-live,.badge-live{
   display:inline-flex;align-items:center;gap:6px;
-  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);
+  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--success);background:var(--success-soft);border:1px solid var(--success-line);
+  padding:4px 9px;border-radius:3px;
 }
-.hero-live i,.badge-live i{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.hero-live i,.badge-live i{width:6px;height:6px;border-radius:50%;background:var(--success);flex-shrink:0}
+
+/* ---------- status pill ----------
+   One small label for every outcome a case study reports: what shipped
+   or was chosen, what was rejected or broke, what is still pending, and
+   neutral notes. Soft tint, darker text, a dot to carry it without
+   relying on colour alone -- the word itself always says the status. */
+.status{
+  display:inline-flex;align-items:center;gap:6px;vertical-align:middle;
+  font-family:var(--sans);font-size:10px;font-weight:700;line-height:1.2;
+  letter-spacing:.11em;text-transform:uppercase;white-space:nowrap;
+  padding:4px 9px;border:1px solid var(--rule);border-radius:3px;
+  color:var(--ink3);background:var(--paper2);
+}
+.status::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.status svg{display:none}
+.status.is-success{color:var(--success);background:var(--success-soft);border-color:var(--success-line)}
+.status.is-error  {color:var(--error);  background:var(--error-soft);  border-color:var(--error-line)}
+.status.is-pending{color:var(--pending);background:var(--pending-soft);border-color:var(--pending-line)}
+.status.is-info   {color:var(--info);   background:var(--info-soft);   border-color:var(--info-line)}
 
 /* ===================================================================
    COLOPHON / FOOTER
@@ -821,7 +872,7 @@ html.js-motion .article-in :is(
 
 @media(max-width:760px){
   body{font-size:16px}
-  h1{max-width:none}
+  h1{max-width:none;font-size:clamp(28px,7.6vw,34px);line-height:1.1}
   .meta,.facts{grid-template-columns:1fr 1fr;gap:var(--s4)}
   .stats{grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4)}
   .ba{grid-template-columns:1fr;gap:var(--s4)}

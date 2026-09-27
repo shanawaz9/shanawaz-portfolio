@@ -154,9 +154,10 @@ p.bench-note{font-size:13px;line-height:1.6;color:var(--ink3);margin:0 0 var(--s
 .opt-v{
   margin-top:auto;display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
   font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-  padding:4px 9px;border:1px solid var(--rule);border-radius:2px;color:var(--ink4);
+  padding:4px 9px;border:1px solid var(--error-line);border-radius:3px;
+  color:var(--error);background:var(--error-soft);
 }
-.opt.is-approved .opt-v{border-color:var(--accent);color:var(--accent)}
+.opt.is-approved .opt-v{border-color:var(--success-line);color:var(--success);background:var(--success-soft)}
 .opt-v svg{width:11px;height:11px;flex-shrink:0}
 
 .flow{margin:var(--s5) 0;border-left:1px solid var(--rule);padding-left:var(--s4);max-width:var(--measure)}
@@ -215,6 +216,9 @@ p.bench-note{font-size:13px;line-height:1.6;color:var(--ink3);margin:0 0 var(--s
   color:var(--ink4);padding-top:3px;
 }
 .con.is-mine .con-r.mine b{color:var(--accent)}
+/* the risk and the result carry the status colours */
+.con-r.is-risk b{color:var(--error)}
+.con-r.is-result b{color:var(--success)}
 .con-r span{font-size:14.5px;line-height:1.6;color:var(--ink2);letter-spacing:-0.002em}
 .con-r.mine span{color:var(--ink)}
 .con-r span strong{color:var(--ink);font-weight:700}
@@ -280,9 +284,10 @@ figcaption strong{color:var(--ink2);font-weight:700}
 .variant-tick,.variant-x{
   display:inline-flex;align-items:center;gap:6px;margin-left:auto;
   border:1px solid var(--rule);padding:3px 9px;
-  font-size:10px;letter-spacing:.11em;color:var(--ink4);
+  font-size:10px;letter-spacing:.11em;border-radius:3px;
+  color:var(--error);background:var(--error-soft);border-color:var(--error-line);
 }
-.variant-tick{border-color:var(--accent);color:var(--accent)}
+.variant-tick{border-color:var(--success-line);color:var(--success);background:var(--success-soft)}
 .variant-tick svg{width:11px;height:11px;flex-shrink:0}
 
 /* three directions side by side - three specimens pinned up, not a panel
@@ -963,23 +968,23 @@ figcaption strong{color:var(--ink2);font-weight:700}
         <div class="con is-mine">
           <h5>Development wanted to start early</h5>
           <div class="con-r"><b>Constraint</b><span>Project managers and developers wanted to begin building while the design was still moving.</span></div>
-          <div class="con-r"><b>Risk</b><span>Wireframes were being read as finished design. Building against an unsettled design would have bought a few weeks and cost rework.</span></div>
+          <div class="con-r is-risk"><b>Risk</b><span>Wireframes were being read as finished design. Building against an unsettled design would have bought a few weeks and cost rework.</span></div>
           <div class="con-r mine"><b>My response</b><span>As offshore design lead I held the sequence, and made the case for it to the people pushing against it.</span></div>
-          <div class="con-r"><b>Result</b><span>The process stayed intact: wireframes, approval, responsive, visual design, handoff.</span></div>
+          <div class="con-r is-result"><b>Result</b><span>The process stayed intact: wireframes, approval, responsive, visual design, handoff.</span></div>
         </div>
         <div class="con">
           <h5>Copy had to be settled before design</h5>
           <div class="con-r"><b>Constraint</b><span>Because this is an insurance product, the client wanted copy approved ahead of the design.</span></div>
-          <div class="con-r"><b>Risk</b><span>In practice the two ran in parallel, and every copy change moved the wireframes again.</span></div>
+          <div class="con-r is-risk"><b>Risk</b><span>In practice the two ran in parallel, and every copy change moved the wireframes again.</span></div>
           <div class="con-r mine"><b>My response</b><span>I kept wireframes and visual direction progressing alongside the copy rather than waiting on it.</span></div>
-          <div class="con-r"><b>Result</b><span>Copy became part of the design process instead of a gate in front of it.</span></div>
+          <div class="con-r is-result"><b>Result</b><span>Copy became part of the design process instead of a gate in front of it.</span></div>
         </div>
         <div class="con">
           <h5>The build was tied to Bootstrap</h5>
           <div class="con-r"><b>Constraint</b><span>Implementation was based on Bootstrap components, which set limits on what the UI could do.</span></div>
-          <div class="con-r"><b>Risk</b><span>Designing past the component set would have produced screens the team could not build as drawn.</span></div>
+          <div class="con-r is-risk"><b>Risk</b><span>Designing past the component set would have produced screens the team could not build as drawn.</span></div>
           <div class="con-r mine"><b>My response</b><span>I worked with the developers to customize components only where usability needed it.</span></div>
-          <div class="con-r"><b>Result</b><span>Responsive behavior was built alongside the core experience rather than bolted on after.</span></div>
+          <div class="con-r is-result"><b>Result</b><span>Responsive behavior was built alongside the core experience rather than bolted on after.</span></div>
         </div>
       </div>
       <div class="insight"><p>Instead of cutting design steps to meet the timeline, <span class="mark">we negotiated the process</span>.</p></div>
@@ -1061,7 +1066,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
         <span>Search used as a fallback, not a first resort</span>
         <span>Component consistency across shipped pages</span>
       </div>
-      <p class="bench-note">Proposed measures, not results from this project.</p>
+      <p class="bench-note"><span class="status is-pending">Proposed</span>&nbsp; These are measures to track, not results from this project.</p>
     </section>
 
     <section class="chapter" id="ch-reflection">

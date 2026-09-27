@@ -384,15 +384,15 @@ footer{margin-top:var(--s9);padding-top:var(--s4);border-top:1px solid var(--ink
 .fc-jumble{display:flex;flex-wrap:wrap;gap:8px;padding:18px;border:1.5px dashed var(--line2);border-radius:2px;background:var(--bg2)}
 .fc-chip-flat{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:2px;border:1px dashed var(--line2);background:var(--bg);font-size:11.5px;font-weight:600;color:var(--ink3)}
 .fc-chip-flat .icon{width:13px;height:13px;flex-shrink:0}
-.fc-warn{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--red);font-weight:500}
+.fc-warn{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--error);font-weight:500;background:var(--error-soft);border:1px solid var(--error-line);border-radius:3px;padding:9px 12px}
 .fc-warn .icon{width:15px;height:15px;flex-shrink:0}
 
 .fc-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 4px}
 .fc-node{display:flex;align-items:center;gap:7px;padding:10px 14px;border-radius:2px;border:1.5px solid var(--line);background:var(--bg);font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}
 .fc-node .icon{width:14px;height:14px;color:var(--ink4);flex-shrink:0}
-.fc-node--gate{border-color:rgba(193,50,31,.4);background:rgba(193,50,31,.045)}
-.fc-node--gate .icon{color:var(--red)}
-.fc-node--end{border-color:rgba(30,110,67,.4);background:var(--gbg);color:var(--green)}
+.fc-node--gate{border-color:var(--pending-line);background:var(--pending-soft)}
+.fc-node--gate .icon{color:var(--pending)}
+.fc-node--end{border-color:var(--success-line);background:var(--success-soft);color:var(--success)}
 .fc-node--end .icon{color:var(--green)}
 .fc-arrow{color:var(--ink4);flex-shrink:0;display:flex;align-items:center}
 .fc-arrow .icon{width:13px;height:13px}
@@ -419,12 +419,12 @@ footer{margin-top:var(--s9);padding-top:var(--s4);border-top:1px solid var(--ink
 .tbl td:last-child,.tbl th:last-child{border-right:none}
 .tbl tr:last-child td{border-bottom:none}
 .tbl td:first-child{font-weight:600;color:var(--ink);font-size:13px;white-space:nowrap}
-.tbl tbody tr:last-child{background:var(--gbg)}
+.tbl tbody tr:last-child{background:var(--success-soft)}
 .tbl tbody tr:last-child td:first-child{color:var(--green)}
 .tbl-tag{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink4);border:1px solid var(--line);border-radius:2px;padding:2px 7px;margin-left:6px;vertical-align:middle;white-space:nowrap}
 
 .risk,.fit{font-weight:700}
-.risk-high,.fit-bad{color:var(--red)}
+.risk-high,.fit-bad{color:var(--error)}
 .risk-med,.fit-mid{color:var(--amber)}
 .risk-low,.fit-good{color:var(--green)}
 .risk-lowest,.fit-best{color:var(--green);font-weight:800}
@@ -667,7 +667,7 @@ html.js-motion :is(
     <div class="meta">
       <div><b>Role</b><span>UX Designer &amp; Product Strategist</span></div>
       <div><b>Stage</b><span>Idea &rarr; MVP &rarr; Product</span></div>
-      <div><b>Status</b><span>In progress</span></div>
+      <div><b>Status</b><span><span class="status is-pending">In progress</span></span></div>
       <div><b>Read time</b><span>~14 min</span></div>
     </div>
 
