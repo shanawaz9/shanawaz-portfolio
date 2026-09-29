@@ -17,6 +17,10 @@
       "destination": "/liberty-dental-plan/index.html"
     },
     {
+      "source": "/archive/shiftlyn-v1",
+      "destination": "/archive/shiftlyn-v1/index.html"
+    },
+    {
       "source": "/shiftlyn",
       "destination": "/shiftlyn/index.html"
     }

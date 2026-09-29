@@ -10,3 +10,6 @@ Disallow: /liberty-dental-plan
 Disallow: /johnson-and-johnson
 Disallow: /confidential-projects
 Disallow: /images/ldp/
+
+# Archived case studies - superseded versions kept for reference, not for search.
+Disallow: /archive/

@@ -4,13 +4,14 @@ import { Stagger, StaggerItem } from './Stagger';
 
 const WORKS = [
   {
-    href: '/liberty-dental-plan',
-    img: '/images/ldp/ldp-card-thumb.jpg',
-    alt: 'The Liberty Dental Plan homepage on a desktop monitor, captioned "Explore the live platform"',
-    year: '2025–2026',
-    tag: 'Confidential work',
-    title: 'Liberty Dental Plan: Restructuring a Legacy Healthcare Platform',
+    href: '/shiftlyn',
+    img: '/thumbnail.png',
+    alt: 'Shiftlyn',
+    year: '2025',
+    tag: 'Case study',
+    title: 'Shiftlyn: AI Risk Assessment, Humanized',
     delay: 'd1',
+    flush: true,
   },
   {
     href: '/ai-visa-platform',
@@ -22,23 +23,22 @@ const WORKS = [
     delay: 'd2',
   },
   {
+    href: '/liberty-dental-plan',
+    img: '/images/ldp/ldp-card-thumb.jpg',
+    alt: 'The Liberty Dental Plan homepage on a desktop monitor, captioned "Explore the live platform"',
+    year: '2025–2026',
+    tag: 'Confidential work',
+    title: 'Liberty Dental Plan: Restructuring a Legacy Healthcare Platform',
+    delay: 'd3',
+  },
+  {
     href: '/johnson-and-johnson',
     img: '/images/jnj-grc-ai.svg',
     alt: 'Johnson & Johnson: enterprise GRC platform with a conversational AI assistant',
     year: '2024–2026',
     tag: 'Confidential work',
     title: 'Johnson & Johnson: Conversational AI & GRC Platform',
-    delay: 'd3',
-  },
-  {
-    href: '/shiftlyn',
-    img: '/thumbnail.png',
-    alt: 'Shiftlyn',
-    year: '2025',
-    tag: 'Case study',
-    title: 'Shiftlyn: AI Risk Assessment, Humanized',
     delay: 'd4',
-    flush: true,
   },
   {
     href: 'https://medium.com/@shanawazhussain989/khoj-landing-page-case-study-c279cb08c671',
