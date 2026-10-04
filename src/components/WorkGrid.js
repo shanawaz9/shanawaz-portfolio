@@ -5,11 +5,12 @@ import { Stagger, StaggerItem } from './Stagger';
 const WORKS = [
   {
     href: '/shiftlyn',
-    img: '/thumbnail.png',
-    alt: 'Shiftlyn',
+    img: '/images/shiftlyn/shiftlyn-card-thumb-v2.jpg',
+    alt: 'The Shiftlyn landing page on a desktop monitor, its headline reading "See how AI-ready your skills really are"',
     year: '2025',
     tag: 'Case study',
-    title: 'Shiftlyn: AI Risk Assessment, Humanized',
+    title: 'Shiftlyn: AI-Assisted Product Design, from MVP to Complete Product',
+    chips: ['Product design', 'Case study', 'End to end product'],
     delay: 'd1',
     flush: true,
   },
@@ -20,6 +21,7 @@ const WORKS = [
     year: '2026',
     tag: 'Case study',
     title: 'AI Visa Platform: From AI-Generated MVP to Trusted Product',
+    chips: ['AI vs human design', 'Case study', 'Conversion journey'],
     delay: 'd2',
   },
   {
@@ -28,16 +30,18 @@ const WORKS = [
     alt: 'The Liberty Dental Plan homepage on a desktop monitor, captioned "Explore the live platform"',
     year: '2025–2026',
     tag: 'Confidential work',
-    title: 'Liberty Dental Plan: Restructuring a Legacy Healthcare Platform',
+    title: 'Liberty Dental Plan: Reshaping a Decade-Old Healthcare Platform',
+    chips: ['UX design', 'Information architecture', 'Case study'],
     delay: 'd3',
   },
   {
     href: '/johnson-and-johnson',
-    img: '/images/jnj-grc-ai.svg',
-    alt: 'Johnson & Johnson: enterprise GRC platform with a conversational AI assistant',
+    img: '/images/jnj/jnj-card-thumb.jpg',
+    alt: 'The Johnson & Johnson access management home screen, blurred under NDA',
     year: '2024–2026',
     tag: 'Confidential work',
-    title: 'Johnson & Johnson: Conversational AI & GRC Platform',
+    title: 'Johnson & Johnson: Conversational AI for Compliance Teams',
+    chips: ['Conversational UX', 'Under NDA', 'Complex workflows'],
     delay: 'd4',
   },
   {
@@ -84,11 +88,17 @@ function WorkCard({ work }) {
         <img src={work.img} alt={work.alt} style={imgStyle} />
       </div>
       <div className="work-card-body">
-        <div className="work-card-meta">
-          <span className="work-card-year">{work.year}</span>
-          <span className="work-card-tag">{work.tag}</span>
+        <div className="work-card-head">
+          <div className="work-card-title">{work.title}</div>
+          {work.href && <span className="work-card-go" aria-hidden="true">&#8599;</span>}
         </div>
-        <div className="work-card-title">{work.title}</div>
+        {work.chips && (
+          <ul className="work-card-chips" aria-label="Keywords">
+            {work.chips.map((chip) => (
+              <li key={chip} className="work-card-chip">{chip}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   );
@@ -99,6 +109,7 @@ function WorkCard({ work }) {
         className={cardClass}
         style={cardStyle}
         href={work.href}
+        data-cursor-label="Read case study"
         target="_blank"
         rel="noopener noreferrer"
       >

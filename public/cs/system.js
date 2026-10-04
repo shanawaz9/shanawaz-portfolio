@@ -159,6 +159,14 @@
     var els = toArray(scope.querySelectorAll(sel));
     if (!els.length) return;
 
+    /* Keyboard safety net: whatever receives focus is shown at once, so
+       focus can never land on content still waiting for its reveal. */
+    document.addEventListener('focusin', function (e) {
+      els.forEach(function (el) {
+        if (el.contains(e.target)) el.classList.add('in');
+      });
+    });
+
     if (!('IntersectionObserver' in window)) {
       els.forEach(function (el) { el.classList.add('in'); });
       return;

@@ -26,6 +26,10 @@
   /* Semantic */
   --success:#2f8f5e;
   --success-dim:rgba(47,143,94,0.12);
+  /* the quiet "reached / live / done" green: the hero cards' markers, the
+     loader's [ok], the contact window's online light and copy confirmations.
+     Used sparingly, always meaning that. */
+  --signal:#2f8f5e;
   --warning:#c0832c;
   --error:#c24a38;
   --cta-bg:rgba(255,255,255,0.55);
@@ -85,6 +89,7 @@
   /* Semantic */
   --success:#46b27f;
   --success-dim:rgba(70,178,127,0.12);
+  --signal:#3f9a70;
   --warning:#d9a24e;
   --error:#d96a54;
   --cta-bg:rgba(255,255,255,0.02);
@@ -448,6 +453,16 @@ nav{
   pointer-events:none;
 }
 
+/* first visit: the cards stay out of sight until the loader's prompt hands
+   off to them (Hero.js animates them in from there) */
+.hero-floating-layer.is-awaiting-split .hero-window{
+  opacity:0;
+}
+/* ...and fly above the headline while they travel out across it */
+.hero-floating-layer.is-splitting{
+  z-index:4;
+}
+
 .hero-window{
   --window-offset-x:0px;
   --window-offset-y:0px;
@@ -460,8 +475,6 @@ nav{
   --window-text:#000000;
   --window-shadow:rgba(0,0,0,0.25);
   --window-border:#000000;
-  --hw-wire-bg:rgba(0,0,0,0.07);
-  --hw-wire-border:rgba(0,0,0,0.18);
   /* Title bar: Windows-terminal grey (kept consistent across themes) with a
      faint lighter-grey pinstripe so it stays a touch retro. */
   --window-titlebar-bg:#2b2b2b;
@@ -469,33 +482,31 @@ nav{
   --window-titlebar-text:#d6d6d6;
   --window-titlebar-edge:#4a4a4a;
   position:absolute;
-  width:clamp(150px, 15vw, 210px);
+  width:clamp(196px, 17vw, 240px);
   padding:0;
+  /* A classic window, kept quiet: one outline, a title bar and a flat panel,
+     square corners, a pixel-font name and window controls. No bevels or glow
+     (light edges read as white fringes on a black page), so the cards stay
+     behind the headline. */
   border:2px solid var(--window-border);
   background:var(--window-bg);
   color:var(--window-text);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.05),
-    5px 5px 0 var(--window-shadow),
-    0 14px 34px rgba(0,0,0,0.4),
-    0 0 26px var(--silver-dim);
+  /* the loader prompt's frame: a hard, faint silver offset behind the
+     bottom-right edge, over a soft ambient shadow */
+  box-shadow:5px 5px 0 rgba(207,211,218,0.11),0 18px 40px rgba(0,0,0,0.5);
   cursor:grab;
   pointer-events:auto;
   touch-action:none;
   user-select:none;
   -webkit-user-select:none;
   transform:translate3d(var(--window-offset-x), var(--window-offset-y), 0) rotate(var(--window-rotation));
-  transition:box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+  transition:box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
   will-change:transform;
-  image-rendering:pixelated;
 }
 
 .hero-window:hover{
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.07),
-    7px 7px 0 var(--window-shadow),
-    0 20px 44px rgba(0,0,0,0.46),
-    0 0 36px rgba(207,211,218,0.16);
+  border-color:#3d3d3d;
+  box-shadow:6px 6px 0 rgba(207,211,218,0.13),0 22px 46px rgba(0,0,0,0.55);
 }
 
 .hero-window:active{
@@ -506,32 +517,25 @@ nav{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:6px;
-  min-height:24px;
-  padding:0 4px 0 8px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 45%, rgba(0,0,0,0.16)),
-    repeating-linear-gradient(
-      to bottom,
-      var(--window-titlebar-line) 0px,
-      var(--window-titlebar-line) 1px,
-      var(--window-titlebar-bg) 1px,
-      var(--window-titlebar-bg) 3px
-    );
+  gap:10px;
+  height:30px;
+  padding:0 11px 0 13px;
+  background:var(--window-titlebar-bg);
+  border-bottom:2px solid var(--window-border);
   color:var(--window-titlebar-text);
+  /* the same pixel face and spacing as the hero eyebrow, so the cards and
+     the hero share one pixel voice */
   font-family:var(--font-logo);
-  font-size:9px;
-  letter-spacing:0.1em;
+  font-size:10px;
+  font-weight:400;
+  line-height:1;
+  letter-spacing:0.16em;
   text-transform:uppercase;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -2px 0 rgba(0,0,0,0.35);
 }
 
 .hero-window__name{
   white-space:nowrap;
-  background:var(--window-titlebar-bg);
-  border:1px solid var(--window-titlebar-edge);
   color:var(--window-titlebar-text);
-  padding:1px 5px;
 }
 
 .hero-window__diamond{
@@ -544,40 +548,30 @@ nav{
 
 .hero-window__chrome-btns{
   display:flex;
-  gap:2px;
+  gap:5px;
   align-items:center;
   flex-shrink:0;
 }
 
+/* window controls as plain pixel boxes: solid, square, hard-edged, no
+   glyphs - solid so they never read like the hollow status markers below */
 .hero-window__chrome-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:14px;
-  height:12px;
-  font-size:8px;
-  line-height:1;
-  font-family:var(--font-logo);
-  background:var(--window-titlebar-bg);
-  border:1px solid var(--window-titlebar-edge);
-  color:var(--window-titlebar-text);
+  display:block;
+  width:8px;
+  height:8px;
+  background:#474747;
   cursor:default;
-  letter-spacing:0;
-}
-
-.hero-window__chrome-btn--x{
-  background:var(--window-titlebar-bg);
 }
 
 .hero-window__body{
-  min-height:148px;
-  padding:8px;
-  background:
-    repeating-linear-gradient(0deg,transparent,transparent 7px,var(--hw-wire-bg) 7px,var(--hw-wire-bg) 8px),
-    repeating-linear-gradient(90deg,transparent,transparent 7px,var(--hw-wire-bg) 7px,var(--hw-wire-bg) 8px),
-    var(--window-panel);
+  padding:19px 15px 18px;
+  /* a soft dark-grey panel in both themes, so the text inside is always light */
+  --window-text:#f2f2f2;
+  --window-accent:#ffffff;
+  background:#1a1a1a;
   text-align:left;
-  font-family:var(--font-logo);
+  /* same face as the hero title, so the cards read as part of the page */
+  font-family:var(--font-head);
   box-shadow:inset 2px 2px 0 rgba(0,0,0,0.07);
 }
 
@@ -594,15 +588,10 @@ nav{
   white-space:nowrap;
 }
 
-.hero-window__body--strategy{
-  padding:7px;
-}
-
+.hero-window__body--strategy,
 .hero-window__body--process{
   display:flex;
   flex-direction:column;
-  gap:8px;
-  padding:8px;
   text-align:left;
 }
 
@@ -663,189 +652,131 @@ nav{
 }
 
 [data-theme="dark"] .hero-window{
-  --window-bg:#1d1b1a;
-  --window-panel:#1d1b1a;
+  --window-bg:#161616;
+  --window-panel:#161616;
   --window-accent:#ffffff;
   --window-ink:#ffffff;
-  --window-paper:#1d1b1a;
+  --window-paper:#161616;
   --window-text:#ffffff;
-  --window-shadow:rgba(0,0,0,0.4);
-  --window-border:#6a6a6a;
-  --hw-wire-bg:rgba(255,255,255,0.045);
-  --hw-wire-border:rgba(255,255,255,0.07);
+  --window-shadow:rgba(0,0,0,0.6);
+  --window-border:#2e2e2e;
+  /* the title bar sits a step greyer than the panel below it */
+  --window-titlebar-bg:#282828;
+  --window-titlebar-text:#cfcfcf;
 }
 
 [data-theme="dark"] .hero-window__body{
-  background:
-    repeating-linear-gradient(0deg,transparent,transparent 7px,var(--hw-wire-bg) 7px,var(--hw-wire-bg) 8px),
-    repeating-linear-gradient(90deg,transparent,transparent 7px,var(--hw-wire-bg) 7px,var(--hw-wire-bg) 8px),
-    var(--window-panel);
-  box-shadow:inset 2px 2px 0 rgba(0,0,0,0.3);
+  background:#161616;
 }
 
+/* The cards line up with the navbar: the left one with the logo, the right
+   one with the Resume button. The hero container and the navbar share the
+   same content edge, one gutter in. */
 .hero-window--strategy{
   top:6%;
-  left:calc(7% - 32px);
-  width:clamp(200px, 19vw, 264px);
+  left:var(--gutter);
 }
 
 .hero-window--process{
-  right:6%;
+  right:var(--gutter);
   bottom:8%;
 }
 
-/* UX STRATEGY BRIEF (strategy window) */
-.hw-head{
+/* Both windows share one row style (.hw-phase): same size, spacing and
+   left edge. The strategy window's metric rows push their value to the
+   right edge, so the numbers line up in a column. */
+.hw-phase.hw-metric{
+  color:#8c8c8c;
+}
+
+/* the readings are set in a blocky pixel face, like an old status display;
+   Silkscreen's digits stay unambiguous at this size (a rounder pixel "2"
+   read as an "8") */
+.hw-metric__val{
+  margin-left:auto;
   font-family:var(--font-logo);
-  font-size:10px;
-  color:var(--window-accent);
-  letter-spacing:0.08em;
-  margin-bottom:6px;
+  font-size:13px;
+  font-weight:400;
+  letter-spacing:0.06em;
+  color:#bcbcbc;
 }
 
-.hw-rule{
-  height:1px;
-  background:var(--hw-wire-border);
-  margin:6px 0;
-}
-
-.hw-brief-rows{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-}
-
-.hw-brief-row{
-  display:flex;
-  align-items:baseline;
-  gap:8px;
-  font-family:var(--font-logo);
-}
-
-.hw-brief-key{
-  font-size:9px;
-  color:var(--window-accent);
-  letter-spacing:0.1em;
-  flex-shrink:0;
-  width:32px;
-  opacity:0.85;
-}
-
-.hw-brief-val{
-  font-size:9px;
-  color:var(--window-text);
-  opacity:0.82;
-}
-
-.hw-hmw{
-  font-family:var(--font-logo);
-  font-size:9px;
-  color:var(--window-text);
-  opacity:0.9;
-  letter-spacing:0.02em;
-  margin-bottom:4px;
-}
-
-.hw-brief-status{
-  display:flex;
-  align-items:center;
-  gap:4px;
-  font-family:var(--font-logo);
-  font-size:8px;
-  color:var(--success);
-  opacity:0.85;
-}
-
+/* the metric rows read like the process steps: green once reached, with
+   the last one as the current step (see .hw-phase--done / --now below) */
 
 /* DESIGN PHASES (process window) */
 .hw-phases{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:13px;
 }
 
 .hw-phase{
   display:flex;
   align-items:center;
-  gap:6px;
-  font-family:var(--font-logo);
-  font-size:10px;
-  letter-spacing:0.04em;
-  color:var(--window-text);
-  opacity:0.35;
+  gap:10px;
+  font-size:15px;
+  /* the face's default line box leaves extra room under the baseline, which
+     makes the last row look further from the panel edge than the first */
+  line-height:1.15;
+  font-weight:500;
+  letter-spacing:-0.01em;
+  color:#808080;
 }
 
 .hw-phase--done{
-  opacity:0.65;
-}
-
-.hw-phase--done .hw-phase__chk{
-  color:var(--success);
+  color:#8c8c8c;
 }
 
 .hw-phase--now{
-  opacity:1;
-  color:var(--window-accent);
+  color:#b4b4b4;
+  font-weight:500;
 }
 
+/* status marker: a small square, filled once the phase is reached */
+/* Pixel-art bullet: an 8px dot on a 2px pixel grid (4 x 4 pixels) with the
+   corner pixels knocked out, so it reads as a drawn pixel dot rather than a
+   plain square. Hollow by default (a stepped pixel ring); the filled states
+   add a one-pixel glint at the top-left. */
 .hw-phase__chk{
-  font-family:var(--font-logo);
-  letter-spacing:0;
   flex-shrink:0;
-  font-size:10px;
+  width:8px;
+  height:8px;
+  border:2px solid currentColor;
+  clip-path:polygon(
+    2px 0, 6px 0, 6px 2px, 8px 2px, 8px 6px, 6px 6px, 6px 8px,
+    2px 8px, 2px 6px, 0 6px, 0 2px, 2px 2px
+  );
+}
+.hw-phase--done .hw-phase__chk,
+.hw-phase--now .hw-phase__chk{
+  box-shadow:inset 2px 2px 0 rgba(255,255,255,0.28);
 }
 
+.hw-phase--done .hw-phase__chk{
+  background:var(--signal);
+  border-color:var(--signal);
+}
+
+.hw-phase--now .hw-phase__chk{
+  background:#b4b4b4;
+  border-color:#b4b4b4;
+}
+
+/* thin text caret after the active line */
 .hw-cursor{
-  font-size:10px;
-  margin-left:1px;
+  display:inline-block;
+  width:6px;
+  height:0.85em;
+  /* a pixel block, 3px after its word, whatever the row's gap */
+  margin-left:-7px;
+  background:currentColor;
+  opacity:0.8;
 }
 
 @keyframes hwBlink{
   0%,49%{opacity:1;}
   50%,100%{opacity:0;}
-}
-
-.hw-pbar{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-family:var(--font-logo);
-  font-size:8px;
-  color:var(--window-text);
-  opacity:0.8;
-  border-top:1px solid var(--hw-wire-border);
-  padding-top:6px;
-  margin-top:2px;
-}
-
-.hw-pbar__lbl{
-  white-space:nowrap;
-  flex-shrink:0;
-}
-
-.hw-pbar__track{
-  flex:1;
-  height:8px;
-  border:1px solid var(--window-accent);
-  padding:1px;
-  background:transparent;
-}
-
-.hw-pbar__fill{
-  height:100%;
-  width:67%;
-  background:repeating-linear-gradient(
-    90deg,
-    var(--window-accent) 0px,
-    var(--window-accent) 3px,
-    transparent 3px,
-    transparent 5px
-  );
-}
-
-.hw-pbar__pct{
-  white-space:nowrap;
-  flex-shrink:0;
 }
 
 .hero-window--text{
@@ -877,6 +808,9 @@ nav{
   box-shadow:3px 3px 0 var(--border);
   transition:border-color 0.15s,color 0.15s,background 0.15s,box-shadow 0.1s steps(2),transform 0.1s steps(2);
 }
+
+/* copy confirmation reads as "done" */
+.hero-cta.is-copied{color:var(--signal);}
 
 /* FINAL HERO STAMP LAYOUT */
 .hero-stamp{
@@ -1240,7 +1174,7 @@ nav{
   }
 
   .hero-window{
-    width:clamp(146px, 24vw, 188px);
+    width:clamp(184px, 26vw, 220px);
   }
 
   .hero-window__body{
@@ -1250,12 +1184,11 @@ nav{
 
   .hero-window--strategy{
     top:0;
-    left:calc(8% - 32px);
-    width:clamp(176px, 28vw, 224px);
+    left:var(--gutter);
   }
 
   .hero-window--process{
-    right:8%;
+    right:var(--gutter);
     bottom:2%;
   }
 
@@ -1458,42 +1391,113 @@ nav{
   gap:20px;
 }
 
+/* PROJECT CARD - image, title, keyword chips; pixel language throughout:
+   square corners, hard offset shadow, Silkscreen labels. */
 .work-card{
-  display:block;border:1px solid var(--border);
-  border-radius:4px;overflow:hidden;
+  display:flex;flex-direction:column;
+  border:1px solid var(--border);border-radius:0;overflow:hidden;
   background:var(--surface);
-  width:100%;
-  max-width:none;
+  width:100%;max-width:none;height:100%;
   position:relative;
-  transition:border-color 0.3s,transform 0.15s steps(3),box-shadow 0.15s steps(3),background-color 0.35s;
+  /* The card never moves on hover: the cards sit at fractional pixel
+     positions, so lifting one redrew its 1px border between pixels and it
+     shimmered. Only the border colour and the hard pixel shadow change. */
+  transition:box-shadow 0.22s ease-out,border-color 0.22s ease-out;
 }
 .work-card:hover{
   border-color:var(--silver-2);
-  transform:translateY(-4px);
   box-shadow:4px 4px 0 var(--silver);
 }
-/* pixel corner decoration */
-.work-card::before{
-  content:'';position:absolute;top:8px;right:8px;
-  width:6px;height:6px;background:var(--silver-2);
-  opacity:0;transition:opacity 0.2s;z-index:3;
-}
-.work-card:hover::before{opacity:0.6;}
 .work-card.wip{opacity:0.38;pointer-events:none;}
-.work-card-thumb{position:relative;width:100%;aspect-ratio:16/9.5;overflow:hidden;background:var(--surface);}
-.work-card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
-.work-card:hover .work-card-thumb img{transform:scale(1.05);}
+.work-card-thumb{
+  position:relative;width:100%;aspect-ratio:16/9.5;overflow:hidden;
+  background:var(--surface);
+}
+/* the sheen colour the image fades into and the card body starts from */
+.work-card{--card-sheen:#161616;}
+/* A short, clean fade at the bottom of the image into the sheen colour,
+   so there's no hard edge and the screenshot stays clear. */
+.work-card-thumb::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;z-index:1;
+  height:18%;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(22,22,22,0) 0%,rgba(22,22,22,0.7) 60%,var(--card-sheen) 100%);
+}
+.work-card-thumb img{
+  display:block;width:100%;height:100%;object-fit:cover;
+  transition:transform 0.4s ease-out;
+}
+.work-card:hover .work-card-thumb img{transform:scale(1.03);}
 .work-card-clients{position:absolute;top:12px;left:12px;z-index:2;display:flex;flex-wrap:wrap;gap:6px;}
 .work-card-client-badge{
   font-family:var(--font-head);font-size:10px;font-weight:700;letter-spacing:0.02em;
   color:#fff;padding:5px 11px;border-radius:0;
   box-shadow:0 2px 8px rgba(0,0,0,0.35);
 }
-.work-card-body{padding:16px 20px 20px;}
-.work-card-meta{display:flex;gap:10px;align-items:center;margin-bottom:10px;}
-.work-card-year{font-size:10px;color:var(--muted);letter-spacing:0.08em;}
-.work-card-tag{font-size:10px;color:var(--muted);border:1px solid var(--border);padding:2px 9px;border-radius:0;letter-spacing:0.04em;font-family:var(--font-logo);}
-.work-card-title{font-family:var(--font-head);font-size:18px;font-weight:600;letter-spacing:-0.01em;}
+
+/* body: title row on top, chips pinned to the bottom so they line up across
+   a row of cards even when one title wraps */
+.work-card-body{
+  flex:1;display:flex;flex-direction:column;gap:18px;
+  padding:20px 22px 22px;
+  /* shiny black: picks up the image's fade and eases back to the card
+     colour just after the title, plus some space */
+  background:linear-gradient(to bottom,var(--card-sheen) 0,var(--surface) 120px);
+}
+.work-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.work-card-title{
+  font-family:var(--font-head);font-size:19px;font-weight:600;
+  line-height:1.3;letter-spacing:-0.01em;color:var(--text);
+}
+/* pixel "open" button: a square that fills with the accent on hover */
+.work-card-go{
+  flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;margin-top:-2px;
+  font-family:var(--font-logo);font-size:14px;line-height:1;
+  color:var(--silver);border:1px solid var(--border);background:transparent;
+  transition:background-color 0.22s ease-out,color 0.22s ease-out,border-color 0.22s ease-out,box-shadow 0.22s ease-out;
+}
+.work-card:hover .work-card-go{
+  color:#fff;background:var(--accent);border-color:var(--accent-bright);
+  box-shadow:2px 2px 0 var(--accent-bright);
+}
+
+/* keyword chips: outlined pixel tags with a square accent bullet */
+.work-card-chips{
+  display:flex;flex-wrap:wrap;gap:8px;
+  margin:auto 0 0;padding:0;list-style:none;
+}
+/* Pixel-art chips. The chip itself is the 1px outline colour, cut to an
+   8-bit shape with 2px stepped notches at each corner (clip-path); ::after
+   lays the fill 1px inside it with the same stepped cut, so the outline
+   follows the pixel corners. A square bullet and the pixel font inside.
+   Muted at rest so the title leads (text 9:1 on the fill); the outline
+   turns purple and the text lifts on card hover. */
+.work-card-chips{gap:8px;}
+.work-card-chip{
+  --chip-line:#2f2f36;--chip-fill:#131317;
+  position:relative;isolation:isolate;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-logo);font-size:10px;line-height:1;letter-spacing:0.06em;
+  text-transform:uppercase;white-space:nowrap;
+  color:#b4b8c0;background:var(--chip-line);
+  padding:7px 10px 8px;border:0;border-radius:0;
+  clip-path:polygon(0 2px,2px 2px,2px 0,calc(100% - 2px) 0,calc(100% - 2px) 2px,100% 2px,100% calc(100% - 2px),calc(100% - 2px) calc(100% - 2px),calc(100% - 2px) 100%,2px 100%,2px calc(100% - 2px),0 calc(100% - 2px));
+  transition:color 0.22s ease-out,background-color 0.22s ease-out;
+}
+.work-card-chip::after{
+  content:'';position:absolute;inset:1px;z-index:-1;background:var(--chip-fill);
+  clip-path:polygon(0 1px,1px 1px,1px 0,calc(100% - 1px) 0,calc(100% - 1px) 1px,100% 1px,100% calc(100% - 1px),calc(100% - 1px) calc(100% - 1px),calc(100% - 1px) 100%,1px 100%,1px calc(100% - 1px),0 calc(100% - 1px));
+}
+.work-card-chip::before{
+  content:'';width:4px;height:4px;flex:0 0 auto;background:var(--accent);
+  transition:background-color 0.22s ease-out;
+}
+.work-card:hover .work-card-chip{color:var(--silver);background:#4a43a0;}
+.work-card:hover .work-card-chip::before{background:var(--accent-bright);}
+@media(max-width:480px){
+  .work-card-body{padding:18px 18px 20px;gap:16px;}
+  .work-card-title{font-size:17px;}
+}
 
 /* BLOG */
 /* Heading + pager on one row; wraps to two rows once they no longer fit,
@@ -1693,7 +1697,8 @@ nav{
   animation:stripScroll 36s linear infinite;
   will-change:transform;
 }
-.photo-strip:hover .photo-strip-track{animation-play-state:paused;}
+.photo-strip:hover .photo-strip-track,
+.photo-strip-track:focus-within{animation-play-state:paused;}
 .photo-strip-track--manual{
   animation:none;
   transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
@@ -1712,7 +1717,11 @@ nav{
   border:1px solid var(--border);
   background:#000;
   cursor:zoom-in;
+  /* it's a <button> now, so reset the native button styling */
+  display:block;padding:0;font:inherit;color:inherit;text-align:inherit;
 }
+.photo-strip-item:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;}
+.photo-strip-item:focus-visible .photo-strip-item-cap{opacity:1;}
 .photo-strip-item img{
   width:100%;height:100%;
   object-fit:contain;
@@ -1829,7 +1838,9 @@ nav{
 .t-full{display:none;}
 .t-full.visible{display:inline;}
 .t-expand-btn{
-  margin-top:10px;background:none;border:none;padding:0;
+  /* 24px tall hit area (WCAG 2.2 target size); the padding replaces part
+     of the old 10px top margin so the text stays where it was */
+  margin-top:5px;background:none;border:none;padding:5px 0;min-height:24px;
   font-size:11px;letter-spacing:0.06em;text-transform:uppercase;
   color:var(--accent-bright);cursor:pointer;
   display:flex;align-items:center;gap:4px;
@@ -1923,6 +1934,9 @@ nav{
   font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
   color:var(--muted);
 }
+.cta-chrome-name{display:inline-flex;align-items:center;gap:8px;}
+/* a small pixel "online" light: available for new work */
+.cta-chrome-live{width:6px;height:6px;background:var(--signal);flex-shrink:0;}
 .cta-chrome-btns{display:flex;gap:4px;flex-shrink:0;}
 .cta-chrome-btn{
   width:16px;height:14px;
@@ -1984,6 +1998,7 @@ nav{
 }
 .cta-email-prefix{color:var(--silver);margin-right:6px;font-family:var(--font-logo);}
 .cta-email:hover{border-color:var(--accent);letter-spacing:0.02em;}
+.cta-email.is-copied,.cta-email.is-copied:hover{color:var(--signal);border-color:var(--signal);}
 
 /* terminal type-in cursor - a solid block that trails whichever line is
    currently being typed, in place of the classic underscore caret */
@@ -2002,9 +2017,12 @@ nav{
   margin-top:24px;
   opacity:0;
   transform:translateY(8px);
-  transition:opacity 0.4s ease,transform 0.4s ease;
+  /* visibility keeps the links out of the tab order while they're invisible,
+     so keyboard focus never lands on something the user can't see */
+  visibility:hidden;
+  transition:opacity 0.4s ease,transform 0.4s ease,visibility 0s linear 0.4s;
 }
-.cta-socials.visible{opacity:1;transform:translateY(0);}
+.cta-socials.visible{opacity:1;transform:translateY(0);visibility:visible;transition-delay:0s;}
 .cta-social-link{
   display:inline-flex;
   align-items:center;
@@ -2055,13 +2073,21 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
   position:fixed;
   inset:0;
   z-index:5000;
-  background:var(--bg);
   display:flex;
   align-items:center;
   justify-content:center;
   will-change:transform;
 }
+/* the page colour behind the boot card - a layer of its own, so it can fade
+   out from under the prompt while the prompt hands off to the hero cards */
+.loader-bg{
+  position:absolute;
+  inset:0;
+  background:var(--bg);
+}
 .loader-term{
+  /* positioned, so it paints above the absolutely placed .loader-bg */
+  position:relative;
   width:min(360px,86vw);
   border:2px solid var(--border);
   background:var(--surface);
@@ -2107,7 +2133,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 .loader-line__txt{color:var(--text);opacity:0.88;letter-spacing:0.02em;}
 .loader-line__ok{
   margin-left:auto;
-  color:var(--success);
+  color:var(--signal);
   font-size:10px;
   letter-spacing:0.08em;
 }
@@ -2188,6 +2214,23 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 /* Rim only - the body stays open so the page reads through the cursor. */
 .cursor-pixel-svg .px-outline{fill:var(--accent-bright);}
 .cursor-pixel-svg .px-fill{fill:none;}
+/* "Read case study" tag beside the pointer over a tagged element: a square
+   label with a hard shadow (pixel language) in the regular sans, popping in
+   below-right of the hand so it never covers what you're pointing at.
+   White on the accent is 5.5:1. */
+.cursor-label{
+  position:absolute;left:22px;top:26px;
+  /* plain sans for legibility; the pixel feel comes from the box itself */
+  font-family:var(--font-head);font-size:13px;font-weight:600;line-height:1;letter-spacing:0.005em;
+  white-space:nowrap;
+  color:#fff;background:var(--accent);
+  padding:7px 11px 8px;border:1px solid var(--accent-bright);
+  box-shadow:2px 2px 0 #000;
+  opacity:0;transform:translate(-4px,-4px) scale(0.92);transform-origin:0 0;
+  transition:opacity 0.15s ease-out,transform 0.15s ease-out;
+}
+.cursor-label:empty{display:none;}
+.cursor-label--on{opacity:1;transform:none;}
 /* GLITCH ANIMATION */
 @keyframes glitch{
   0%,93%,100%{transform:translate(0);text-shadow:none;}

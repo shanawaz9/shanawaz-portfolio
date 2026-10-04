@@ -113,9 +113,27 @@ export default function CursorGlow() {
   const readySet = useRef(false);
   const [shape, setShape] = useState('arrow');
   const [ready, setReady] = useState(false);
+  // Optional tag shown beside the pointer, from the hovered element's
+  // data-cursor-label (e.g. "Read case study" on the project cards).
+  const [label, setLabel] = useState('');
 
   useEffect(() => {
+    // Last known pointer position, so a scroll can re-check what's under it.
+    const pos = { x: -1, y: -1 };
+
+    // Shape and label follow whatever element is under the pointer.
+    // A labelled element keeps the normal arrow: the label itself says
+    // what clicking does, so the pointing hand would be redundant.
+    const updateFor = (target) => {
+      const el = target && target.closest ? target : null;
+      const tagged = el && el.closest('[data-cursor-label]');
+      setShape(!tagged && el && el.closest(INTERACTIVE_SELECTOR) ? 'hand' : 'arrow');
+      setLabel(tagged ? tagged.getAttribute('data-cursor-label') : '');
+    };
+
     const handleMouseMove = (e) => {
+      pos.x = e.clientX;
+      pos.y = e.clientY;
       if (rootRef.current) {
         rootRef.current.style.left = e.clientX + 'px';
         rootRef.current.style.top = e.clientY + 'px';
@@ -125,20 +143,36 @@ export default function CursorGlow() {
         setReady(true);
       }
     };
-    const handleMouseOver = (e) => {
-      setShape(e.target.closest(INTERACTIVE_SELECTOR) ? 'hand' : 'arrow');
+    const handleMouseOver = (e) => updateFor(e.target);
+    // Scrolling with a still mouse moves content out from under the pointer
+    // without any mouse event, so re-check the element under it - otherwise
+    // a card's label lingers after the card has gone. Scroll events already
+    // arrive at most once per frame, and elementFromPoint is cheap.
+    const handleScroll = () => {
+      if (pos.x < 0) return;
+      updateFor(document.elementFromPoint(pos.x, pos.y));
     };
+    // Pointer left the window: drop any label.
+    const handleMouseOut = (e) => {
+      if (!e.relatedTarget) setLabel('');
+    };
+
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <div className={`cursor-dot${ready ? ' cursor-dot--ready' : ''}`} ref={rootRef}>
+    <div className={`cursor-dot${ready ? ' cursor-dot--ready' : ''}`} ref={rootRef} aria-hidden="true">
       <PixelCursorIcon shape={shape} />
+      <span className={`cursor-label${label ? ' cursor-label--on' : ''}`}>{label}</span>
     </div>
   );
 }

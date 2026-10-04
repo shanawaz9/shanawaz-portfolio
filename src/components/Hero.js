@@ -1,6 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { animate, useReducedMotion } from 'motion/react';
 import Reveal from './Reveal';
-import { Stagger, StaggerItem, INTRO_REVEAL_DELAY } from './Stagger';
+import {
+  Stagger,
+  StaggerItem,
+  INTRO_REVEAL_DELAY,
+  INTRO_FLOOR_MS,
+  INTRO_SPLIT_EVENT,
+  INTRO_HANDOFF_MS,
+  INTRO_SWAP_MS,
+} from './Stagger';
 import { PLAY_INTRO } from '../introState';
 
 const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
@@ -35,34 +44,33 @@ function HeroWindowGraphic({ id, label }) {
         <div className="hero-window__chrome">
           <span className="hero-window__name">{label}</span>
           <div className="hero-window__chrome-btns" aria-hidden="true">
-            <span className="hero-window__chrome-btn">_</span>
-            <span className="hero-window__chrome-btn">□</span>
-            <span className="hero-window__chrome-btn hero-window__chrome-btn--x">×</span>
+            <span className="hero-window__chrome-btn" />
+            <span className="hero-window__chrome-btn" />
+            <span className="hero-window__chrome-btn" />
           </div>
         </div>
         <div className="hero-window__body hero-window__body--strategy">
-          <p className="hw-head">BRIEF.MD</p>
-          <div className="hw-rule" />
-          <div className="hw-brief-rows">
-            <div className="hw-brief-row">
-              <span className="hw-brief-key">WHO</span>
-              <span className="hw-brief-val">product teams</span>
+          <div className="hw-phases">
+            <div className="hw-phase hw-phase--done hw-metric">
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Conversion</span>
+              <span className="hw-metric__val">2%</span>
             </div>
-            <div className="hw-brief-row">
-              <span className="hw-brief-key">PAIN</span>
-              <span className="hw-brief-val">unclear flows</span>
+            <div className="hw-phase hw-phase--done hw-metric">
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Target</span>
+              <span className="hw-metric__val">4%</span>
             </div>
-            <div className="hw-brief-row">
-              <span className="hw-brief-key">GOAL</span>
-              <span className="hw-brief-val">time to value</span>
+            <div className="hw-phase hw-phase--done hw-metric">
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Framework</span>
+              <span className="hw-metric__val">C-Trust</span>
             </div>
-          </div>
-          <div className="hw-rule" />
-          <p className="hw-hmw">HMW: reduce friction?</p>
-          <div className="hw-brief-status">
-            <span aria-hidden="true">▶</span>
-            <span>DEFINING</span>
-            <span className="hw-cursor" aria-hidden="true">▋</span>
+            <div className="hw-phase hw-phase--now">
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Activation</span>
+              <span className="hw-cursor" aria-hidden="true" />
+            </div>
           </div>
         </div>
       </>
@@ -75,42 +83,56 @@ function HeroWindowGraphic({ id, label }) {
         <div className="hero-window__chrome">
           <span className="hero-window__name">{label}</span>
           <div className="hero-window__chrome-btns" aria-hidden="true">
-            <span className="hero-window__chrome-btn">_</span>
-            <span className="hero-window__chrome-btn">□</span>
-            <span className="hero-window__chrome-btn hero-window__chrome-btn--x">×</span>
+            <span className="hero-window__chrome-btn" />
+            <span className="hero-window__chrome-btn" />
+            <span className="hero-window__chrome-btn" />
           </div>
         </div>
         <div className="hero-window__body hero-window__body--process">
           <div className="hw-phases">
             <div className="hw-phase hw-phase--done">
-              <span className="hw-phase__chk">[x]</span>
-              <span className="hw-phase__lbl">DISCOVER</span>
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Discover</span>
             </div>
             <div className="hw-phase hw-phase--done">
-              <span className="hw-phase__chk">[x]</span>
-              <span className="hw-phase__lbl">DEFINE</span>
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Define</span>
             </div>
             <div className="hw-phase hw-phase--now">
-              <span className="hw-phase__chk">[&gt;]</span>
-              <span className="hw-phase__lbl">DESIGN</span>
-              <span className="hw-cursor" aria-hidden="true">▋</span>
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Design</span>
+              <span className="hw-cursor" aria-hidden="true" />
             </div>
             <div className="hw-phase">
-              <span className="hw-phase__chk">[ ]</span>
-              <span className="hw-phase__lbl">DELIVER</span>
+              <span className="hw-phase__chk" />
+              <span className="hw-phase__lbl">Deliver</span>
             </div>
-          </div>
-          <div className="hw-pbar">
-            <span className="hw-pbar__lbl">PROGRESS</span>
-            <div className="hw-pbar__track">
-              <div className="hw-pbar__fill" />
-            </div>
-            <span className="hw-pbar__pct">67%</span>
           </div>
         </div>
       </>
     );
   }
+}
+
+// First-visit hero text: held back until the cards have left the prompt, then
+// each line fades and rises into place, slowly, one after another. Opacity and
+// transform only, so it stays on the GPU alongside the cards' glide.
+const HERO_TEXT_SLOW = {
+  hidden: { opacity: 0, y: 22 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+function RevealLayer(props) {
+  return <Reveal as="div" {...props} />;
+}
+
+// eslint-disable-next-line no-unused-vars
+function PlainLayer({ y, delay, amount, ...rest }) {
+  return <div {...rest} />;
 }
 
 async function copyToClipboard(text) {
@@ -209,6 +231,88 @@ export default function Hero() {
     }, {})
   );
   const wordIndexRef = useRef(0);
+  const windowRefs = useRef({});
+  const reduce = useReducedMotion();
+  // On a first visit the two cards are born from the loader's prompt: they stay
+  // hidden until the boot ends, then appear stacked on the prompt and glide
+  // apart to their resting places.
+  const splitIntro = PLAY_INTRO && !reduce;
+  const [awaitingSplit, setAwaitingSplit] = useState(splitIntro);
+  // While the cards travel out from the centre they cross the headline, so
+  // they ride above it until they land.
+  const [splitting, setSplitting] = useState(false);
+  // ...and the hero text waits for that moment too, then fades in behind them.
+  const [heroTextShown, setHeroTextShown] = useState(!splitIntro);
+
+  useEffect(() => {
+    if (!awaitingSplit) return undefined;
+
+    const onSplit = (event) => {
+      const prompt = event.detail;
+      // The loader lifted like a curtain instead (no cards on screen to hand
+      // off to): just bring the hero in.
+      if (!prompt) {
+        setHeroTextShown(true);
+        setAwaitingSplit(false);
+        return;
+      }
+      const flights = [];
+      FLOATING_WINDOWS.forEach((windowCard, i) => {
+        const el = windowRefs.current[windowCard.id];
+        if (!el || !prompt) return;
+        // Both cards start whole, stacked on the prompt's centre, and glide
+        // apart from there. A rotation spins a card about its centre, so the
+        // centre of its bounding box is its true resting centre.
+        const rest = el.getBoundingClientRect();
+        const dx = prompt.x + prompt.w / 2 - (rest.left + rest.width / 2);
+        const dy = prompt.y + prompt.h / 2 - (rest.top + rest.height / 2);
+        // they come out of the prompt a touch smaller, and grow as they glide
+        const onPrompt = `translate3d(${dx}px, ${dy}px, 0) rotate(0deg) scale(0.9)`;
+        const atRest = `translate3d(0px, 0px, 0) rotate(${windowCard.rotation}) scale(1)`;
+        // A critically damped spring (no bounce): it leaves the prompt softly,
+        // glides and settles without overshoot. Motion turns the spring into a
+        // CSS linear() curve on the Web Animations API, so the glide runs on
+        // the compositor and stays smooth while the page is still busy
+        // mounting. The second card trails by a beat.
+        const glide = animate(
+          el,
+          { transform: [onPrompt, atRest], opacity: [0, 1] },
+          {
+            transform: { type: 'spring', visualDuration: INTRO_HANDOFF_MS / 1000, bounce: 0, delay: i * 0.09 },
+            opacity: { duration: INTRO_SWAP_MS / 1000, ease: 'easeOut' },
+          }
+        );
+        // Motion writes the final values inline as it finishes; a frame later,
+        // hand the card back to its stylesheet, where its drag offset and tilt
+        // live (the values are identical, so nothing visibly changes).
+        flights.push(
+          new Promise((resolve) => {
+            glide.then(() => requestAnimationFrame(() => {
+              el.style.transform = '';
+              el.style.opacity = '';
+              resolve();
+            }));
+          })
+        );
+      });
+      setSplitting(true);
+      setHeroTextShown(true);
+      Promise.all(flights).then(() => setSplitting(false));
+      setAwaitingSplit(false);
+    };
+
+    window.addEventListener(INTRO_SPLIT_EVENT, onSplit);
+    // If the loader never splits (it lifts like a curtain where the cards are
+    // hidden), don't leave the cards waiting.
+    const fallback = setTimeout(() => {
+      setAwaitingSplit(false);
+      setHeroTextShown(true);
+    }, INTRO_FLOOR_MS + 3000);
+    return () => {
+      window.removeEventListener(INTRO_SPLIT_EVENT, onSplit);
+      clearTimeout(fallback);
+    };
+  }, [awaitingSplit]);
 
   useEffect(() => {
     let cycleTimer;
@@ -318,14 +422,23 @@ export default function Hero() {
 
   // The hero waits for the boot curtain only when the curtain is actually there.
   const revealDelay = PLAY_INTRO ? INTRO_REVEAL_DELAY : 0.05;
+  // The split animates the cards itself, so the layer must not also fade in.
+  const FloatingLayer = splitIntro ? PlainLayer : RevealLayer;
+  const textItem = splitIntro ? { variants: HERO_TEXT_SLOW } : {};
 
   return (
     <div className="hero">
       <div className="hero-bg" aria-hidden="true"></div>
       <div className="hero-inner">
-        <Stagger className="hero-text" onLoad stagger={0.12} delay={revealDelay}>
-          <StaggerItem as="p" className="hero-eyebrow">Product Designer &middot; Hyderabad, India</StaggerItem>
-          <StaggerItem as="h1" className="hero-title">
+        <Stagger
+          className="hero-text"
+          onLoad
+          {...(splitIntro
+            ? { stagger: 0.16, delay: 0.55, animate: heroTextShown ? 'show' : 'hidden' }
+            : { stagger: 0.12, delay: revealDelay })}
+        >
+          <StaggerItem as="p" className="hero-eyebrow" {...textItem}>Product Designer &middot; Hyderabad, India</StaggerItem>
+          <StaggerItem as="h1" className="hero-title" {...textItem}>
             Designing with
             <br />
             <span
@@ -335,12 +448,12 @@ export default function Hero() {
               {displayWord}
             </span>
           </StaggerItem>
-          <StaggerItem as="p" className="hero-desc">
+          <StaggerItem as="p" className="hero-desc" {...textItem}>
             Hi, I'm <span className="name-mark">Shanawaz</span>. Generalist product designer
             crafting thoughtful, user-centered experiences across systems, stories, and interfaces.
           </StaggerItem>
-          <StaggerItem className="hero-cta-wrap">
-            <button className="hero-cta" onClick={handleConnectClick}>
+          <StaggerItem className="hero-cta-wrap" {...textItem}>
+            <button className={`hero-cta${ctaCopied ? ' is-copied' : ''}`} onClick={handleConnectClick}>
               {ctaCopied ? 'Email Copied' : "Let's Connect"}
               <span className="hero-cta-icon" aria-hidden="true">
                 &rarr;
@@ -348,13 +461,19 @@ export default function Hero() {
             </button>
           </StaggerItem>
         </Stagger>
-        <Reveal as="div" className="hero-floating-layer" y={0} delay={revealDelay + 0.4} amount={0}>
+        <FloatingLayer
+          className={`hero-floating-layer${awaitingSplit ? ' is-awaiting-split' : ''}${splitting ? ' is-splitting' : ''}`}
+          y={0}
+          delay={revealDelay + 0.4}
+          amount={0}
+        >
           {FLOATING_WINDOWS.map((windowCard) => {
             const current = windowState[windowCard.id];
 
             return (
               <button
                 key={windowCard.id}
+                ref={(el) => { windowRefs.current[windowCard.id] = el; }}
                 type="button"
                 className={windowCard.className}
                 onPointerDown={handleWindowPointerDown(windowCard.id)}
@@ -374,7 +493,7 @@ export default function Hero() {
               </button>
             );
           })}
-        </Reveal>
+        </FloatingLayer>
       </div>
       <ConnectModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>

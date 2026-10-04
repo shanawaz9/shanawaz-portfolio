@@ -68,16 +68,26 @@ export default function PhotoStrip({ onPhotoClick }) {
             className={`photo-strip-track${manual ? ' photo-strip-track--manual' : ''}`}
             ref={trackRef}
           >
-            {allPhotos.map((photo, i) => (
-              <div
-                className="photo-strip-item"
-                key={i}
-                onClick={() => onPhotoClick(i % PHOTOS.length)}
-              >
-                <img src={photo.src} alt={photo.caption} loading="lazy" />
-                <div className="photo-strip-item-cap">{photo.caption}</div>
-              </div>
-            ))}
+            {/* The list is doubled for the seamless loop. Only the first copy
+                is exposed: the second is hidden from screen readers and the
+                tab order, so each photo is announced and reachable once. */}
+            {allPhotos.map((photo, i) => {
+              const isCopy = i >= PHOTOS.length;
+              return (
+                <button
+                  type="button"
+                  className="photo-strip-item"
+                  key={i}
+                  onClick={() => onPhotoClick(i % PHOTOS.length)}
+                  aria-label={isCopy ? undefined : `View photo: ${photo.caption}`}
+                  aria-hidden={isCopy || undefined}
+                  tabIndex={isCopy ? -1 : undefined}
+                >
+                  <img src={photo.src} alt="" loading="lazy" />
+                  <span className="photo-strip-item-cap" aria-hidden="true">{photo.caption}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -73,53 +73,6 @@ p.takeaway b{
 }
 p.bench-note{font-size:13px;line-height:1.6;color:var(--ink3);margin:0 0 var(--s5)}
 
-/* ---------- hand marker ----------
-   A highlighter stroke the way it lands in a paperback: the angled gradient
-   starts and ends short of the text, the second pass adds a band of uneven
-   density, and the lopsided radius keeps the ends from reading as a
-   rectangle. The classic marker yellow, carried at higher opacity than a
-   dark ink would need, because yellow only reads once it is nearly solid. */
-.mark{
-  --marker:255,222,47;
-  background-image:
-    linear-gradient(101deg,
-      rgba(var(--marker),0)   0.4%,
-      rgba(var(--marker),.72) 2.6%,
-      rgba(var(--marker),.64) 6%,
-      rgba(var(--marker),.46) 62%,
-      rgba(var(--marker),.68) 92%,
-      rgba(var(--marker),.22) 97%,
-      rgba(var(--marker),0)   99.3%),
-    linear-gradient(184deg,
-      rgba(var(--marker),0)   0%,
-      rgba(var(--marker),.30) 34%,
-      rgba(var(--marker),.10) 78%,
-      rgba(var(--marker),0)   100%);
-  background-size:100% 82%;
-  background-position:0 76%;
-  background-repeat:no-repeat;
-  padding:.16em .34em .2em;
-  margin:0 -.26em;
-  border-radius:.7em .25em .55em .3em;
-  -webkit-box-decoration-break:clone;box-decoration-break:clone;
-  color:inherit;text-decoration:none;
-}
-.mark.m2{
-  border-radius:.3em .65em .28em .6em;
-  padding:.2em .3em .14em;
-  background-size:100% 74%;
-  background-position:0 96%;
-}
-.mark.m3{
-  border-radius:.5em .5em .22em .75em;
-  padding:.14em .38em .22em;
-  margin:0 -.3em;
-  background-size:100% 90%;
-  background-position:0 42%;
-}
-.mark strong{color:inherit}
-@media print{.mark,.mark.m2,.mark.m3{background:rgba(255,222,47,.55);border-radius:0}}
-
 /* ---------- decision furniture ----------
    Small pieces that let the page show judgment rather than narrate it:
    a label for who owned a call, option cards, a chain from evidence to
@@ -205,24 +158,6 @@ p.bench-note{font-size:13px;line-height:1.6;color:var(--ink3);margin:0 0 var(--s
 }
 .notes .impl{color:var(--ink);font-weight:500}
 
-.cons{display:grid;gap:var(--s5);margin:var(--s5) 0;max-width:var(--measure)}
-.con{border-left:2px solid var(--rule);padding-left:var(--s4)}
-.con.is-mine{border-left-color:var(--accent)}
-.con h5{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;margin:0 0 var(--s3)}
-.con-r{display:grid;grid-template-columns:118px 1fr;gap:var(--s3);padding:7px 0}
-.con-r + .con-r{border-top:1px solid var(--rule2)}
-.con-r b{
-  font-size:9.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--ink4);padding-top:3px;
-}
-.con.is-mine .con-r.mine b{color:var(--accent)}
-/* the risk and the result carry the status colours */
-.con-r.is-risk b{color:var(--error)}
-.con-r.is-result b{color:var(--success)}
-.con-r span{font-size:14.5px;line-height:1.6;color:var(--ink2);letter-spacing:-0.002em}
-.con-r.mine span{color:var(--ink)}
-.con-r span strong{color:var(--ink);font-weight:700}
-
 /* measures we would use, clearly not results we have */
 .measures{display:grid;grid-template-columns:1fr 1fr;gap:10px var(--s5);margin:var(--s4) 0 var(--s3);max-width:var(--measure)}
 .measures span{position:relative;padding-left:20px;font-size:14.5px;line-height:1.55;color:var(--ink2);letter-spacing:-0.002em}
@@ -241,7 +176,6 @@ p.bench-note{font-size:13px;line-height:1.6;color:var(--ink3);margin:0 0 var(--s
   .opts{grid-template-columns:1fr;gap:var(--s5)}
   .a11y,.measures{grid-template-columns:1fr}
   .model{grid-template-columns:1fr;gap:var(--s4)}
-  .con-r{grid-template-columns:1fr;gap:3px}
 }
 
 /* ---------- figures ----------
@@ -312,21 +246,6 @@ figcaption strong{color:var(--ink2);font-weight:700}
   .trio{grid-template-columns:1fr;gap:var(--s6);width:100%}
   .trio-frame{aspect-ratio:4/5}
 }
-
-/* a screenshot that stays under NDA: shown, but not readable */
-.nda{position:relative;overflow:hidden;background:var(--paper2);border:1px solid var(--rule)}
-.nda img{display:block;width:100%;height:auto}
-.nda-veil{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:color-mix(in srgb, var(--paper) 62%, transparent);
-}
-.nda-badge{
-  display:inline-flex;align-items:center;gap:9px;background:var(--paper);
-  border:1px solid var(--rule);padding:9px 16px;
-  font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink2);
-}
-.nda-badge svg{width:14px;height:14px;color:var(--ink4);flex-shrink:0}
-@media(max-width:640px){.nda-badge{font-size:10px;padding:8px 14px}}
 
 .meme{max-width:300px}
 .meme img{display:block;width:100%;height:auto;border:1px solid var(--rule)}
@@ -443,10 +362,10 @@ figcaption strong{color:var(--ink2);font-weight:700}
 </div>
 
 
-<div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+<div class="progress" aria-hidden="true" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
 <!-- MOBILE CHROME -->
-<div class="mobbar">
+<nav class="mobbar" aria-label="Case study">
   <a class="mobbar-back" href="/#work">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
     Portfolio
@@ -455,7 +374,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
   <button class="mobbar-toggle" type="button" aria-expanded="false" aria-controls="mobnav">
     <span class="bars" aria-hidden="true"></span>Sections
   </button>
-</div>
+</nav>
 
 <nav class="mobnav" id="mobnav" aria-label="Case study sections">
   <div class="mobnav-in">
@@ -539,7 +458,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       Delivered under NDA. Internal screens and exact metrics are intentionally left out.
     </p>
 
-    <h4 class="subhead">In short</h4>
+    <h4 class="subhead" aria-level="2">In short</h4>
     <dl class="spec lbl">
       <div><dt>Problem</dt><dd>One structure was trying to serve members, providers and brokers. Content sat in more than one menu, a decade of additions had nowhere to go, and the menus broke on mobile.</dd></div>
       <div><dt>Constraints</dt><dd>An insurance product where copy needed client approval, a Bootstrap-based build, a brand color that changed mid-project, and a tight timeline.</dd></div>
@@ -547,7 +466,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <div class="own"><dt>Outcome</dt><dd>A persona-based platform, responsive across desktop and mobile, live in production.</dd></div>
     </dl>
 
-    <h4 class="subhead">What I owned</h4>
+    <h4 class="subhead" aria-level="2">What I owned</h4>
     <div class="chips">
       <span class="chip">Product structure</span>
       <span class="chip">Information architecture</span>
@@ -614,7 +533,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
         <li>User journey and task flow mapping <span class="li-note">How each audience moves through the product. This fed the priority order we later set in the card sort.</span></li>
       </ul>
 
-      <h4 class="subhead2">What the rest of the market was already doing</h4>
+      <h4 class="subhead2" aria-level="3">What the rest of the market was already doing</h4>
       <p>I reviewed the six for the patterns that repeat: navigation, member self-service, accessibility, personalization and mobile. Not to copy anyone, but to find where LDP could simplify.</p>
       <div class="ctable-wrap">
         <table class="ctable">
@@ -684,7 +603,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
         </div></li>
       </ol>
 
-      <h4 class="subhead2">The question I had to answer</h4>
+      <h4 class="subhead2" aria-level="3">The question I had to answer</h4>
       <div class="inline-note"><strong><span class="mark m3">How do we structure the information and navigation</span> around three different personas without making the product fragmented?</strong></div>
       <div class="insight"><p>Navigation was not a menu problem. It was a product structure problem.</p></div>
     </section>
@@ -693,7 +612,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <div class="chapter-no"><b>04</b>&nbsp;&nbsp;Restructuring the Product</div>
       <h2 class="title">Restructuring the product around how people actually use it</h2>
       <p>We could not redesign the navigation until we knew what belonged together, and for whom. So the first design work was structural, not visual.</p>
-      <h4 class="subhead2">Validating what belongs together</h4>
+      <h4 class="subhead2" aria-level="3">Validating what belongs together</h4>
       <div class="tag is-mine">My decision</div>
       <p>I ran <span class="mark">card sorting</span> inside the UX team, every page and tool on its own card, placed by <strong>what the client wanted surfaced</strong> against <strong>how the three personas actually look for information</strong>.</p>
       <p>Where those disagreed we argued the card out, then took a position to the client rather than a question. That set the priority order: what earns primary navigation, what sits a level down, and what had never earned its place.</p>
@@ -712,7 +631,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
     </figure>
 
-      <h4 class="subhead2">Choosing a structural model</h4>
+      <h4 class="subhead2" aria-level="3">Choosing a structural model</h4>
       <p>The card sort gave us content groupings, but not a model for the product. With three audiences to serve, <strong>members, providers and brokers</strong>, I put three directions to the client at the same wireframe fidelity.</p>
       <div class="opts">
         <div class="opt">
@@ -827,7 +746,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
         <div><dt>Why</dt><dd>It shows one level at a time with a back arrow to the last, so mobile follows the same persona, local nav, subcategory path as desktop.</dd></div>
       </dl>
 
-      <h4 class="subhead2">How the pattern translates</h4>
+      <h4 class="subhead2" aria-level="3">How the pattern translates</h4>
       <div class="model">
         <div>
           <b>Desktop</b>
@@ -889,7 +808,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <div class="tag">Design trade-off</div>
       <p>The top of the page is deliberately marketing-led: few surfaces, large imagery, short copy. The density is saved for the screens where members do the work.</p>
 
-      <h4 class="subhead2">A system, not just a new look</h4>
+      <h4 class="subhead2" aria-level="3">A system, not just a new look</h4>
       <p>The visual work mattered less as a style and more as the thing that would keep a large product consistent once we stepped away.</p>
       <ul class="article-list">
         <li><strong>Consistency.</strong> One type scale and one set of color roles across every page and breakpoint.</li>
@@ -897,7 +816,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
         <li><strong>Easier to build.</strong> Components stayed close to the Bootstrap set the build used, customized only where usability needed it.</li>
       </ul>
 
-      <h4 class="subhead2">Typography</h4>
+      <h4 class="subhead2" aria-level="3">Typography</h4>
       <p>We had to balance <span class="mark">SEO requirements</span>, readability, and visual hierarchy. One scale covers every breakpoint, so the hierarchy holds from desktop to phone.</p>
     <figure class="shots">
       <a href="/images/ldp/typography-system.jpg" target="_blank" rel="noopener noreferrer">
@@ -906,7 +825,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <figcaption>The typography system: one scale across all breakpoints, with weight and usage fixed per style.</figcaption>
     </figure>
 
-      <h4 class="subhead2">Color</h4>
+      <h4 class="subhead2" aria-level="3">Color</h4>
       <p>I aligned the color system with the client's brand guidelines. The primary brand color changed mid-project, so we explored and adapted the system around it.</p>
     <figure class="shots">
       <a href="/images/ldp/color-system.jpg" target="_blank" rel="noopener noreferrer">
@@ -915,7 +834,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <figcaption>The color system: every token tied to a named role, with the usage table driving text, action, surface and border decisions.</figcaption>
     </figure>
 
-      <h4 class="subhead2">Accessibility decisions</h4>
+      <h4 class="subhead2" aria-level="3">Accessibility decisions</h4>
       <p>Accessibility was handled inside the system rather than as a pass at the end. These are the decisions it produced, not an audit.</p>
       <div class="a11y">
         <div><b>Color contrast</b><span>Every token tied to a named role, so text, action, surface and border colors are chosen by the usage table rather than by eye.</span></div>
@@ -937,21 +856,21 @@ figcaption strong{color:var(--ink2);font-weight:700}
     </figure>
       <div class="cons">
         <div class="con is-mine">
-          <h5>Development wanted to start early</h5>
+          <h5 aria-level="3">Development wanted to start early</h5>
           <div class="con-r"><b>Constraint</b><span>Project managers and developers wanted to begin building while the design was still moving.</span></div>
           <div class="con-r is-risk"><b>Risk</b><span>Wireframes were being read as finished design. Building against an unsettled design would have bought a few weeks and cost rework.</span></div>
           <div class="con-r mine"><b>My response</b><span>As offshore design lead I held the sequence, and made the case for it to the people pushing against it.</span></div>
           <div class="con-r is-result"><b>Result</b><span>The process stayed intact: wireframes, approval, responsive, visual design, handoff.</span></div>
         </div>
         <div class="con">
-          <h5>Copy had to be settled before design</h5>
+          <h5 aria-level="3">Copy had to be settled before design</h5>
           <div class="con-r"><b>Constraint</b><span>Because this is an insurance product, the client wanted copy approved ahead of the design.</span></div>
           <div class="con-r is-risk"><b>Risk</b><span>In practice the two ran in parallel, and every copy change moved the wireframes again.</span></div>
           <div class="con-r mine"><b>My response</b><span>I kept wireframes and visual direction progressing alongside the copy rather than waiting on it.</span></div>
           <div class="con-r is-result"><b>Result</b><span>Copy became part of the design process instead of a gate in front of it.</span></div>
         </div>
         <div class="con">
-          <h5>The build was tied to Bootstrap</h5>
+          <h5 aria-level="3">The build was tied to Bootstrap</h5>
           <div class="con-r"><b>Constraint</b><span>Implementation was based on Bootstrap components, which set limits on what the UI could do.</span></div>
           <div class="con-r is-risk"><b>Risk</b><span>Designing past the component set would have produced screens the team could not build as drawn.</span></div>
           <div class="con-r mine"><b>My response</b><span>I worked with the developers to customize components only where usability needed it.</span></div>
@@ -960,7 +879,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
       <div class="insight"><p>Instead of cutting design steps to meet the timeline, <span class="mark">we negotiated the process</span>.</p></div>
 
-      <h4 class="subhead2">Working with the developers</h4>
+      <h4 class="subhead2" aria-level="3">Working with the developers</h4>
       <div class="tag is-mine">My role</div>
       <p>Visual approval was not the end. <span class="mark m2">We worked closely with developers during handoff</span> to make sure what got built matched what was designed.</p>
       <div class="flow">
@@ -976,7 +895,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       <div class="chapter-no"><b>08</b>&nbsp;&nbsp;Outcome</div>
       <h2 class="title">A restructured platform, live in production</h2>
       <p>It took several rounds of exploration, rejection and client feedback to get here. The result is one product organized around the people who use it, instead of around a decade of additions.</p>
-      <h4 class="subhead">What shipped</h4>
+      <h4 class="subhead" aria-level="3">What shipped</h4>
       <ul class="ship">
         <li>A product structure built around <strong>members, providers and brokers</strong>, approved and running in production</li>
         <li>A restructured <strong>information architecture</strong> and a full page-by-page sitemap</li>
@@ -1027,7 +946,7 @@ figcaption strong{color:var(--ink2);font-weight:700}
       </div>
     </div>
 
-      <h4 class="subhead2">How we would measure success</h4>
+      <h4 class="subhead2" aria-level="3">How we would measure success</h4>
       <p>The engagement did not give us access to post-launch analytics. If it had, these are the measures I would have held the design to.</p>
       <div class="measures">
         <span>Navigation success rate per persona</span>

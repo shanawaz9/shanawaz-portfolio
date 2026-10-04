@@ -10,6 +10,15 @@ export const EASE_OUT = [0.22, 1, 0.36, 1];
 export const INTRO_FLOOR_MS = 4500;
 export const INTRO_REVEAL_DELAY = 4.3;
 
+// Loader -> hero hand-off. When the boot finishes, the loader's prompt
+// announces where it is (INTRO_SPLIT_EVENT) and fades as it shrinks; the hero's
+// two window cards appear stacked on that spot and glide apart to their resting
+// places over INTRO_HANDOFF_MS.
+export const INTRO_SPLIT_EVENT = 'intro:split';
+export const INTRO_HANDOFF_MS = 1450;
+// how long the prompt takes to give way to the two cards on the same spot
+export const INTRO_SWAP_MS = 420;
+
 // A single child's entrance: soft fade + small rise, on a gentle spring.
 export const itemVariants = {
   hidden: { opacity: 0, y: 20 },

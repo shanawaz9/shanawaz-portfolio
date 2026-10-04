@@ -839,7 +839,7 @@
 }
 
 /* ---------- the framework, applied ----------
-   The shipped page beside the stages it answers, so the mapping can be
+   The first-draft page beside the stages it answers, so the mapping can be
    checked against the artwork instead of taken on trust. The markers are
    the Fig. 4 ones, because it is the same five stages one step later. */
 .applied{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:var(--s5);align-items:start}
@@ -895,10 +895,10 @@
 </div>
 
 
-<div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+<div class="progress" aria-hidden="true" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
 <!-- MOBILE CHROME -->
-<div class="mobbar">
+<nav class="mobbar" aria-label="Case study">
   <a class="mobbar-back" href="/#work">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
     Portfolio
@@ -907,7 +907,7 @@
   <button class="mobbar-toggle" type="button" aria-expanded="false" aria-controls="mobnav">
     <span class="bars" aria-hidden="true"></span>Sections
   </button>
-</div>
+</nav>
 
 <nav class="mobnav" id="mobnav" aria-label="Case study sections">
   <div class="mobnav-in">
@@ -1089,7 +1089,7 @@
         </div>
 
         <div class="audit-list">
-          <h4>Six problems</h4>
+          <h4 aria-level="3">Six problems</h4>
           <ol class="notes">
             <li><span><b>Too much at once.</b> 17&ndash;19 sections, all with the same visual weight.</span></li>
             <li><span><b>One flow for two audiences.</b> Applicants and attorneys were sent down the same path.</span></li>
@@ -1201,7 +1201,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Landing<i class="jam-aud">Applicants</i></h6>
+                    <h6 aria-level="3">Landing<i class="jam-aud">Applicants</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="attention"><span>Hero</span><i>Attention</i></li>
                       <li class="jam-chip" data-s="interest"><span>Visa categories</span><i>Interest</i></li>
@@ -1230,7 +1230,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Evaluation<i class="jam-aud">Applicants</i></h6>
+                    <h6 aria-level="3">Evaluation<i class="jam-aud">Applicants</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="action"><span>Evaluation form</span><i>Action</i></li>
                     </ul>
@@ -1241,7 +1241,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Attorney<i class="jam-aud is-second">Attorneys</i></h6>
+                    <h6 aria-level="3">Attorney<i class="jam-aud is-second">Attorneys</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="interest"><span>Attorney information</span><i>Interest</i></li>
                       <li class="jam-chip" data-s="action"><span>Talk to an attorney</span><i>Action</i></li>
@@ -1254,7 +1254,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Resources<i class="jam-aud">Both</i></h6>
+                    <h6 aria-level="3">Resources<i class="jam-aud">Both</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="interest"><span>Resources</span><i>Interest</i></li>
                       <li class="jam-chip" data-s="trust"><span>FAQ</span><i>Trust</i></li>
@@ -1266,7 +1266,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Articles<i class="jam-aud">Both</i></h6>
+                    <h6 aria-level="3">Articles<i class="jam-aud">Both</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="interest"><span>Articles</span><i>Interest</i></li>
                     </ul>
@@ -1277,7 +1277,7 @@
               <li class="jam-branch">
                 <div class="jam-row">
                   <div class="jam-dest">
-                    <h6>Contact us<i class="jam-aud">Both</i></h6>
+                    <h6 aria-level="3">Contact us<i class="jam-aud">Both</i></h6>
                     <ul>
                       <li class="jam-chip" data-s="action"><span>Contact us</span><i>Action</i></li>
                     </ul>
@@ -1355,11 +1355,11 @@
           <div class="scrub-stage">
             <div class="scrollshot-hd">
               <b>Landing page</b>
-              <span>As it shipped</span>
+              <span>First draft for framework understanding</span>
             </div>
             <div class="scrub-view">
               <img src="/images/visa/petitioniq-landing-aida.webp" width="1400" height="7798" decoding="async"
-                   alt="The shipped landing page as a single full-page screenshot: a hero reading Immigration Intelligence Before the Petition Is Written beside a sample eligibility panel, a Why PetitionIQ explainer, a four-step How it works strip, a free evaluation band, the EB-1A, EB-2 NIW and O-1 visa categories, three pricing tiers, a Built from patterns section, testimonials, an FAQ and a closing call to action.">
+                   alt="The first draft of the landing page as a single full-page screenshot: a hero reading Immigration Intelligence Before the Petition Is Written beside a sample eligibility panel, a Why PetitionIQ explainer, a four-step How it works strip, a free evaluation band, the EB-1A, EB-2 NIW and O-1 visa categories, three pricing tiers, a Built from patterns section, testimonials, an FAQ and a closing call to action.">
               <div class="glimpse-meter" aria-hidden="true"><i></i></div>
             </div>
           </div>

@@ -19,10 +19,15 @@
    and active states.
    ------------------------------------------------------------------- */
 :root{
-  /* Shiftlyn's brand red */
-  --accent:      #c1321f;
-  --accent-soft: rgba(193,50,31,.08);
-  --accent-line: rgba(193,50,31,.34);
+  /* Shiftlyn's brand orange. The brand hex is #D97706, but the accent
+     carries white text on the cover and Part bands and is used as small
+     text on paper, where #D97706 holds only 3.2:1. A darkened amber
+     (#B45309) passed but went brown under the cover's darker fall, so this
+     leans slightly red-orange to stay vivid: #C2410C, 5.2:1 on white,
+     4.7:1 on paper2. (--red is a legacy name the components still use.) */
+  --accent:      #c2410c;
+  --accent-soft: rgba(194,65,12,.08);
+  --accent-line: rgba(194,65,12,.34);
   --red:         var(--accent);
 }
 
@@ -206,7 +211,7 @@ footer .seq{margin:var(--s4) 0 0}
 .vtab[aria-selected="true"] .vtab-no{color:rgba(255,255,255,0.55)}
 .vtab:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 .vtab-panel[hidden]{display:none}
-.vtab-panel:focus{outline:none}
+.vtab-panel:focus:not(:focus-visible){outline:none}
 .vtab-panel .split{margin-top:0}
 .vtab-meta{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--ink4);padding-bottom:12px;margin-bottom:var(--s4);border-bottom:1px solid var(--line)}
 .vtab-meta b{color:var(--red)}
@@ -336,10 +341,10 @@ html.js-motion :is(
   <a href="https://drive.google.com/file/d/17dqLMiZSPHW2qX38N2fS5N0pazbWhBv8/view?usp=sharing" target="_blank" rel="noreferrer">Resume &#8599;</a>
 </div>
 
-<div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+<div class="progress" aria-hidden="true" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
 <!-- MOBILE CHROME -->
-<div class="mobbar">
+<nav class="mobbar" aria-label="Case study">
   <a class="mobbar-back" href="/#work">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
     Portfolio
@@ -348,7 +353,7 @@ html.js-motion :is(
   <button class="mobbar-toggle" type="button" aria-expanded="false" aria-controls="mobnav">
     <span class="bars" aria-hidden="true"></span>Sections
   </button>
-</div>
+</nav>
 
 <nav class="mobnav" id="mobnav" aria-label="Case study sections">
   <div class="mobnav-in">
@@ -505,7 +510,7 @@ html.js-motion :is(
   <p>I didn't want to build the whole ecosystem at once. I started with two sets of goals: one for users, one for the business.</p>
   <div class="ba">
     <div class="after">
-      <h5>User goal</h5>
+      <h5 aria-level="3">User goal</h5>
       <ul>
         <li>Know which skills AI puts at risk</li>
         <li>Choose a direction: upskill, adapt or pivot</li>
@@ -513,7 +518,7 @@ html.js-motion :is(
       </ul>
     </div>
     <div class="after">
-      <h5>Business goal</h5>
+      <h5 aria-level="3">Business goal</h5>
       <ul>
         <li>Show people where they stand, and guide them</li>
         <li>Hold healthy conversion and retention</li>
@@ -548,7 +553,7 @@ html.js-motion :is(
 </div>
 <div class="callout">
   <div class="icon-badge green" style="margin:0"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
-  <div><h5>The question the MVP had to answer</h5><p>Will people find value in understanding their <strong>AI readiness</strong>? If yes, I could build the rest around it.</p></div>
+  <div><h5 aria-level="3">The question the MVP had to answer</h5><p>Will people find value in understanding their <strong>AI readiness</strong>? If yes, I could build the rest around it.</p></div>
 </div>
 <div class="shots mvp-shots">
   <div>
@@ -581,11 +586,11 @@ html.js-motion :is(
   <p>I tested the MVP with about <strong>20&ndash;25 users</strong>, looking for usefulness, not just usability.</p>
   <div class="ba">
     <div>
-      <h5>What they liked</h5>
+      <h5 aria-level="4">What they liked</h5>
       <ul><li>Personalised recommendations</li><li>Knowing their AI readiness</li><li>Clearer career direction</li></ul>
     </div>
     <div class="after">
-      <h5>What they wanted more of</h5>
+      <h5 aria-level="4">What they wanted more of</h5>
       <ul><li>Learning resources</li><li>Deeper recommendations</li><li>AI updates for their profession</li></ul>
     </div>
   </div>
@@ -673,7 +678,7 @@ html.js-motion :is(
   <div class="split">
     <div class="frame">
       <div class="frame-bar"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-url">shiftlyn.com/results</span></div>
-      <div class="frame-scroll" tabindex="0" aria-label="First full report, scrollable"><img src="/resultspage.jpeg" alt="The first full Shiftlyn report: a score, a multicolour gauge with a separate safe, moderate and risk legend, and the score explained in three prose paragraphs"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
+      <div class="frame-scroll" role="region" tabindex="0" aria-label="First full report, scrollable"><img src="/resultspage.jpeg" alt="The first full Shiftlyn report: a score, a multicolour gauge with a separate safe, moderate and risk legend, and the score explained in three prose paragraphs"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
     </div>
     <div>
       <div class="vtab-meta"><b>V1</b> &middot; First full report</div>
@@ -705,7 +710,7 @@ html.js-motion :is(
     <div class="split">
       <div class="frame">
         <div class="frame-bar"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-url">shiftlyn.com/results</span></div>
-        <div class="frame-scroll" tabindex="0" aria-label="Results page before payment, scrollable"><img src="/beforepayment.jpeg" alt="Shiftlyn results page before payment: score with the risk gauge, the skills table, one free skill, and the remaining roadmap blurred behind an unlock card"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
+        <div class="frame-scroll" role="region" tabindex="0" aria-label="Results page before payment, scrollable"><img src="/beforepayment.jpeg" alt="Shiftlyn results page before payment: score with the risk gauge, the skills table, one free skill, and the remaining roadmap blurred behind an unlock card"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
       </div>
       <div>
         <div class="vtab-meta"><b>V2</b> &middot; Before payment</div>
@@ -718,7 +723,7 @@ html.js-motion :is(
     <div class="split">
       <div class="frame">
         <div class="frame-bar"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-url">shiftlyn.com/results</span></div>
-        <div class="frame-scroll" tabindex="0" aria-label="Results page after payment, scrollable"><img src="/new%20results%20page.jpeg" alt="The current Shiftlyn report: a status pill above the score, a cleaner gauge, the reasoning rebuilt as a skills table with low, medium and high exposure chips, and a ranked skill roadmap with cited evidence"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
+        <div class="frame-scroll" role="region" tabindex="0" aria-label="Results page after payment, scrollable"><img src="/new%20results%20page.jpeg" alt="The current Shiftlyn report: a status pill above the score, a cleaner gauge, the reasoning rebuilt as a skills table with low, medium and high exposure chips, and a ranked skill roadmap with cited evidence"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
       </div>
       <div>
         <div class="vtab-meta"><b>V2</b> &middot; After payment</div>
@@ -770,7 +775,8 @@ html.js-motion :is(
   <div class="chapter-no"><b>04</b>Conversion</div>
   <h2 class="title">The paywall comes after the payoff.</h2>
   <p>The result now delivered value. Then came the harder ask: payment.</p>
-  <p>Asking before users understood their result would hurt conversion. So I drew the line between knowing and doing.</p>
+  <p>This is where conversion happens. The free result before payment gives the final push, but conversion really starts from the very first screen of the application.</p>
+  <p>Asking for payment before users understood their result would hurt it. So I drew the line between knowing and doing.</p>
 </div></section>
 
 <div class="w">
@@ -825,7 +831,7 @@ html.js-motion :is(
 </div></section>
 
 <div class="w">
-<div class="tbl-wrap">
+<div class="tbl-wrap" role="region" tabindex="0" aria-label="Login methods compared">
 <table class="tbl">
   <thead><tr><th>Pattern</th><th>Main issue</th><th>Fit after payment</th></tr></thead>
   <tbody>
@@ -848,7 +854,7 @@ html.js-motion :is(
   <p>I avoided login before payment because forced account creation adds checkout friction. Baymard reports <strong>19% of shoppers abandon checkout when forced to create an account</strong>. (<a href="https://baymard.com/blog/reduce-cart-abandonment" target="_blank" rel="noopener">Baymard Institute</a>)</p>
   <p>When the user returns as an existing user, they verify the <strong>same purchase email with an Email OTP</strong>. This confirms ownership of the email and creates their authenticated session, without passwords, OAuth choices, or resets.</p>
   <p>Email OTP is an established passwordless authentication method supported by platforms such as <strong>Microsoft Entra, Amazon Cognito, and ServiceNow</strong>. (<a href="https://github.com/MicrosoftDocs/entra-docs/blob/main/docs/identity-platform/reference-native-authentication-api.md" target="_blank" rel="noopener">GitHub</a>)</p>
-  <h5>Design principle</h5>
+  <h5 aria-level="4">Design principle</h5>
   <div class="pull"><p><strong>Don't make users authenticate before they have value. Authenticate them when access to that value matters.</strong></p></div>
 </div>
 <div class="t">
@@ -870,7 +876,7 @@ html.js-motion :is(
 <div class="split">
   <div class="frame">
     <div class="frame-bar"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-url">shiftlyn.com</span></div>
-    <div class="frame-scroll" tabindex="0" aria-label="Shiftlyn landing page, scrollable"><img src="/landingpage.jpeg" alt="Shiftlyn landing page: full scroll showing the hero, trust signals, testimonials, FAQ, and final call to action"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
+    <div class="frame-scroll" role="region" tabindex="0" aria-label="Shiftlyn landing page, scrollable"><img src="/landingpage.jpeg" alt="Shiftlyn landing page: full scroll showing the hero, trust signals, testimonials, FAQ, and final call to action"><div class="scrub-meter" aria-hidden="true"><i></i></div></div>
   </div>
   <ul class="fw-list">
     <li class="fw-item"><div class="fw-num">C</div><div class="fw-b"><strong>Clarity</strong><p>One message, one CTA.</p></div></li>
@@ -1239,6 +1245,9 @@ Array.prototype.forEach.call(document.querySelectorAll('.scrubfig'),function(roo
   function layout(){
     var on=wide.matches;
     root.classList.toggle('is-scrub',on);
+    /* pinned frames don't scroll themselves, so they leave the tab order;
+       on phones they scroll inside and stay keyboard-reachable */
+    Array.prototype.forEach.call(root.querySelectorAll('.frame-scroll'),function(v){v.tabIndex=on?-1:0;});
     track.style.height='';
     if(on){
       pinTop();

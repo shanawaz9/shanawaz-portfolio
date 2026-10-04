@@ -64,10 +64,16 @@ export default function Typewriter({
     };
   }, [active, text, reduce, startDelay, slowMs, fastMs]);
 
+  // Screen readers get the whole text up front, whether or not the type-in
+  // has started; the letter-by-letter output is visual only. Without this a
+  // heading or link reads as empty until the animation reaches it.
   return (
     <Tag className={className} {...rest}>
-      {output}
-      {showCaret && active && !done && <span className="type-caret" aria-hidden="true" />}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {output}
+        {showCaret && active && !done && <span className="type-caret" />}
+      </span>
     </Tag>
   );
 }

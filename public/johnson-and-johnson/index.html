@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Johnson &amp; Johnson &middot; Conversational AI &amp; GRC Platform</title>
 <meta name="robots" content="noindex, nofollow, noimageindex">
-<meta name="description" content="A confidential product design engagement for Johnson &amp; Johnson: an AI-assisted conversational layer inside an enterprise GRC and Identity &amp; Access Management platform.">
+<meta name="description" content="A compliance platform used by 600,000+ people. I joined as the only designer and helped turn it into a simpler, faster product with an AI assistant built in.">
 <link rel="preload" href="/cs/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/cs/fonts/general-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/cs/system.css">
@@ -14,8 +14,8 @@
 /* -------------------------------------------------------------------
    JOHNSON & JOHNSON - project layer.
    This case study is text-only under NDA, so almost everything it needs
-   is already in the shared system. What is left is the brand accent and
-   two components this page alone uses.
+   is already in the shared system (including the hand marker and the
+   problem cards). What is left is the brand accent and the author box.
    ------------------------------------------------------------------- */
 :root{
   /* Johnson & Johnson's brand red, used only as a marker: chapter
@@ -26,8 +26,20 @@
 
 }
 
-/* a paragraph that qualifies rather than asserts */
-p.dim{color:var(--ink3);font-size:15.5px}
+/* the cover's product shot is blurred in the file itself, under NDA; the
+   frame is the .nda box, so the image drops its own border */
+.hero-shot.nda img{border:0}
+
+/* the NDA note is the first thing a reader needs to know here, so it is
+   a callout rather than the system's quiet footnote line */
+.nda-line.is-loud{
+  max-width:var(--measure);margin-top:var(--s5);
+  padding:var(--s3) var(--s4);gap:12px;
+  background:var(--accent-soft);border-left:3px solid var(--accent);
+  font-size:15px;color:var(--ink2);
+}
+.nda-line.is-loud svg{width:18px;height:18px;margin-top:2px;color:var(--accent)}
+.nda-line.is-loud strong{color:var(--accent)}
 
 /* ---------- author box ---------- */
 .authorbox{display:flex;gap:18px;align-items:flex-start}
@@ -77,10 +89,10 @@ p.dim{color:var(--ink3);font-size:15.5px}
 </div>
 
 
-<div class="progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+<div class="progress" aria-hidden="true" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
 <!-- MOBILE CHROME -->
-<div class="mobbar">
+<nav class="mobbar" aria-label="Case study">
   <a class="mobbar-back" href="/#work">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
     Portfolio
@@ -89,18 +101,17 @@ p.dim{color:var(--ink3);font-size:15.5px}
   <button class="mobbar-toggle" type="button" aria-expanded="false" aria-controls="mobnav">
     <span class="bars" aria-hidden="true"></span>Sections
   </button>
-</div>
+</nav>
 
 <nav class="mobnav" id="mobnav" aria-label="Case study sections">
   <div class="mobnav-in">
     <div class="mobnav-kicker">Johnson &amp; Johnson &middot; On this page</div>
     <ul>
-      <li><a href="#p1-overview"><span class="n">01</span><span class="lbl">Overview</span></a></li>
-      <li><a href="#p1-role"><span class="n">02</span><span class="lbl">Role &amp; responsibilities</span></a></li>
-      <li><a href="#p1-process"><span class="n">03</span><span class="lbl">Process &amp; design decisions</span></a></li>
-      <li><a href="#p1-collab"><span class="n">04</span><span class="lbl">Collaboration</span></a></li>
-      <li><a href="#p1-outcomes"><span class="n">05</span><span class="lbl">Outcomes &amp; impact</span></a></li>
-      <li><a href="#p1-takeaway"><span class="n">&middot;</span><span class="lbl">Key takeaway</span></a></li>
+      <li><a href="#jj-beginning"><span class="n">01</span><span class="lbl">The beginning</span></a></li>
+      <li><a href="#jj-growing"><span class="n">02</span><span class="lbl">Growing the product and the team</span></a></li>
+      <li><a href="#jj-problems"><span class="n">03</span><span class="lbl">The problems and how I solved them</span></a></li>
+      <li><a href="#jj-result"><span class="n">04</span><span class="lbl">The result</span></a></li>
+      <li><a href="#jj-learned"><span class="n">&middot;</span><span class="lbl">What I learned</span></a></li>
     </ul>
     <div class="mobnav-foot">Confidential: details abstracted under NDA</div>
   </div>
@@ -117,12 +128,11 @@ p.dim{color:var(--ink3);font-size:15.5px}
     <div class="rail-project">Johnson &amp; Johnson</div>
     <nav aria-label="Case study sections">
       <ul>
-        <li><a class="raillink" href="#p1-overview"><span class="n">01</span><span class="lbl">Overview</span></a></li>
-        <li><a class="raillink" href="#p1-role"><span class="n">02</span><span class="lbl">Role &amp; responsibilities</span></a></li>
-        <li><a class="raillink" href="#p1-process"><span class="n">03</span><span class="lbl">Process &amp; design decisions</span></a></li>
-        <li><a class="raillink" href="#p1-collab"><span class="n">04</span><span class="lbl">Collaboration</span></a></li>
-        <li><a class="raillink" href="#p1-outcomes"><span class="n">05</span><span class="lbl">Outcomes &amp; impact</span></a></li>
-        <li><a class="raillink" href="#p1-takeaway"><span class="n">&middot;</span><span class="lbl">Key takeaway</span></a></li>
+        <li><a class="raillink" href="#jj-beginning"><span class="n">01</span><span class="lbl">The beginning</span></a></li>
+        <li><a class="raillink" href="#jj-growing"><span class="n">02</span><span class="lbl">Growing the product and the team</span></a></li>
+        <li><a class="raillink" href="#jj-problems"><span class="n">03</span><span class="lbl">The problems and how I solved them</span></a></li>
+        <li><a class="raillink" href="#jj-result"><span class="n">04</span><span class="lbl">The result</span></a></li>
+        <li><a class="raillink" href="#jj-learned"><span class="n">&middot;</span><span class="lbl">What I learned</span></a></li>
       </ul>
     </nav>
     <div class="rail-foot">Confidential: details abstracted under NDA</div>
@@ -132,94 +142,104 @@ p.dim{color:var(--ink3);font-size:15.5px}
   <main class="article">
   <div class="article-in">
 
-    <header class="masthead is-flat">
+    <header class="masthead">
     <div class="kicker">
       <i></i><span>Johnson &amp; Johnson</span><span class="sep">&middot;</span>
-      <span>Senior Product Designer</span><span class="sep">&middot;</span>
+      <span>Senior UX Designer</span><span class="sep">&middot;</span>
       <span>2024&ndash;2026</span><span class="sep">&middot;</span>
-      <span>5 min read</span>
+      <span>4 min read</span>
     </div>
 
-    <h1>Conversational AI &amp; GRC Platform (IAM)</h1>
-    <p class="lead">A conversational AI layer designed into an enterprise Governance, Risk &amp; Compliance platform, so compliance teams could ask a question in plain language instead of hunting across dashboards.</p>
+    <h1>Conversational AI &amp; GRC Platform</h1>
+    <p class="lead">A compliance platform used by 600,000+ people. I joined as the only designer and helped turn it into a simpler, faster product with an AI assistant built in.</p>
     </header>
+
+    <div class="hero-shot nda">
+      <img src="/images/jnj/jnj-hero-nda.jpg" width="1600" height="798" loading="eager" decoding="async"
+           alt="The platform's end-user home: a navigation sidebar, a request status summary and a grid of access tasks, with the AI assistant docked at the bottom. Obscured, withheld under NDA.">
+      <div class="nda-veil">
+        <span class="nda-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Withheld under NDA
+        </span>
+      </div>
+    </div>
 
     <div class="meta">
       <div><b>Client</b><span>Johnson &amp; Johnson</span></div>
-      <div><b>Role</b><span>Senior Product Designer</span></div>
-      <div><b>Releases</b><span>13+ shipped</span></div>
-      <div><b>Domain</b><span>Enterprise GRC &amp; AI</span></div>
+      <div><b>Role</b><span>Solo Designer &rarr; Senior UX Designer</span></div>
       <div><b>Timeline</b><span>2024&ndash;2026</span></div>
-      <div><b>Status</b><span>NDA: abstracted</span></div>
-      <div class="span"><b>Focus</b><span>Identity &amp; Access Management &middot; Conversational AI</span></div>
+      <div class="span"><b>Focus</b><span>Access management &middot; Conversational AI &middot; Complex workflows &middot; Dashboards &middot; Design system</span></div>
     </div>
 
-    <p class="nda-line">
+    <div class="stats">
+      <div><b>600,000+</b><span>Users</span></div>
+      <div><b>13+</b><span>Releases</span></div>
+      <div><b>4.2 / 5</b><span>User rating</span></div>
+    </div>
+
+    <p class="nda-line is-loud">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <span><strong>A note on confidentiality.</strong> This project was built under NDA for an enterprise client. Screenshots, exact metrics, and internal product details have been intentionally left out: what follows describes the problem, process, and role, not the proprietary product itself.</span>
+      <span><strong>About the NDA.</strong> Screens and internal details are not shown. This page shares the story: the problems, the decisions, and the results.</span>
     </p>
 
-    <section class="chapter" id="p1-overview">
+    <section class="chapter" id="jj-beginning">
       <div class="chapter-no"><b>01</b></div>
-      <h2 class="title">Overview</h2>
-      <p>I worked on an enterprise-grade GRC (Governance, Risk, and Compliance) platform focused on <strong>Identity &amp; Access Management</strong>, and an AI-powered conversational assistant designed to help users query complex GRC information in plain language.</p>
-      <p>The product was used internally by <strong>compliance teams, auditors, and business stakeholders</strong> operating in a highly regulated environment, where every workflow, approval, and data point carries real governance weight.</p>
+      <h2 class="title">The beginning</h2>
+      <p>I joined as the only designer on a Governance, Risk &amp; Compliance (GRC) platform for managing who has access to what. Its users were compliance teams, auditors, and business teams.</p>
+      <p>The product was powerful but hard to use. Pages were crowded with data, tasks took too many steps, and screens looked and worked differently from each other.</p>
+      <p>My goal was not to remove the detail, since auditors need it. It was to <span class="mark">make that detail easy to move through</span>, so users always know their next step.</p>
     </section>
 
-    <section class="chapter" id="p1-role">
+    <section class="chapter" id="jj-growing">
       <div class="chapter-no"><b>02</b></div>
-      <h2 class="title">Role &amp; responsibilities</h2>
-      <p>The platform evolved continuously across more than a dozen releases, so the work wasn't a single redesign: it was maintaining design integrity over a long-running, high-stakes product.</p>
-      <ul class="article-list">
-        <li><strong>Simplified complex, multi-step user flows</strong>, significantly reducing task completion time.</li>
-        <li><strong>Redesigned the UI</strong> across the application, aligning it with Material UI and industry standards.</li>
-        <li><strong>Built and maintained a design system</strong> to ensure reusability, consistency, and scalability.</li>
-        <li><strong>Supported 13+ product releases</strong>, ensuring design continuity across iterations.</li>
-        <li><strong>Designed new compliance and approval workflows</strong> aligned with enterprise governance rules.</li>
-        <li><strong>Improved data analytics interfaces</strong> to make insights clearer and more actionable.</li>
-        <li><strong>Ensured pixel-perfect UI handoff</strong> by closely collaborating with developers.</li>
-        <li><strong>Aligned the entire product experience</strong> with GRC-specific branding guidelines.</li>
-      </ul>
+      <h2 class="title">Growing the product and the team</h2>
+      <p>Release by release, the product grew. We added compliance flows, delegation, approver flows, dashboards, and a conversational AI assistant.</p>
+      <p>The team grew too. I moved from solo designer to Senior UX Designer and <span class="mark m2">helped hire 6 designers</span>. I set up the design system and the way we worked, so the whole team designed to one standard.</p>
+
     </section>
 
-    <section class="chapter" id="p1-process">
+    <section class="chapter" id="jj-problems">
       <div class="chapter-no"><b>03</b></div>
-      <h2 class="title">Process &amp; design decisions</h2>
-      <h3>Conversational AI for GRC</h3>
-      <p>A key part of my work involved designing an AI assistant embedded within the GRC platform: one built to act as a support layer, not a shortcut around understanding. I functioned as the design bridge between compliance complexity and usable interfaces, balancing technical feasibility against usability.</p>
-      <ol class="article-list">
-        <li><strong>Ask in plain language</strong>: a GRC question typed the way a person would actually ask it.</li>
-        <li><strong>Interpret intent</strong>: conversational UX patterns tuned for compliance-specific queries.</li>
-        <li><strong>Retrieve GRC data</strong>: pulled from the underlying compliance and access data, with no manual dashboard hunting.</li>
-        <li><strong>Support the decision</strong>: the response is framed to help the user decide, not to act on their behalf.</li>
+      <h2 class="title">The problems and how I solved them</h2>
+      <p>Five problems shaped most of the work.</p>
+      <ol class="notes">
+        <li><div><b>Pages with too much data</b><span>Users had to scan crowded pages to find what mattered.</span></div></li>
+        <li><div><b>Workflows with too many steps</b><span>Key tasks like compliance, delegation, and approvals took too many steps.</span></div></li>
+        <li><div><b>Answers spread across dashboards</b><span>A simple question meant clicking through several dashboards or asking the compliance team.</span></div></li>
+        <li><div><b>Screens that didn't match</b><span>Similar screens looked and worked differently.</span></div></li>
+        <li><div><b>Keeping quality at release speed</b><span>With frequent releases, details can get lost between design and code.</span></div></li>
       </ol>
-      <p>Contributions here included exploring natural language interaction models suited for enterprise and compliance contexts, designing AI responses that supported decision-making rather than automating it away, and improving overall UI cleanliness so AI-led interactions didn't feel bolted onto an existing dashboard.</p>
-      <div class="inline-note"><p><strong>Guiding principle:</strong> focus on conversational UX instead of reverting to clickable UI actions: the assistant helps users understand, rather than acting on their behalf.</p></div>
-    </section>
 
-    <section class="chapter" id="p1-collab">
-      <div class="chapter-no"><b>04</b></div>
-      <h2 class="title">Collaboration</h2>
-      <p>I worked closely with <strong>AI engineers, full-stack developers, business analysts, QA, and product managers</strong>: aligning conversational logic with what the interface could realistically surface, keeping handoff pixel-perfect across a fast release cadence, and balancing enterprise governance rules against day-to-day usability.</p>
-    </section>
-
-    <section class="chapter" id="p1-outcomes">
-      <div class="chapter-no"><b>05</b></div>
-      <h2 class="title">Outcomes &amp; impact</h2>
-      <p class="dim">Exact metrics are confidential, but the direction of impact was consistent across releases:</p>
+      <h3>How I solved them</h3>
       <ul class="article-list">
-        <li>Faster access to GRC information, without navigating multiple dashboards.</li>
-        <li>Reduced reliance on manual compliance teams for routine queries.</li>
-        <li>Increased confidence in AI-assisted workflows.</li>
-        <li>A reusable Conversational UX framework applicable across other GRC domains.</li>
+        <li><strong>User research.</strong> Talked to users and stakeholders to learn how compliance work really happens.</li>
+        <li><strong>Defining the problem.</strong> Turned business requirements into clear user problems.</li>
+        <li><strong>User journeys.</strong> Used user journeys and storyboards to find where people got stuck.</li>
+        <li><strong>Crazy 8s rapid ideation.</strong> Sketched many ideas quickly with Crazy 8s before picking one.</li>
+        <li><strong>Stakeholder collaboration.</strong> I worked closely with product owners and business stakeholders to keep every change within the agreed requirements. When a bigger design change would clearly help users, <span class="mark m3">I made the case using user journeys and data</span>, and we agreed on it together.</li>
+        <li><strong>Design reviews.</strong> Checked designs with product owners, business analysts, and AI engineers.</li>
+        <li><strong>Developer handoff.</strong> Shared clear specs and components. My technical background helped the build match the design.</li>
       </ul>
     </section>
 
-    <section class="chapter" id="p1-takeaway">
+    <section class="chapter" id="jj-result">
+      <div class="chapter-no"><b>04</b></div>
+      <h2 class="title">The result</h2>
+      <p>The product serves 600,000+ users and holds a <span class="mark m3">4.2 out of 5 rating</span> from its in-app feedback tool.</p>
+      <ul class="article-list">
+        <li>Users find answers and finish tasks faster.</li>
+        <li>The business gets fewer routine requests to compliance teams.</li>
+        <li>The client got a consistent, on-brand product across 13+ releases.</li>
+        <li>The company gained 6 new designers, a design system, and an AI pattern it can reuse.</li>
+      </ul>
+    </section>
+
+    <section class="chapter" id="jj-learned">
       <div class="chapter-no"><b>&middot;</b></div>
-      <h2 class="title">Key takeaway</h2>
-      <blockquote><p>Good UX doesn't simplify compliance: it makes it navigable.</p></blockquote>
-      <p>Designing for enterprise GRC systems reinforced that the job isn't to hide complexity: auditors and compliance teams need the rigor. It's to give that complexity a shape people can move through without getting lost.</p>
+      <h2 class="title">What I learned</h2>
+      <blockquote><p>Good design doesn't make compliance simple. It makes it easy to find your way through.</p></blockquote>
+      <p>As a product designer, I learned that <span class="mark m2">big product changes rest on strong basics</span>: a design system, a clear process, and a team working to one standard. That is what let us bring AI into the product without losing users' trust.</p>
     </section>
 
     <div class="authorbox">

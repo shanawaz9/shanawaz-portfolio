@@ -69,7 +69,7 @@ export default function CTA() {
     <div className="cta">
       <div className="cta-panel anim" ref={panelRef}>
         <div className="cta-chrome" aria-hidden="true">
-          <span className="cta-chrome-name">CONNECT.EXE</span>
+          <span className="cta-chrome-name"><span className="cta-chrome-live" />CONNECT.EXE</span>
           <span className="cta-chrome-btns">
             <span className="cta-chrome-btn">_</span>
             <span className="cta-chrome-btn">&#9633;</span>
@@ -119,7 +119,7 @@ export default function CTA() {
             )}
           </p>
 
-          <a href={`mailto:${EMAIL_ADDRESS}`} className="cta-email" onClick={handleEmailCopy}>
+          <a href={`mailto:${EMAIL_ADDRESS}`} className={`cta-email${copied ? ' is-copied' : ''}`} onClick={handleEmailCopy}>
             <span className="cta-email-prefix" aria-hidden="true">&gt;</span>
             {emailDone ? (
               copied ? 'Email copied to clipboard' : EMAIL_ADDRESS
@@ -134,6 +134,10 @@ export default function CTA() {
               />
             )}
           </a>
+          {/* the link text swap isn't announced on its own */}
+          <p className="sr-only" role="status" aria-live="polite">
+            {copied ? 'Email address copied to clipboard' : ''}
+          </p>
 
           <div className={`cta-socials${emailDone ? ' visible' : ''}`}>
             <a href="https://www.linkedin.com/in/shanawaz-hussain-42335b12b" target="_blank" rel="noreferrer" className="cta-social-link" title="LinkedIn" aria-label="LinkedIn">in</a>
