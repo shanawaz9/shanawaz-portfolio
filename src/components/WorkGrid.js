@@ -5,8 +5,8 @@ import { Stagger, StaggerItem } from './Stagger';
 const WORKS = [
   {
     href: '/shiftlyn',
-    img: '/images/shiftlyn/shiftlyn-card-thumb-v2.jpg',
-    alt: 'The Shiftlyn landing page on a desktop monitor, its headline reading "See how AI-ready your skills really are"',
+    img: '/images/shiftlyn/shiftlyn-card-thumb-v3.webp',
+    alt: 'Shiftlyn, AI Career Readiness Platform: the landing page on a desktop monitor, its headline reading "See how AI-ready your skills really are"',
     year: '2025',
     tag: 'Case study',
     title: 'Shiftlyn: AI-Assisted Product Design, from MVP to Complete Product',
