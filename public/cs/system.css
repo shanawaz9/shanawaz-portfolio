@@ -545,6 +545,23 @@ ol.article-list li::before{
 .shifts .now{padding-left:var(--s4)}
 .shifts-head span:last-child{padding-left:var(--s4)}
 
+/* ---------- part divider ----------
+   Each part opens on a band of the project colour, an echo of the cover,
+   so the reader feels the act change. */
+.part{margin:var(--s9) 0 0;padding:var(--s6) clamp(24px,3vw,40px);background:var(--accent);color:#fff}
+.part-inner{display:flex;align-items:baseline;gap:var(--s4);flex-wrap:wrap}
+.part-no{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;flex-shrink:0}
+.part-title{
+  font-family:var(--head);font-size:clamp(34px,4.6vw,60px);font-weight:800;color:#fff;
+  letter-spacing:-0.035em;line-height:1;flex-shrink:0;margin:0;max-width:none;
+}
+.part-desc{font-size:14.5px;color:#fff;line-height:1.5;max-width:340px;margin:0 0 0 auto;text-align:right}
+.part + .chapter{margin-top:var(--s7);padding-top:0;border-top:0}
+@media(max-width:760px){
+  .part-inner{gap:var(--s2)}
+  .part-desc{margin-left:0;text-align:left;max-width:none;flex-basis:100%}
+}
+
 /* ---------- key numbers ---------- */
 .stats{
   display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4) var(--s5);
