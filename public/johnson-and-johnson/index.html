@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Johnson &amp; Johnson &middot; Conversational AI &amp; GRC Platform</title>
 <meta name="robots" content="noindex, nofollow, noimageindex">
-<meta name="description" content="A compliance platform used by 600,000+ people. I helped make it simpler and faster, and designed its AI assistant.">
+<meta name="description" content="A compliance platform used by 200,000+ people. I helped make it simpler and faster, and designed its AI assistant.">
 <link rel="preload" href="/cs/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/cs/fonts/general-sans-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/cs/system.css">
@@ -115,7 +115,7 @@
 
 <nav class="mobnav" id="mobnav" aria-label="Case study sections">
   <div class="mobnav-in">
-    <div class="mobnav-kicker">Johnson &amp; Johnson &middot; 9 chapters in 3 parts</div>
+    <div class="mobnav-kicker">Johnson &amp; Johnson &middot; 10 chapters in 3 parts</div>
     <div class="mobnav-group-title">Part 01 &middot; GRC platform</div>
     <ul>
       <li><a href="#jj-beginning"><span class="n">01</span><span class="lbl">The beginning</span></a></li>
@@ -129,10 +129,11 @@
       <li><a href="#jj-guide"><span class="n">06</span><span class="lbl">First version</span></a></li>
       <li><a href="#jj-case"><span class="n">07</span><span class="lbl">Making the case</span></a></li>
       <li><a href="#jj-conversation"><span class="n">08</span><span class="lbl">Chat-first design</span></a></li>
+      <li><a href="#jj-action"><span class="n">09</span><span class="lbl">Taking action</span></a></li>
     </ul>
     <div class="mobnav-group-title">Part 03 &middot; Outcome</div>
     <ul>
-      <li><a href="#jj-result"><span class="n">09</span><span class="lbl">Result</span></a></li>
+      <li><a href="#jj-result"><span class="n">10</span><span class="lbl">Result</span></a></li>
       <li><a href="#jj-learned"><span class="n">&middot;</span><span class="lbl">Learnings</span></a></li>
     </ul>
     <div class="mobnav-foot">Confidential: details abstracted under NDA</div>
@@ -165,12 +166,13 @@
           <li><a class="raillink" href="#jj-guide"><span class="n">06</span><span class="lbl">First version</span></a></li>
           <li><a class="raillink" href="#jj-case"><span class="n">07</span><span class="lbl">Making the case</span></a></li>
           <li><a class="raillink" href="#jj-conversation"><span class="n">08</span><span class="lbl">Chat-first design</span></a></li>
+          <li><a class="raillink" href="#jj-action"><span class="n">09</span><span class="lbl">Taking action</span></a></li>
         </ul>
       </div>
       <div class="rail-group">
         <div class="rail-group-title">03 &middot; Outcome</div>
         <ul>
-          <li><a class="raillink" href="#jj-result"><span class="n">09</span><span class="lbl">Result</span></a></li>
+          <li><a class="raillink" href="#jj-result"><span class="n">10</span><span class="lbl">Result</span></a></li>
           <li><a class="raillink" href="#jj-learned"><span class="n">&middot;</span><span class="lbl">Learnings</span></a></li>
         </ul>
       </div>
@@ -191,7 +193,7 @@
     </div>
 
     <h1>Conversational AI &amp; GRC Platform</h1>
-    <p class="lead">A compliance platform used by 600,000+ people. I helped make it simpler and faster, and designed its AI assistant.</p>
+    <p class="lead">A compliance platform used by 200,000+ people. I helped make it simpler and faster, and designed its AI assistant.</p>
 
     <aside class="nda-notice" aria-label="Confidentiality notice">
       <span class="nda-notice-icon" aria-hidden="true">
@@ -223,7 +225,7 @@
     </div>
 
     <div class="stats">
-      <div><b>600,000+</b><span>Users</span></div>
+      <div><b>200,000+</b><span>Users</span></div>
       <div><b>12&ndash;14 &rarr; ~6</b><span>Steps to complete the task</span></div>
       <div><b>4 / 5</b><span>Overall rating</span></div>
     </div>
@@ -325,8 +327,33 @@
     <section class="chapter" id="jj-conversation">
       <div class="chapter-no"><b>08</b></div>
       <h2 class="title">Conversation first, UI when needed</h2>
+      <p>I based the assistant on the <strong>Natural Conversation Framework (NCF)</strong> from <em>Conversational UX Design</em> by Robert J. Moore and Raphael Arar. It combines conversation analysis, the study of how people really talk, with UX design.</p>
+      <p>Its core idea is conversation first: if it works as a natural conversation, it works anywhere.</p>
+      <p>NCF breaks a conversation into three layers of reusable patterns:</p>
+      <dl class="band">
+        <dt>Activity</dt>
+        <dd>What the conversation is about<em>The user asks a question or makes a request.</em></dd>
+        <dt>Sequence</dt>
+        <dd>Keeping each exchange on track<em>Repair: the assistant checks what the user meant, and the user can correct themselves.</em></dd>
+        <dt>Conversation</dt>
+        <dd>Opening and closing the chat<em>A clear greeting, and a clean close once the task is done.</em></dd>
+      </dl>
       <p>Instead of filling the chat with UI elements, I proposed using <span class="mark">contextual components such as chips, dropdowns, and buttons only when needed</span>.</p>
-      <p>The assistant evolved from providing guidance to supporting actions through conversation. Users could now <span class="mark m2">raise access requests directly through the assistant</span>.</p>
+    </section>
+
+    <section class="chapter" id="jj-action">
+      <div class="chapter-no"><b>09</b></div>
+      <h2 class="title">From guidance to action</h2>
+      <p>The assistant evolved from providing guidance to supporting actions through conversation.</p>
+      <p>Users could now <span class="mark m2">raise access requests directly through the assistant</span>, completing the task right in the conversation.</p>
+      <p>The goal was to make the experience more conversational while keeping structured UI elements where they helped users provide information and make selections.</p>
+
+      <h3>Clarity and trust</h3>
+      <p>Users need to trust what the assistant tells them, so <span class="mark">every answer comes with a way to check it</span>.</p>
+      <dl class="band">
+        <dt>Every answer</dt>
+        <dd>Relevant resources alongside<em>The AI understands the question and provides the relevant resources with each answer.</em></dd>
+      </dl>
     </section>
 
     <div class="part" id="jj-part3">
@@ -337,9 +364,9 @@
     </div>
 
     <section class="chapter" id="jj-result">
-      <div class="chapter-no"><b>09</b></div>
+      <div class="chapter-no"><b>10</b></div>
       <h2 class="title">The result</h2>
-      <p>The product serves 600,000+ users. Overall, we received positive business feedback, with an average reported rating of <span class="mark m3">4/5</span>.</p>
+      <p>The product serves 200,000+ users. Overall, we received positive business feedback, with an average reported rating of <span class="mark m3">4/5</span>.</p>
       <ul class="article-list">
         <li>Users find answers and finish tasks faster.</li>
         <li>The business gets fewer routine requests to compliance teams.</li>
