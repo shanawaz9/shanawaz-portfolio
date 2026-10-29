@@ -127,9 +127,9 @@ export default function About() {
           <p>
             I&rsquo;m <span className="name-mark">Shanawaz</span>, a{' '}
             <strong className="about-hl">Product Designer with 5+ years of experience</strong>.
-            I&rsquo;ve been into design and creative work since college, always
-            curious about making things, experimenting with ideas, and turning
-            them into something real.
+            I&rsquo;ve always been into design and creative work, curious about
+            making things, experimenting with ideas, and turning them into
+            something real.
           </p>
           <p>
             Over time, that curiosity grew into a{' '}
