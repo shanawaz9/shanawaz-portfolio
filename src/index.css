@@ -402,10 +402,24 @@ nav{
 }
 @keyframes gridPulse{0%,100%{opacity:0.14;}50%{opacity:0.22;}}
 
-/* HERO WORD TRANSITION */
+/* HERO WORD TRANSITION
+   The cycling word sits in a slot of fixed height whose width glides to the
+   next word's measured width, so the scramble glyphs (which fall back to
+   other fonts at other widths) never move the headline or the section. */
+.hero-title-line{display:block;}
+.hero-title-cycle{
+  display:flex;
+  justify-content:center;
+  align-items:baseline;
+  height:1.12em;
+}
 .hero-word{
-  display:inline-block;
-  position:relative;
+  display:flex;
+  justify-content:center;
+  white-space:nowrap;
+  overflow:clip;
+  overflow-clip-margin:0.3em;
+  transition:width 0.42s cubic-bezier(0.22,1,0.36,1);
 }
 .hero-word.scrambling{
   animation:designMorph 0.55s ease-in-out infinite alternate;
@@ -416,8 +430,21 @@ nav{
   content:'';
 }
 @keyframes designMorph{
-  0%   {opacity:0.55;letter-spacing:-0.02em;}
-  100% {opacity:0.88;letter-spacing:0em;}
+  0%   {opacity:0.55;}
+  100% {opacity:0.88;}
+}
+/* off-screen copies of the words, measured for the slot widths */
+.hero-word-measure{
+  position:absolute;
+  top:0;left:0;
+  height:0;
+  overflow:hidden;
+  visibility:hidden;
+  white-space:nowrap;
+}
+.hero-word-measure > span{display:inline-block;}
+@media (prefers-reduced-motion:reduce){
+  .hero-word{transition:none;}
 }
 
 .hero-inner{
@@ -443,7 +470,7 @@ nav{
   display:flex;
   flex-direction:column;
   align-items:center;
-  max-width:640px;
+  max-width:800px;
 }
 
 .hero-floating-layer{
@@ -787,7 +814,7 @@ nav{
 /* HERO CTA */
 .hero-cta-wrap{
   display:inline-block;
-  margin-top:36px;
+  margin-top:40px;
 }
 .hero-cta{
   font-family:var(--font-logo);
@@ -796,9 +823,10 @@ nav{
   text-transform:uppercase;
   color:var(--text);
   background:var(--bg);
-  border:2px solid var(--border);
+  /* the hero's one action: a firmer edge than the chips above it */
+  border:2px solid color-mix(in srgb,var(--text) 32%,var(--bg));
   border-radius:0;
-  padding:14px 32px;
+  padding:14px 30px;
   cursor:pointer;
   display:inline-flex;
   align-items:center;
@@ -1102,22 +1130,42 @@ nav{
   color:var(--accent);
   flex-shrink:0;
 }
+/* Hero copy is set for reading first: the pixel face stays decorative (the
+   slashes, the CTA), and every line of content uses the body or head face.
+   Size follows priority: title > description > CTA > chips > eyebrow. */
+/* eyebrow: two-tone, so it registers by contrast rather than a box. The role
+   reads bright, the experience a step back. */
 .hero-eyebrow{
-  font-size:11px;color:var(--muted);
-  letter-spacing:0.18em;text-transform:uppercase;
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:4px 10px;
+  font-family:var(--font-body);
+  font-size:14px;font-weight:500;
+  letter-spacing:0.02em;
+  line-height:1.5;
+  max-width:100%;
   margin-bottom:24px;
-  display:flex;align-items:center;gap:10px;
-  font-family:var(--font-logo);
 }
-.hero-eyebrow::before{content:'//';color:var(--silver);font-size:12px;font-weight:700;width:auto;height:auto;background:none;flex-shrink:0;}
+.hero-eyebrow::before{content:'//';font-family:var(--font-logo);color:color-mix(in srgb,var(--accent) 65%,var(--text));font-size:12px;}
+.hero-eyebrow-role{color:var(--text);}
+.hero-eyebrow-sep{color:color-mix(in srgb,var(--accent) 65%,var(--text));}
+.hero-eyebrow-exp{color:color-mix(in srgb,var(--text) 64%,var(--bg));}
+/* phones: break cleanly at the separator instead of mid-phrase */
+@media(max-width:560px){
+  .hero-eyebrow-sep{display:none;}
+  .hero-eyebrow-exp{flex-basis:100%;}
+}
+@media(max-width:380px){
+  .hero-eyebrow{font-size:12px;gap:4px 8px;}
+}
 
 .hero-title{
   font-family:var(--font-head);
-  font-size:clamp(38px,5.5vw,72px);
+  font-size:clamp(36px,3.6vw,56px);
   font-weight:600;
-  line-height:1.08;
-  letter-spacing:-0.025em;
-  margin-bottom:28px;
+  line-height:1.12;
+  letter-spacing:-0.02em;
+  text-wrap:balance;
+  margin-bottom:20px;
 }
 .hero-title .accent{
   color:var(--accent);
@@ -1127,8 +1175,8 @@ nav{
 .hero-title .accent:hover{
   animation:glitch 1.5s steps(1) infinite;
 }
-/* blinking caret after title */
-.hero-title::after{
+/* blinking caret after the cycling word; it rides the slot's edge as it glides */
+.hero-title-cycle::after{
   content:'_';
   color:var(--accent);
   animation:caretBlink 1s steps(1) infinite;
@@ -1136,11 +1184,35 @@ nav{
   margin-left:2px;
 }
 .hero-desc{
-  font-size:16px;color:var(--muted);
-  line-height:1.8;font-weight:400;
+  font-size:18px;
+  /* a step brighter than --muted: this is the line people actually read */
+  color:color-mix(in srgb,var(--text) 80%,var(--bg));
+  line-height:1.65;font-weight:400;
   max-width:560px;
   text-align:center;
+  text-wrap:pretty;
 }
+/* expertise tags: the work cards' stepped pixel chip, with readable text.
+   A lifted fill and clear outline so they register as a row of skills,
+   while staying smaller than the description. */
+.hero-expertise{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin:28px 0 0;padding:0;list-style:none;
+}
+.hero-expertise-chip{
+  --chip-line:color-mix(in srgb,var(--text) 32%,var(--bg));
+  position:relative;isolation:isolate;
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-body);font-size:13px;font-weight:500;line-height:1;
+  color:var(--text);background:var(--chip-line);
+  padding:9px 13px 10px;white-space:nowrap;
+  clip-path:polygon(0 2px,2px 2px,2px 0,calc(100% - 2px) 0,calc(100% - 2px) 2px,100% 2px,100% calc(100% - 2px),calc(100% - 2px) calc(100% - 2px),calc(100% - 2px) 100%,2px 100%,2px calc(100% - 2px),0 calc(100% - 2px));
+}
+.hero-expertise-chip::after{
+  content:'';position:absolute;inset:1px;z-index:-1;background:color-mix(in srgb,var(--text) 8%,var(--bg));
+  clip-path:polygon(0 1px,1px 1px,1px 0,calc(100% - 1px) 0,calc(100% - 1px) 1px,100% 1px,100% calc(100% - 1px),calc(100% - 1px) calc(100% - 1px),calc(100% - 1px) 100%,1px 100%,1px calc(100% - 1px),0 calc(100% - 1px));
+}
+.hero-expertise-chip::before{content:'';width:5px;height:5px;flex:0 0 auto;background:var(--accent);}
 /* subtle name highlight - a soft accent tag, not a loud callout */
 .name-mark{
   position:relative;
@@ -2314,7 +2386,6 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 /* Large laptop / small desktop */
 @media(min-width:1400px){
   :root{--max-w:1320px;--gutter:32px;}
-  .hero-text{max-width:700px;}
   .hero-desc{max-width:620px;}
   .work-grid{gap:24px;}
   .blog-grid{gap:24px;}
@@ -2327,7 +2398,6 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 @media(min-width:1600px){
   :root{--max-w:1460px;--gutter:40px;--cursor-px:2px;}
   .section,.philosophy,.cta{padding-top:116px;padding-bottom:116px;}
-  .hero-text{max-width:740px;}
   .work-grid{gap:28px;}
   .blog-grid{gap:28px;}
   .t-grid{gap:28px;}
@@ -2368,7 +2438,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 
   .hero{min-height:auto;}
   .hero-inner{padding-top:48px;padding-bottom:48px;}
-  .hero-title{font-size:clamp(30px,9vw,52px);}
+  .hero-title{font-size:clamp(32px,5.6vw,44px);}
   .hero-desc{font-size:16px;}
 
   .section{padding-top:72px;padding-bottom:72px;}
@@ -2424,7 +2494,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 @media(max-width:480px){
   :root{--gutter:16px;}
   .hero-inner{padding-top:32px;padding-bottom:32px;}
-  .hero-title{font-size:clamp(26px,10vw,42px);}
+  .hero-title{font-size:clamp(26px,7.4vw,32px);}
   .section{padding-top:56px;padding-bottom:56px;}
   #about.section{padding-top:72px;padding-bottom:80px;}
   .section-heading{margin-bottom:32px;}
@@ -2445,7 +2515,7 @@ footer p{font-size:11px;color:var(--muted);letter-spacing:0.04em;font-family:var
 
 /* Small phone <=380px - keep the tightest layout from overflowing. */
 @media(max-width:380px){
-  .hero-title{font-size:clamp(24px,10.5vw,34px);}
+  .hero-title{font-size:clamp(22px,7vw,28px);}
   .hero-cta{padding:13px 24px;font-size:11px;}
   .photo-strip-item{width:180px;height:135px;}
   .about-img-wrap img{height:340px;}

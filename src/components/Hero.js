@@ -12,8 +12,10 @@ import {
 } from './Stagger';
 import { PLAY_INTRO } from '../introState';
 
-const CYCLE_WORDS = ['Curiosity', 'Empathy', 'Intent'];
+const CYCLE_WORDS = ['Strategy', 'User-centered design', 'Engineering'];
 const SCRAMBLE_CHARS = '◆○□△◇●■▲◈◉◎·∙⬡✦◐◑';
+
+const EXPERTISE = ['Enterprise SaaS', 'Conversational AI', 'UX Engineering', 'B2C'];
 
 const RESUME_URL =
   'https://drive.google.com/file/d/1qJ6uW_f1SyinMg_9Xh9Q4yHv571btKNM/view?usp=drive_link';
@@ -223,7 +225,12 @@ export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
   const [ctaCopied, setCtaCopied] = useState(false);
   const [displayWord, setDisplayWord] = useState(CYCLE_WORDS[0]);
+  const [targetWord, setTargetWord] = useState(CYCLE_WORDS[0]);
   const [isScrambling, setIsScrambling] = useState(false);
+  // Rendered width of each cycling word, so the word's slot can glide from one
+  // width to the next instead of jumping with every scrambled glyph.
+  const [wordWidths, setWordWidths] = useState({});
+  const measureRefs = useRef({});
   const [windowState, setWindowState] = useState(() =>
     FLOATING_WINDOWS.reduce((acc, window) => {
       acc[window.id] = { x: 0, y: 0, z: window.initialZ };
@@ -318,9 +325,26 @@ export default function Hero() {
     let cycleTimer;
     let scrambleTimer;
     let active = true;
+    if (!heroTextShown) return undefined;
+
+    // Each word holds just long enough to read once it has settled: a beat
+    // for the eye to land, plus a little per word in the phrase.
+    const holdFor = (word) => 1300 + 300 * word.split(/[\s-]+/).length;
+
+    const next = () => {
+      wordIndexRef.current = (wordIndexRef.current + 1) % CYCLE_WORDS.length;
+      scrambleTo(CYCLE_WORDS[wordIndexRef.current]);
+    };
 
     const scrambleTo = (target) => {
       if (!active) return;
+      setTargetWord(target);
+      // Reduced motion: swap the word outright, no glyph scramble.
+      if (reduce) {
+        setDisplayWord(target);
+        cycleTimer = setTimeout(next, holdFor(target));
+        return;
+      }
       setIsScrambling(true);
       let frame = 0;
       const totalFrames = 14;
@@ -332,6 +356,7 @@ export default function Hero() {
           clearInterval(scrambleTimer);
           setDisplayWord(target);
           setIsScrambling(false);
+          cycleTimer = setTimeout(next, holdFor(target));
           return;
         }
         const revealed = Math.floor((frame / totalFrames) * target.length);
@@ -344,16 +369,34 @@ export default function Hero() {
       }, 26);
     };
 
-    cycleTimer = setInterval(() => {
-      wordIndexRef.current = (wordIndexRef.current + 1) % CYCLE_WORDS.length;
-      scrambleTo(CYCLE_WORDS[wordIndexRef.current]);
-    }, 2800);
+    // The first word gets its full read once the headline is actually on
+    // screen, not while the intro is still playing.
+    cycleTimer = setTimeout(next, holdFor(CYCLE_WORDS[0]) + (splitIntro ? 1200 : 0));
 
     return () => {
       active = false;
-      clearInterval(cycleTimer);
+      clearTimeout(cycleTimer);
       clearInterval(scrambleTimer);
     };
+  }, [reduce, heroTextShown, splitIntro]);
+
+  // Re-measure whenever a word's size changes (viewport-driven font size, web
+  // fonts finishing loading).
+  useEffect(() => {
+    const measure = () => {
+      setWordWidths(
+        CYCLE_WORDS.reduce((acc, word) => {
+          const el = measureRefs.current[word];
+          if (el) acc[word] = Math.ceil(el.getBoundingClientRect().width) + 2;
+          return acc;
+        }, {})
+      );
+    };
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const observer = new ResizeObserver(measure);
+    Object.values(measureRefs.current).forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -437,20 +480,46 @@ export default function Hero() {
             ? { stagger: 0.16, delay: 0.55, animate: heroTextShown ? 'show' : 'hidden' }
             : { stagger: 0.12, delay: revealDelay })}
         >
-          <StaggerItem as="p" className="hero-eyebrow" {...textItem}>Product Designer &middot; Hyderabad, India</StaggerItem>
+          <StaggerItem as="p" className="hero-eyebrow" {...textItem}>
+            <span className="hero-eyebrow-role">Senior Product Designer at Aapmor</span>
+            <span className="hero-eyebrow-sep">&middot;</span>
+            <span className="hero-eyebrow-exp">5+ Years Experience</span>
+          </StaggerItem>
           <StaggerItem as="h1" className="hero-title" {...textItem}>
-            Designing with
-            <br />
-            <span
-              className={`accent hero-word${isScrambling ? ' scrambling' : ''}`}
-              data-word={displayWord}
-            >
-              {displayWord}
+            {/* the cycling word is visual only; screen readers get the full line once */}
+            <span className="sr-only">Shaping products through strategy, user-centered design, and engineering</span>
+            <span aria-hidden="true">
+              <span className="hero-title-line">Shaping products through</span>
+              <span className="hero-title-cycle">
+                <span
+                  className={`accent hero-word${isScrambling ? ' scrambling' : ''}`}
+                  data-word={displayWord}
+                  style={wordWidths[targetWord] ? { width: wordWidths[targetWord] } : undefined}
+                >
+                  {displayWord}
+                </span>
+              </span>
+              <span className="hero-word-measure">
+                {CYCLE_WORDS.map((word) => (
+                  <span
+                    key={word}
+                    className="accent"
+                    ref={(el) => { measureRefs.current[word] = el; }}
+                  >
+                    {word}
+                  </span>
+                ))}
+              </span>
             </span>
           </StaggerItem>
           <StaggerItem as="p" className="hero-desc" {...textItem}>
-            Hi, I'm <span className="name-mark">Shanawaz</span>. Generalist product designer
-            crafting thoughtful, user-centered experiences across systems, stories, and interfaces.
+            I turn complex workflows into intuitive experiences across enterprise SaaS and
+            conversational AI
+          </StaggerItem>
+          <StaggerItem as="ul" className="hero-expertise" aria-label="Expertise" {...textItem}>
+            {EXPERTISE.map((area) => (
+              <li key={area} className="hero-expertise-chip">{area}</li>
+            ))}
           </StaggerItem>
           <StaggerItem className="hero-cta-wrap" {...textItem}>
             <button className={`hero-cta${ctaCopied ? ' is-copied' : ''}`} onClick={handleConnectClick}>
