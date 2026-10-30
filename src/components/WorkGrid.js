@@ -4,35 +4,15 @@ import { Stagger, StaggerItem } from './Stagger';
 
 const WORKS = [
   {
-    href: '/shiftlyn',
-    img: '/images/shiftlyn/shiftlyn-card-thumb-v3.webp',
-    alt: 'Shiftlyn, AI Career Readiness Platform: the landing page on a desktop monitor, its headline reading "See how AI-ready your skills really are"',
-    year: '2025',
-    tag: 'Case study',
-    title: 'Shiftlyn: AI-Assisted Product Design, from MVP to Complete Product',
-    chips: ['Product design', 'Case study', 'End to end product'],
-    delay: 'd1',
-    flush: true,
-  },
-  {
     href: '/ai-visa-platform',
     img: '/images/visa/visa-card-thumb.webp',
     alt: 'The redesigned PetitionIQ.ai landing page on a desktop monitor, its serif headline reading "Immigration intelligence before the petition is written"',
     year: '2026',
     tag: 'Case study',
-    title: 'AI Visa Platform: From AI-Generated MVP to Trusted Product',
+    client: 'AI Visa Platform',
+    title: 'Redesigning an AI-Built Visa Platform to Build Trust and Improve Conversions',
     chips: ['AI vs human design', 'Case study', 'Conversion journey'],
-    delay: 'd2',
-  },
-  {
-    href: '/liberty-dental-plan',
-    img: '/images/ldp/ldp-card-thumb.jpg',
-    alt: 'The Liberty Dental Plan homepage on a desktop monitor, captioned "Explore the live platform"',
-    year: '2025–2026',
-    tag: 'Confidential work',
-    title: 'Liberty Dental Plan: Reshaping a Decade-Old Healthcare Platform',
-    chips: ['UX design', 'Information architecture', 'Case study'],
-    delay: 'd3',
+    delay: 'd1',
   },
   {
     href: '/johnson-and-johnson',
@@ -40,8 +20,32 @@ const WORKS = [
     alt: 'The Johnson & Johnson access management home screen, blurred under NDA',
     year: '2024–2026',
     tag: 'Confidential work',
-    title: 'Johnson & Johnson: Conversational AI for Compliance Teams',
+    client: 'Johnson & Johnson',
+    title: 'Simplifying Compliance Workflows and Designing Action-Driven Conversational AI',
     chips: ['Conversational UX', 'Under NDA', 'Complex workflows'],
+    delay: 'd2',
+  },
+  {
+    href: '/shiftlyn',
+    img: '/images/shiftlyn/shiftlyn-card-thumb-v3.webp',
+    alt: 'Shiftlyn, AI Career Readiness Platform: the landing page on a desktop monitor, its headline reading "See how AI-ready your skills really are"',
+    year: '2025',
+    tag: 'Case study',
+    client: 'Shiftlyn',
+    title: 'Designing an End-to-End AI Career Product to Reduce Drop-Off and Bring Users Back',
+    chips: ['Product design', 'Case study', 'End to end product'],
+    delay: 'd3',
+    flush: true,
+  },
+  {
+    href: '/liberty-dental-plan',
+    img: '/images/ldp/ldp-card-thumb.jpg',
+    alt: 'The Liberty Dental Plan homepage on a desktop monitor, captioned "Explore the live platform"',
+    year: '2025–2026',
+    tag: 'Confidential work',
+    client: 'Liberty Dental Plan',
+    title: 'Redesigning a Decade-Old Platform’s Information Architecture for Three User Groups',
+    chips: ['UX design', 'Information architecture', 'Case study'],
     delay: 'd4',
   },
   {
@@ -50,7 +54,8 @@ const WORKS = [
     alt: 'Khoj',
     year: '2025',
     tag: 'Case study',
-    title: 'Khoj: Landing Page Built to Convert',
+    client: 'Khoj',
+    title: 'Landing Page Built to Convert',
     delay: 'd5',
     // Hidden for now - flip this off to bring it back.
     hidden: true,
@@ -61,7 +66,8 @@ const WORKS = [
     alt: 'Ethno Furniture e-commerce UI screens',
     year: '2023',
     tag: 'Case study',
-    title: 'Ethno: Indian Craft Commerce, Reimagined',
+    client: 'Ethno',
+    title: 'Indian Craft Commerce, Reimagined',
     delay: 'd5',
     // Kept in the list but not shown for now - flip this off to bring it back.
     hidden: true,
@@ -89,7 +95,10 @@ function WorkCard({ work }) {
       </div>
       <div className="work-card-body">
         <div className="work-card-head">
-          <div className="work-card-title">{work.title}</div>
+          <div className="work-card-heading">
+            {work.client && <span className="work-card-brand">{work.client}</span>}
+            <div className="work-card-title">{work.title}</div>
+          </div>
           {work.href && <span className="work-card-go" aria-hidden="true">&#8599;</span>}
         </div>
         {work.chips && (
