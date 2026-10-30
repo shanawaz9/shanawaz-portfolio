@@ -32,7 +32,7 @@ const WORKS = [
     year: '2025',
     tag: 'Case study',
     client: 'Shiftlyn',
-    title: 'Designing an End-to-End AI Career Product to Reduce Drop-Off and Bring Users Back',
+    title: 'Designing an End-to-End AI Career Product, Solving Drop-Off and Retention Challenges',
     chips: ['Product design', 'Case study', 'End to end product'],
     delay: 'd3',
     flush: true,
